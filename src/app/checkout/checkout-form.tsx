@@ -88,6 +88,7 @@ export default function CheckoutForm() {
     // be redirected to an intermediate site first to authorize the payment, then
     // redirected to the `return_url`.
     if (confirmResult.type === "error") {
+      console.trace(confirmResult);
       setMessage(confirmResult.error.message);
     }
 
@@ -112,7 +113,7 @@ export default function CheckoutForm() {
         {isLoading ? (
           <div className="spinner"></div>
         ) : (
-          `Pay ${checkout.total.total.amount} now`
+          `Payer ${checkout.total.total.amount} maintenant`
         )}
       </button>
       {/* Show any error or success messages */}

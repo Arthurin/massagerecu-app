@@ -11,7 +11,7 @@ export async function POST(req: Request) {
       line_items: lineItems,
       mode: "payment",
       automatic_tax: { enabled: true },
-      return_url: `${YOUR_DOMAIN}/success?session_id={CHECKOUT_SESSION_ID}`,
+      return_url: `${YOUR_DOMAIN}/complete?session_id={CHECKOUT_SESSION_ID}`,
     });
 
     if (!session.client_secret) {
@@ -20,7 +20,6 @@ export async function POST(req: Request) {
         { status: 500 }
       );
     }
-    console.log(session);
 
     return NextResponse.json({ clientSecret: session.client_secret });
   } catch (err: unknown) {
