@@ -1,0 +1,41 @@
+import React from "react";
+
+interface StripeErrorBoundaryState {
+  hasError: boolean;
+  errorMessage: string | null;
+}
+
+export class StripeErrorBoundary extends React.Component<
+  React.PropsWithChildren,
+  StripeErrorBoundaryState
+> {
+  constructor(props: React.PropsWithChildren) {
+    super(props);
+    this.state = { hasError: false, errorMessage: null };
+  }
+
+  static getDerivedStateFromError(error: unknown): StripeErrorBoundaryState {
+    return {
+      hasError: true,
+      errorMessage: error instanceof Error ? error.message : String(error),
+    };
+  }
+
+  override componentDidCatch(error: unknown, errorInfo: React.ErrorInfo): void {
+    // Tu peux envoyer ça à Sentry ou à un service de logs
+    console.error("Erreur Stripe capturée:", error, errorInfo);
+  }
+
+  override render() {
+    if (this.state.hasError) {
+      return (
+        <div className="p-4 bg-red-100 text-red-700 rounded">
+          <p>Une erreur est survenue avec Stripe :</p>
+          <pre>{this.state.errorMessage}</pre>
+        </div>
+      );
+    }
+
+    return this.props.children;
+  }
+}
