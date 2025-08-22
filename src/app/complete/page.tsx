@@ -17,13 +17,19 @@ export default function Complete() {
     const queryParams = new URLSearchParams(window.location.search);
     const sessionId = queryParams.get("session_id");
     if (!sessionId) {
-      setError("No session ID found");
+      setError("Identifiant de session manquant.");
       setIsLoading(false);
       return;
     }
 
     fetch(`/api/session-status?session_id=${sessionId}`)
-      .then((res) => res.json())
+      .then(async (res) => {
+        const data = await res.json();
+        if (!res.ok) {
+          throw new Error("Impossible de récupérer le statut de la session.");
+        }
+        return data;
+      })
       .then((data) => {
         setStatus(data.status);
         setPaymentIntentId(data.payment_intent_id);
@@ -32,13 +38,15 @@ export default function Complete() {
 
         // Handle different session statuses
         if (data.status !== "complete") {
-          setError(`Payment incomplete. Status: ${data.status}`);
+          setError(`Le paiement n'a pas été complété. Status: ${data.status}`);
         }
 
         setIsLoading(false);
       })
       .catch((err) => {
-        setError("Failed to retrieve session information");
+        setError(
+          err.message || "Impossible de récupérer les informations de paiement."
+        );
         setIsLoading(false);
       });
   }, []);
@@ -64,7 +72,7 @@ export default function Complete() {
         </div>
       ) : (
         <div>
-          <h2>❌ Le paiement n'a pas été complété</h2>
+          <h2>❌ Erreur !</h2>
           <p>{error}</p>
           <button onClick={handleTryAgain}>Essayer à nouveau</button>
         </div>
