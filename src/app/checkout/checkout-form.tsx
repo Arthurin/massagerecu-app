@@ -3,7 +3,6 @@
 import {
   useCheckout,
   PaymentElement,
-  AddressElement,
   CheckoutContextValue,
 } from "@stripe/react-stripe-js";
 import { useState, FormEvent } from "react";
@@ -97,16 +96,14 @@ export default function CheckoutForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
+      <h3>Votre commande</h3>
       <EmailInput
         email={email}
         setEmail={setEmail}
         error={emailError}
         setError={setEmailError}
       />
-      <h4>Billing Address</h4>
-      <AddressElement options={{ mode: "billing" }} />
 
-      <h4>Payment</h4>
       <PaymentElement id="payment-element" />
 
       <button disabled={isLoading} id="submit">
