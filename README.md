@@ -1,5 +1,21 @@
 StripeErrorBoundary : le mettre à jour et l'utiliser
 
+Arborescence du projet :
+src/
+├─ app/
+│ ├─ api/
+│ │ └─ webhook/
+│ │ └─ route.ts
+│ ├─ checkout/
+│ └─ complete/
+├─ lib/
+│ ├─ stripe.ts
+│ └─ mailer.ts
+└─ lib/
+│ └─ mailer.ts
+
+Pour tester l'envoi de mail : > npx tsx .\src\test-mail.ts
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
