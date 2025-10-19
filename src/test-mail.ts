@@ -5,7 +5,7 @@ dotenv.config({ path: ".env.local" });
 async function main() {
   await sendMail({
     to: "arthurfrin@gmail.com",
-    subject: "Test mail OAuth2 2",
+    subject: "Test mail OAuth2 3",
     text: "Ceci est un test réussi depuis le terminal 🎉",
   });
   console.log("✅ Email envoyé !");

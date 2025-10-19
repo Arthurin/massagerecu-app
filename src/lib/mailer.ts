@@ -1,5 +1,6 @@
 import nodemailer from "nodemailer";
 import { google } from "googleapis";
+import { logMail } from "./logger";
 
 // --- Fonction d'envoi d'email ---
 export async function sendMail({
@@ -59,6 +60,7 @@ export async function sendMail({
     const mailOptions = {
       from: `"Massage Reçu" <${GMAIL_SENDER}>`,
       to,
+      replyTo: GMAIL_SENDER,
       subject,
       text,
       html,
@@ -66,11 +68,15 @@ export async function sendMail({
 
     // Envoi
     const result = await transporter.sendMail(mailOptions);
-    console.log(`✅ Email envoyé à ${to} — ID: ${result.messageId}`);
+    const msg = `✅ Email envoyé à ${to} (${result.messageId})`;
+    console.log(msg);
+    logMail(msg);
 
     return result;
   } catch (error) {
-    console.error("❌ Erreur lors de l'envoi de l'email :", error);
+    const msg = `❌ Erreur lors de l'envoi à ${to}: ${String(error)}`;
+    console.error(msg);
+    logMail(msg);
     throw error;
   }
 }
