@@ -1,6 +1,7 @@
 import nodemailer from "nodemailer";
 import { google } from "googleapis";
 import { logMail } from "./logger";
+import { sanitizeText, sanitizeRichHtml } from "@/lib/sanitizeInput";
 
 // --- Fonction d'envoi d'email ---
 export async function sendMail({
@@ -46,6 +47,7 @@ export async function sendMail({
     // Configuration du transport Nodemailer
     const transporter = nodemailer.createTransport({
       service: "gmail",
+      logger: true,
       auth: {
         type: "OAuth2",
         user: GMAIL_SENDER,
@@ -59,11 +61,15 @@ export async function sendMail({
     // Contenu du mail
     const mailOptions = {
       from: `"Massage Reçu" <${GMAIL_SENDER}>`,
-      to,
       replyTo: GMAIL_SENDER,
-      subject,
-      text,
-      html,
+      headers: {
+        "Content-Language": "fr",
+      },
+      to: sanitizeText(to),
+      subject: sanitizeText(subject),
+      text: text ? sanitizeText(text) : undefined,
+      html: html ? sanitizeRichHtml(html) : undefined,
+      encoding: "utf-8",
     };
 
     // Envoi

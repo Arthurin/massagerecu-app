@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
 import { headers } from "next/headers";
 import Stripe from "stripe";
+import { sendMail } from "@/lib/mailer";
 
 // Configure body parser for webhooks
 export const config = {
@@ -102,7 +103,7 @@ async function handlePaymentIntentSucceeded(
 
   if (customerEmail) {
     // Send your own custom email
-    await sendCustomEmail(customerEmail, {
+    await sendCustomEmail(customerEmail as string, {
       amount: (paymentIntent.amount / 100).toFixed(2),
       currency: paymentIntent.currency.toUpperCase(),
       paymentId: paymentIntent.id,
@@ -112,8 +113,23 @@ async function handlePaymentIntentSucceeded(
 }
 
 async function sendCustomEmail(
-  customerEmail: String,
+  customerEmail: string,
   paymentInfos: { amount: string; currency: string; paymentId: string }
 ) {
   console.log(`Let's send an email to ${customerEmail}...`);
+  try {
+    await sendMail({
+      to: customerEmail,
+      subject: "[Massage Reçu] Merci pour votre achat !",
+      text: `Bonjour, votre paiement d’un montant de ${paymentInfos.amount}€ a bien été reçu. Merci pour votre achat ! 🌿`,
+      html: `
+        <p>Bonjour,</p>
+        <p>Votre paiement d’un montant de <strong>${paymentInfos.amount}€</strong> a bien été reçu.</p>
+        <p>Merci pour votre achat et à très bientôt 🌿</p>
+        <p><em>Massage Reçu</em></p>
+      `,
+    });
+  } catch (err: any) {
+    console.error("❌ Erreur lors de l'envoi :", err);
+  }
 }
