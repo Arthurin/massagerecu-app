@@ -1,3 +1,6 @@
+Pour avoir les webhook de Stripe en local ouvrir un terminal et taper :
+stripe listen --forward-to localhost:3000/api/webhook
+
 StripeErrorBoundary : le mettre à jour et l'utiliser
 
 Arborescence du projet :
