@@ -11,7 +11,7 @@ describe("sanitizeInput", () => {
   it("sanitizeRichHtml should keep allowed tags", () => {
     const dirty = "<p>Texte <b>gras</b> <script>hack()</script></p>";
     const clean = sanitizeRichHtml(dirty);
-    expect(clean).toBe("<p>Texte <b>gras</b> Mise en échec du test</p>");
+    expect(clean).toBe("<p>Texte <b>gras</b> </p>");
   });
 
   it("sanitizeRichHtml should keep links but strip dangerous ones", () => {
