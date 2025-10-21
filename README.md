@@ -26,6 +26,7 @@ NextJs 15
 Typescript
 Paiement : API Stripe
 Mail : Nodemailer + API Gmail + Sanitaze-html
+PDF : pdf-lib
 Tests : Vitest + Github Workflow
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
