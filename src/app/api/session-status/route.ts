@@ -24,6 +24,12 @@ export async function GET(req: NextRequest) {
       payment_intent_status = paymentIntent.status;
     }
 
+    if (!session || session.payment_status !== "paid") {
+      return new Response("Paiement non valide", { status: 403 });
+    }
+
+    // TODO: Inclure le composant qui gère le PDF
+
     return NextResponse.json({
       status: session.status,
       payment_status: session.payment_status,

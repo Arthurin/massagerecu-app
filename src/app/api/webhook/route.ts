@@ -4,6 +4,7 @@ import { stripe } from "@/lib/stripe";
 import { headers } from "next/headers";
 import Stripe from "stripe";
 import { sendMail } from "@/lib/mailer";
+import { generatePDF } from "@/lib/pdfUtils";
 
 // Configure body parser for webhooks
 export const config = {
@@ -101,20 +102,37 @@ async function handlePaymentIntentSucceeded(
     }
   }
 
+  // Prépare les champs pour le PDF
+  const fields = {
+    nomDestinataire: "Nom du bénéfiaire",
+    nomAcheteur: "Nom de l'acheteur",
+    montant: "60 €",
+    dateExpiration: "30/04/2025",
+    idCarteCadeau: "311025-1",
+  };
+  //new Date().toLocaleDateString("fr-FR")
+
+  const pdfBytes = await generatePDF(fields);
+
   if (customerEmail) {
     // Send your own custom email
     await sendCustomEmail(customerEmail as string, {
       amount: (paymentIntent.amount / 100).toFixed(2),
       currency: paymentIntent.currency.toUpperCase(),
       paymentId: paymentIntent.id,
-      // Add other details you want to include
+      pdfBytes,
     });
   }
 }
 
 async function sendCustomEmail(
   customerEmail: string,
-  paymentInfos: { amount: string; currency: string; paymentId: string }
+  paymentInfos: {
+    amount: string;
+    currency: string;
+    paymentId: string;
+    pdfBytes: any;
+  }
 ) {
   console.log(`Let's send an email to ${customerEmail}...`);
   try {
@@ -128,6 +146,13 @@ async function sendCustomEmail(
         <p>Merci pour votre achat et à très bientôt 🌿</p>
         <p><em>Massage Reçu</em></p>
       `,
+      attachments: [
+        {
+          filename: "recu.pdf",
+          content: Buffer.from(paymentInfos.pdfBytes), // <--- conversion du Uint8Array en Buffer
+          contentType: "application/pdf",
+        },
+      ],
     });
   } catch (err: any) {
     console.error("❌ Erreur lors de l'envoi :", err);

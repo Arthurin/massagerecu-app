@@ -17,7 +17,7 @@ src/
 └─ lib/
 │ └─ mailer.ts
 
-Pour tester l'envoi de mail : > npx tsx .\src\test-mail.ts
+Pour tester l'envoi de mail : > npx tsx .\src\script\test-mail.ts
 
 ## Tech Stack
 

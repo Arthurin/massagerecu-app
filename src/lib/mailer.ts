@@ -9,11 +9,18 @@ export async function sendMail({
   subject,
   text,
   html,
+  attachments,
 }: {
   to: string;
   subject: string;
   text?: string;
   html?: string;
+  attachments?: {
+    filename: string;
+    path?: string;
+    content: Buffer;
+    contentType: string;
+  }[];
 }) {
   // --- Validation stricte des variables d'environnement ---
   const {
@@ -70,6 +77,7 @@ export async function sendMail({
       text: text ? sanitizeText(text) : undefined,
       html: html ? sanitizeRichHtml(html) : undefined,
       encoding: "utf-8",
+      attachments,
     };
 
     // Envoi
