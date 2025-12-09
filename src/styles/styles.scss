@@ -1,0 +1,49 @@
+//
+// Styles
+//
+
+// Import variables
+@import "./variables.scss";
+
+// Import Bootstrap
+@import "bootstrap/scss/bootstrap.scss";
+
+// Global CSS
+@import "./global.scss";
+
+// Components
+@import "./components/buttons.scss";
+@import "./components/navbar.scss";
+@import "./components/tableau_massages.scss";
+@import "./components/liste.scss";
+
+// Sections
+@import "./sections/index.scss";
+@import "./sections/masthead.scss";
+@import "./sections/portfolio.scss";
+@import "./sections/timeline.scss";
+@import "./sections/team.scss";
+@import "./sections/contact.scss";
+@import "./sections/footer.scss";
+
+div.booking {
+  background-color: green !important;
+  --color-primary: $yellow;
+
+  .ui-button__type__primary {
+    background-color: red !important;
+  }
+}
+
+div.booking[data-v-ca8c5e23] {
+  background-color: black !important;
+  --color-primary: $yellow;
+
+  .ui-button__type__primary {
+    background-color: red !important;
+  }
+}
+
+.accordion-button {
+  font-size: 1.2rem;
+}

@@ -1,0 +1,118 @@
+//
+// Navbar
+//
+
+
+#mainNav {
+    padding-top: $menu-padding-small;
+    padding-bottom: $menu-padding-small;
+    background-color: #fff;
+
+    // Ajuste le positionnement du bouton Réserver dans le menu principal
+    li:has(a.btn) {
+        padding: 0.1rem 0 0 0;
+    }
+
+    .navbar-toggler {
+
+        padding: 0.75rem;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+
+    .navbar-toggler:focus{
+        box-shadow: 0 0 0 0.1rem;
+    }
+
+    .navbar-brand {
+        color: $primary;
+        font-family: $headings-font-family;
+        font-weight: $headings-font-weight;
+        letter-spacing: $headings-letter-spacing;
+        text-transform: uppercase;
+
+        img {
+            height: $menu-logo-small;
+        }
+    }
+
+    .navbar-nav {
+        padding-left: 1rem;
+
+        .nav-item {
+
+            /*Affichage du bouton dans le menu aligné aux autres éléments .nav-link*/
+            .btnMenuCustom {
+                font-family: $headings-font-family;
+                font-size: 1.3rem;
+                letter-spacing: $headings-letter-spacing;
+            }
+
+            .nav-link {
+                font-family: $headings-font-family;
+                font-size: 1.3rem;
+                color: $black_light;
+                letter-spacing: $headings-letter-spacing;
+
+                &.active {
+                    color: $primary;
+                }
+
+                &:hover {
+                    color: $primary_light;
+                }
+            }
+        }
+    }
+}
+
+// Responsive styling for screen width equal to or greater than the large breakpoint
+@include media-breakpoint-up(lg) {
+
+    #mainNav {
+        padding-top: $menu-padding-bigscreen;
+        padding-bottom: $menu-padding-bigscreen;
+        border: none;
+        background-color: #fff;
+        transition: padding-top 0.3s ease-in-out,
+            padding-bottom 0.3s ease-in-out;
+
+        .navbar-brand {
+            font-size: 1.5em;
+            transition: font-size 0.3s ease-in-out;
+
+            img {
+                height: $menu-logo-bigscreen;
+                transition: height 0.3s ease-in-out;
+            }
+        }
+
+        // Styling for when the navbar shrinks on larger screens
+        &.navbar-shrink {
+            padding-top: $menu-padding-bigscreen-sticky;
+            padding-bottom: $menu-padding-bigscreen-sticky;
+            background-color: #fff;
+
+            .navbar-brand {
+                font-size: 1.25em;
+
+                svg{
+                    height: 1.5rem;
+                }
+
+                img {
+                    height: $menu-logo-bigscreen-sticky;
+                }
+            }
+        }
+
+        .navbar-nav .nav-item {
+            margin-right: 1rem;
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+    }
+}

@@ -1,0 +1,43 @@
+//
+// Colors
+//
+
+// Override Bootstrap color variables
+
+$old_yellow: #ffc800;
+
+$yellow: #FFA700;
+
+
+$complementary: #1144AA; //proche de la couleur imposée par traffft pour la résa en ligne : #191EB9
+
+$old_blue: #2A17B1;
+
+$blue_dark: #150B6C;
+
+$blue_light: #6A5DC5;
+// Override Bootstrap state colors variables
+
+$primary: #50aaa7;
+// C'est plus clair que la couleur du logo : #347070 (ce serait trop foncé pour le menu principal et le bouton Réserver 
+// dfefef : un gris clair légèrement bleu, pourquoi pas pour accentuer la couleur de fond d'une section
+$text_with_primary_background: #ffffff;
+// une sorte de marron : b67f68
+
+$primary_light: #32b7b3; //menu:hover
+
+$primaireFonce: #347070; //couleur du logo footer partie inférieure
+$primaireTresClair: #dfefef; // footer partie supérieure
+//premier test #E8F9F9
+
+$liens: #2a3d3d; // il y a aussi  a.link-dark.text-decoration-none(href='#!')
+
+$secondary: $complementary; //utilisé dans les .link-secondary
+
+$black_light: #140003;
+
+// si besoin pour une couleur de texte un peu plus grise : 5b5b5b #5b5b5b
+
+// Override Bootstrap contrast ratio
+
+$min-contrast-ratio: 1.5;

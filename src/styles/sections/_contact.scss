@@ -1,0 +1,155 @@
+//
+// Contact section styling
+//
+
+ul#contact-list {
+  li {
+    font-size: 1.1rem;
+  }
+
+  .conteneur-adresse {
+    display: inline-flex;
+    text-decoration: inherit;
+  }
+}
+
+.max-width-adresse {
+  width: 220px;
+}
+
+.align-icon {
+  padding-right: 0.3rem;
+  flex-shrink: 0;
+}
+
+ul#contact-list li {
+  display: flex;
+  align-items: baseline;
+}
+
+.col-custom {
+  width: 100%;
+}
+
+.col-custom h4 {
+  text-align: center;
+}
+
+// Responsive styling
+@include media-breakpoint-up(md) {
+  .max-width-adresse {
+    width: 400px;
+  }
+  ul#contact-list li {
+    max-width: 400px;
+    gap: 5px;
+  }
+
+  .col-custom h4 {
+    text-align: initial;
+  }
+  .col-custom {
+    width: auto;
+  }
+
+  .container-contact {
+    justify-content: space-evenly;
+  }
+}
+
+#horairesBloc {
+  width: auto;
+}
+
+.petit-margin {
+  margin-bottom: 0.1rem;
+}
+
+.conteneur-horaires {
+  display: flex;
+  flex-direction: column;
+  font-size: 1.1rem;
+}
+
+.google-map {
+  overflow: hidden;
+  padding-bottom: 56.25%;
+  position: relative;
+  height: 0;
+}
+
+.google-map iframe {
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
+
+section#contact {
+  background-color: $gray-900;
+  background-image: url("/assets/img/map-image.webp");
+  background-repeat: no-repeat;
+  background-position: center;
+
+  .section-heading {
+    color: $white;
+  }
+
+  form#contactForm {
+    .form-group {
+      margin-bottom: $grid-gutter-width;
+
+      input,
+      textarea {
+        padding: 1.25rem;
+      }
+
+      input.form-control {
+        height: auto;
+      }
+    }
+
+    .form-group-textarea {
+      height: 100%;
+
+      textarea {
+        height: 100%;
+        min-height: 10rem;
+      }
+    }
+
+    p.help-block {
+      margin: 0;
+    }
+
+    .form-control:focus {
+      border-color: $primary;
+      box-shadow: none;
+    }
+
+    ::-webkit-input-placeholder {
+      font-family: $headings-font-family;
+      font-weight: $headings-font-weight;
+      color: $gray-400;
+    }
+
+    :-moz-placeholder {
+      font-family: $headings-font-family;
+      font-weight: $headings-font-weight;
+      color: $gray-400;
+    }
+
+    ::-moz-placeholder {
+      font-family: $headings-font-family;
+      font-weight: $headings-font-weight;
+      color: $gray-400;
+    }
+
+    :-ms-input-placeholder {
+      font-family: $headings-font-family;
+      font-weight: $headings-font-weight;
+      color: $gray-400;
+    }
+  }
+}

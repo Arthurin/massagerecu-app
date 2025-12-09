@@ -1,0 +1,350 @@
+.tableauMassages {
+  margin: 0;
+}
+.tableauMassages caption {
+  color : black;
+  padding: 4px 0;
+  font-size: 1rem;
+}
+
+.liste-legende {
+  padding-left: 1rem;
+  list-style: none;
+  display: inline-grid;
+  margin-bottom: 0;
+}
+
+.liste-legende li {
+  margin: 4px 0;
+}
+
+.deplacementLieux {
+  display: inline-block;
+  margin: 0 0 0 12px;
+}
+
+.deplacementLieux .position-icones {
+  top: 3px;
+}
+
+.flexDeplacement {
+  display: flex;
+  /*font-size: 9pt;*/
+  margin: 2px 0 2px 0;
+}
+/*
+.theadRecapMassages {
+  font-size: 12pt;
+}*/
+
+.tableauMassages .massage_cat {
+  background-color: #d6d1ca;
+  text-align: left;
+  font-size: 1.2rem;
+}
+.tableauMassages .textExtraPrixMassage {
+  font-size: 9pt;
+  margin-top: 2px;
+}
+.tableauMassages .tenueContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.tableauMassages td,
+.tableauMassages th {
+  text-align: center;
+  border: 1px solid #101820;
+  vertical-align: middle;
+}
+.tableauMassages th.colonneMassage,
+.tableauMassages tr,
+.tableauMassages > :not(:first-child) {
+  border: 0px solid;
+}
+.tableauMassages .textExtraPrixMassage {
+  display: none;
+}
+.tableauMassages td.colonneMassage,
+.tableauMassages th.colonneMassage {
+  text-align: left;
+}
+.tableauMassages .titreMassage {
+  display: flex;
+  align-items: center;
+ /* font-size: 12pt;*/
+}
+.tableauMassages .massage_icon {
+  height: 28px;
+  margin-right: 2px;
+  border-style: none;
+  vertical-align: middle;
+}
+.tableauMassages td.colonnePrix,
+.tableauMassages th.colonnePrix {
+  min-width: 45px;
+}
+.tableauMassages th.colonnePrix {
+  background-color: #ff683e;
+  color: #fff;
+}
+.tableauMassages th.colonnePression,
+.tableauMassages th.colonneTenue {
+  background-color: #101820;
+  color: #fff;
+}
+.tableauMassages .pressionContainer {
+  font-size: 0;
+  min-width: fit-content;
+  padding: 4px;
+}
+.tableauMassages .pressionContainer > * {
+  vertical-align: middle;
+  line-height: normal;
+}
+.tableauMassages .pressionContainer .pression1 {
+  background-color: #dad73c;
+}
+.tableauMassages .pressionContainer .pression2 {
+  background-color: #daa33c;
+}
+.tableauMassages .pressionContainer .pression3 {
+  background-color: #da6e3c;
+}
+.tableauMassages .pressionContainer .pression4 {
+  background-color: #da3c3c;
+}
+
+.tableauMassages .caseReserver:hover {
+  background-color: #ffd093 e7;
+}
+
+.tableauMassages .lienReserver2:hover {
+  text-decoration: underline;
+}
+.tableauMassages .caseReserver {
+  position: relative;
+}
+.tableauMassages .reserverDansTableau {
+  display: grid;
+}
+.tableauMassages .pressionTexte {
+  font-size: 0.9rem;
+  padding: 4px 4px 0px;
+}
+
+.tailleNormale {
+  font-size: 1rem;
+}
+
+
+.prestationsSection th {
+  font-weight: 400;
+}
+
+.table {
+  /*j'ai repris le css de la feuille de style user-agent pour l'element table*/
+  caption-side: bottom;
+  border-collapse: collapse;
+
+  display: table;
+  box-sizing: border-box;
+  text-indent: initial;
+  unicode-bidi: isolate;
+  line-height: normal;
+  font-weight: normal;
+  font-style: normal;
+  text-align: start;
+  border-spacing: 2px;
+  border-color: gray;
+  white-space: normal;
+  font-variant: normal;
+}
+
+th {
+  padding: 5px;
+}
+
+.faq-question {
+  background-color: #ffd093;
+}
+
+.faq-reponse {
+  text-align: justify;
+}
+
+.pagePromoTitre {
+  text-align: center;
+
+  text-transform: uppercase;
+  font-family: "Bellefair", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 38px;
+  margin: 0 0 16px 0;
+}
+
+.titreFAQ {
+  margin-top: 16px;
+}
+
+.pressionCircles {
+  display: block;
+}
+
+.logoPagePromo {
+  width: 30mm;
+  position: absolute;
+  margin-left: 20px;
+}
+
+.tableauMassages td {
+  /*  font-size: inherit;*/
+    padding: 8px 7px;
+    white-space:nowrap;
+  }
+  
+  .tenueIcon {
+    height: 20px;
+  }
+  
+  .choixTenue {
+    font-size: 17px;
+    padding: 0 1px;
+  }
+  
+  #deplacementStJacques {
+    display: block;
+  }
+  
+  .tableauMassages .circle {
+    margin-top:0;
+    width: 12px;
+    height: 12px;
+    display: inline-block;
+    background-color: #fff;
+    border-radius: 50%;
+    border: 1px solid #000;
+    box-shadow: 0 0 0px #000;
+  }
+
+  .textDescriptionLieu {
+    align-content: end;
+    font-size: 0.9rem;
+    padding-top: 2px;
+  }
+
+  .maTooltip {
+    position: relative;
+  }
+
+  .maTooltip .maTooltipTexte {
+    font-size: 0.9rem;  
+    visibility: hidden;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 10px;
+    
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    top: 100%;
+    left: 50%;
+    margin-left: -60px;
+
+    /* Fade in tooltip - takes 1 second to go from 0% to 100% opac: */
+    opacity: 0;
+    transition: opacity 1s;
+  }
+
+  .maTooltip .maTooltipTexte::after {
+    content: " ";
+    position: absolute;
+    bottom: 100%;  /* At the top of the tooltip */
+    left: 30%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent black transparent;
+  }
+  
+  .maTooltip:hover .maTooltipTexte {
+    visibility: visible;
+    opacity: 1;
+  }
+  
+  @include media-breakpoint-up(md) {
+    .tableauMassages caption {
+      padding: 9px 0 0 0;
+    }
+
+    .maTooltip {
+      all: revert;
+    }
+    .maTooltip .maTooltipTexte{
+      all: revert;      
+      font-size: 0.9rem;
+      padding-top: 2px;
+    }
+
+    .maTooltip .maTooltipTexte::after {
+      all: revert;
+    }
+
+    .tableauMassages .pressionTexte {
+      padding: 4px 4px 0px;
+    }
+
+    .table{
+      font-size: 1.2rem;
+    }
+
+    .tableauMassages .massage_cat {
+      font-size: 1.3rem;
+    }
+  
+    .tenueIcon {
+      height: 25px;
+    }
+  
+    .choixTenue {
+      font-size: 20px;
+      padding: 0 4px;
+    }
+  
+    .pressionContainer {
+      vertical-align: bottom;    
+      width: 134px;
+    }
+  
+    .tableauMassages .circle {
+      margin-top:6px;
+    }
+  }
+
+
+  @media print {    
+    .prestationsSection{
+      color: black;
+    }
+    .deplacementLieux a.link-secondary {
+      color: black !important;
+    }
+
+    .hidePrint{
+      display: none;
+    }
+  }
+
+  #impressionAffichePrestation {
+    margin: 0 0 42px 0;
+    padding-top: 42px;
+  }
+
+  #logoImpressionAffichePrestation {
+    width: 28mm;
+    position: absolute;
+    top: 0;
+  }
