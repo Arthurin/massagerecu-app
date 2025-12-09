@@ -1,7 +1,9 @@
 Pour avoir les webhook de Stripe en local ouvrir un terminal et taper :
 stripe listen --forward-to localhost:3000/api/webhook
 
-StripeErrorBoundary : le mettre à jour et l'utiliser
+Améliorations :
+
+- StripeErrorBoundary -> le mettre à jour et l'utiliser
 
 Arborescence du projet :
 src/
@@ -17,7 +19,7 @@ src/
 └─ lib/
 │ └─ mailer.ts
 
-Pour tester l'envoi de mail : > npx tsx .\src\script\test-mail.ts
+Pour tester l'envoi de mail : > npx tsx .\src\scripts\test-mail.ts
 
 ## Tech Stack
 
@@ -29,11 +31,7 @@ Mail : Nodemailer + API Gmail + Sanitaze-html
 PDF : pdf-lib
 Tests : Vitest + Github Workflow
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
-
 ## Getting Started
-
-First, run the development server:
 
 ```bash
 npm run dev
@@ -44,10 +42,6 @@ pnpm dev
 # or
 bun dev
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
