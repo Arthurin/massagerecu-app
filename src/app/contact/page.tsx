@@ -18,14 +18,15 @@ export default function ContactPage() {
         <div className="text-center">
           <h2 className="section-heading text-uppercase">Me contacter</h2>
           <h3 className="section-subheading text-muted">
-            Pour une réponse rapide privilégiez un mail ou un message sur le
-            répondeur
+            Vous pouvez me contacter pour toute question ou pour prendre
+            rendez-vous dans mon cabinet de massage bien-être situé à Brie, près
+            de Janzé. Je réponds rapidement par email ou téléphone.
           </h3>
         </div>
 
         <div className="row container-contact">
           {/* Informations pratiques */}
-          <div className="col-custom">
+          <address className="col-custom">
             <h4>Informations pratiques</h4>
             <ul className="list-unstyled" id="contact-list">
               <li id="mail-icon">
@@ -33,12 +34,19 @@ export default function ContactPage() {
                   icon={faEnvelope}
                   className="fa-fw align-icon"
                 />
-                <a href="mailto:massagerecu@gmail.com">massagerecu@gmail.com</a>
+                <a
+                  href="mailto:massagerecu@gmail.com"
+                  aria-label="Envoyer un email à Massage Reçu"
+                >
+                  massagerecu@gmail.com
+                </a>
               </li>
 
               <li id="tel-icon">
                 <FontAwesomeIcon icon={faPhone} className="fa-fw align-icon" />
-                <a href="tel:+33769488450">07 69 48 84 50</a>
+                <a href="tel:+33769488450" aria-label="Appeler Massage Reçu">
+                  07 69 48 84 50
+                </a>
               </li>
 
               <li id="adress-icon">
@@ -49,9 +57,12 @@ export default function ContactPage() {
                 <a
                   href="https://goo.gl/maps/B44fLckT3UUP7C2Q8"
                   target="_blank"
-                  aria-label="Google map"
+                  rel="noopener"
+                  aria-label="Voir la localisation sur Google Maps"
                 >
-                  Le Grand Long Pré <br /> 35150 Brie
+                  Le Grand Long Pré
+                  <br />
+                  35150 Brie
                 </a>
               </li>
 
@@ -66,7 +77,7 @@ export default function ContactPage() {
                 </p>
               </li>
             </ul>
-          </div>
+          </address>
 
           {/* Horaires d'ouverture */}
           <div className="col-custom">
@@ -100,6 +111,7 @@ export default function ContactPage() {
             allowFullScreen
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
+            aria-label="Voir la localisation sur Google Maps"
           ></iframe>
         </div>
       </div>

@@ -5,10 +5,12 @@ import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { usePathname } from "next/navigation";
+import NavItem from "@/components/layout/Navitem";
 
 const Header: React.FC = () => {
   const pathname = usePathname();
   console.log("Current pathname:", pathname);
+  console.log("Header render", new Date().toISOString());
 
   const items = [
     { title: "Accueil", url: "/" },
@@ -66,7 +68,14 @@ const Header: React.FC = () => {
         </button>
         <div className="collapse navbar-collapse" id="navbarResponsive">
           <ul className="navbar-nav ms-auto py-4 py-lg-0">
-            {items.map((item) => renderItem(item.title, item.url))}
+            {items.map((item) => (
+              <NavItem
+                key={item.url}
+                url={item.url}
+                title={item.title}
+                isActive={pathname === item.url}
+              />
+            ))}
           </ul>
         </div>
       </div>
