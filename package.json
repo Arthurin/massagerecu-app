@@ -8,7 +8,7 @@
     "start": "next start",
     "test": "vitest run",
     "test:ui": "vitest --ui",
-    "lint": "eslint"
+    "lint": "next lint"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^7.1.0",
