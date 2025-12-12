@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import Image from "next/image";
 import TableauMassages from "@/components/layout/TableauMassages";
 
 export const metadata: Metadata = {
@@ -36,11 +37,14 @@ export default function Prestations() {
           <div className="row">
             <div className="col-lg-4 col-sm-6 mb-4">
               <div className="portfolio-item">
-                <img
+                <Image
+                  src="/assets/img/massages/abhyanga.webp"
+                  alt="Photo massage Abhyanga"
+                  width={416}
+                  height={277}
                   className="img-fluid"
-                  src="assets/img/massages/abhyanga.webp"
-                  loading="lazy"
-                  alt="Abhyanga"
+                  unoptimized
+                  priority
                 />
                 <div className="portfolio-caption">
                   <div className="portfolio-caption-heading">
@@ -59,11 +63,14 @@ export default function Prestations() {
 
             <div className="col-lg-4 col-sm-6 mb-4">
               <div className="portfolio-item">
-                <img
+                <Image
+                  src="/assets/img/massages/thai.webp"
+                  alt="Photo massage Thaïlandais à l'huile"
+                  width={416}
+                  height={277}
                   className="img-fluid"
-                  src="assets/img/massages/thai.webp"
-                  loading="lazy"
-                  alt="Thaïlandais à l'huile"
+                  unoptimized
+                  priority
                 />
                 <div className="portfolio-caption">
                   <div className="portfolio-caption-heading">
@@ -82,11 +89,13 @@ export default function Prestations() {
 
             <div className="col-lg-4 col-sm-6 mb-4">
               <div className="portfolio-item">
-                <img
+                <Image
+                  src="/assets/img/massages/balinais.webp"
+                  alt="Photo massage Balinais"
+                  width={416}
+                  height={277}
                   className="img-fluid"
-                  src="assets/img/massages/balinais.webp"
-                  loading="lazy"
-                  alt="Balinais"
+                  unoptimized
                 />
                 <div className="portfolio-caption">
                   <div className="portfolio-caption-heading">Balinais</div>
@@ -102,11 +111,13 @@ export default function Prestations() {
 
             <div className="col-lg-4 col-sm-6 mb-4">
               <div className="portfolio-item">
-                <img
+                <Image
+                  src="/assets/img/massages/shiatsu.webp"
+                  alt="Photo massage Shiatsu"
+                  width={416}
+                  height={277}
                   className="img-fluid"
-                  src="assets/img/massages/shiatsu.webp"
-                  loading="lazy"
-                  alt="Shiatsu"
+                  unoptimized
                 />
                 <div className="portfolio-caption">
                   <div className="portfolio-caption-heading">
@@ -125,11 +136,13 @@ export default function Prestations() {
 
             <div className="col-lg-4 col-sm-6 mb-4">
               <div className="portfolio-item">
-                <img
+                <Image
+                  src="/assets/img/massages/californien.webp"
+                  alt="Photo massage Ciblé"
+                  width={416}
+                  height={277}
                   className="img-fluid"
-                  src="assets/img/massages/californien.webp"
-                  loading="lazy"
-                  alt="Ciblé"
+                  unoptimized
                 />
                 <div className="portfolio-caption">
                   <div className="portfolio-caption-heading">Massage ciblé</div>
@@ -145,11 +158,13 @@ export default function Prestations() {
 
             <div className="col-lg-4 col-sm-6 mb-4">
               <div className="portfolio-item">
-                <img
+                <Image
+                  src="/assets/img/massages/reflexo.webp"
+                  alt="Photo Réflexologie plantaire"
+                  width={416}
+                  height={277}
                   className="img-fluid"
-                  src="assets/img/massages/reflexo.webp"
-                  loading="lazy"
-                  alt="Réflexologie plantaire"
+                  unoptimized
                 />
                 <div className="portfolio-caption">
                   <div className="portfolio-caption-heading">
