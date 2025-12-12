@@ -9,8 +9,7 @@ import NavItem from "@/components/layout/Navitem";
 
 const Header: React.FC = () => {
   const pathname = usePathname();
-  console.log("Current pathname:", pathname);
-  console.log("Header render", new Date().toISOString());
+  console.log("Affichage de la page :", pathname);
 
   const items = [
     { title: "Accueil", url: "/" },
