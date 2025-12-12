@@ -2,7 +2,7 @@
   margin: 0;
 }
 .tableauMassages caption {
-  color : black;
+  color: black;
   padding: 4px 0;
   font-size: 1rem;
 }
@@ -72,11 +72,11 @@
 .tableauMassages .titreMassage {
   display: flex;
   align-items: center;
- /* font-size: 12pt;*/
+  /* font-size: 12pt;*/
 }
 .tableauMassages .massage_icon {
   height: 28px;
-  margin-right: 2px;
+  margin-right: 7px;
   border-style: none;
   vertical-align: middle;
 }
@@ -136,7 +136,6 @@
 .tailleNormale {
   font-size: 1rem;
 }
-
 
 .prestationsSection th {
   font-weight: 400;
@@ -200,151 +199,150 @@ th {
 
 .tableauMassages td {
   /*  font-size: inherit;*/
-    padding: 8px 7px;
-    white-space:nowrap;
-  }
-  
-  .tenueIcon {
-    height: 20px;
-  }
-  
-  .choixTenue {
-    font-size: 17px;
-    padding: 0 1px;
-  }
-  
-  #deplacementStJacques {
-    display: block;
-  }
-  
-  .tableauMassages .circle {
-    margin-top:0;
-    width: 12px;
-    height: 12px;
-    display: inline-block;
-    background-color: #fff;
-    border-radius: 50%;
-    border: 1px solid #000;
-    box-shadow: 0 0 0px #000;
+  padding: 8px 7px;
+  white-space: nowrap;
+}
+
+.tenueIcon {
+  height: 20px;
+}
+
+.choixTenue {
+  font-size: 17px;
+  padding: 0 1px;
+}
+
+#deplacementStJacques {
+  display: block;
+}
+
+.tableauMassages .circle {
+  margin-top: 0;
+  width: 12px;
+  height: 12px;
+  display: inline-block;
+  background-color: #fff;
+  border-radius: 50%;
+  border: 1px solid #000;
+  box-shadow: 0 0 0px #000;
+}
+
+.textDescriptionLieu {
+  align-content: end;
+  font-size: 0.9rem;
+  padding-top: 2px;
+}
+
+.maTooltip {
+  position: relative;
+}
+
+.maTooltip .maTooltipTexte {
+  font-size: 0.9rem;
+  visibility: hidden;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 10px;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  top: 100%;
+  left: 50%;
+  margin-left: -60px;
+
+  /* Fade in tooltip - takes 1 second to go from 0% to 100% opac: */
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+.maTooltip .maTooltipTexte::after {
+  content: " ";
+  position: absolute;
+  bottom: 100%; /* At the top of the tooltip */
+  left: 30%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent black transparent;
+}
+
+.maTooltip:hover .maTooltipTexte {
+  visibility: visible;
+  opacity: 1;
+}
+
+@include media-breakpoint-up(md) {
+  .tableauMassages caption {
+    padding: 9px 0 0 0;
   }
 
-  .textDescriptionLieu {
-    align-content: end;
+  .maTooltip {
+    all: revert;
+  }
+  .maTooltip .maTooltipTexte {
+    all: revert;
     font-size: 0.9rem;
     padding-top: 2px;
   }
 
-  .maTooltip {
-    position: relative;
-  }
-
-  .maTooltip .maTooltipTexte {
-    font-size: 0.9rem;  
-    visibility: hidden;
-    background-color: black;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 10px;
-    
-    /* Position the tooltip */
-    position: absolute;
-    z-index: 1;
-    top: 100%;
-    left: 50%;
-    margin-left: -60px;
-
-    /* Fade in tooltip - takes 1 second to go from 0% to 100% opac: */
-    opacity: 0;
-    transition: opacity 1s;
-  }
-
   .maTooltip .maTooltipTexte::after {
-    content: " ";
-    position: absolute;
-    bottom: 100%;  /* At the top of the tooltip */
-    left: 30%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: transparent transparent black transparent;
-  }
-  
-  .maTooltip:hover .maTooltipTexte {
-    visibility: visible;
-    opacity: 1;
-  }
-  
-  @include media-breakpoint-up(md) {
-    .tableauMassages caption {
-      padding: 9px 0 0 0;
-    }
-
-    .maTooltip {
-      all: revert;
-    }
-    .maTooltip .maTooltipTexte{
-      all: revert;      
-      font-size: 0.9rem;
-      padding-top: 2px;
-    }
-
-    .maTooltip .maTooltipTexte::after {
-      all: revert;
-    }
-
-    .tableauMassages .pressionTexte {
-      padding: 4px 4px 0px;
-    }
-
-    .table{
-      font-size: 1.2rem;
-    }
-
-    .tableauMassages .massage_cat {
-      font-size: 1.3rem;
-    }
-  
-    .tenueIcon {
-      height: 25px;
-    }
-  
-    .choixTenue {
-      font-size: 20px;
-      padding: 0 4px;
-    }
-  
-    .pressionContainer {
-      vertical-align: bottom;    
-      width: 134px;
-    }
-  
-    .tableauMassages .circle {
-      margin-top:6px;
-    }
+    all: revert;
   }
 
-
-  @media print {    
-    .prestationsSection{
-      color: black;
-    }
-    .deplacementLieux a.link-secondary {
-      color: black !important;
-    }
-
-    .hidePrint{
-      display: none;
-    }
+  .tableauMassages .pressionTexte {
+    padding: 4px 4px 0px;
   }
 
-  #impressionAffichePrestation {
-    margin: 0 0 42px 0;
-    padding-top: 42px;
+  .table {
+    font-size: 1.2rem;
   }
 
-  #logoImpressionAffichePrestation {
-    width: 28mm;
-    position: absolute;
-    top: 0;
+  .tableauMassages .massage_cat {
+    font-size: 1.3rem;
   }
+
+  .tenueIcon {
+    height: 25px;
+  }
+
+  .choixTenue {
+    font-size: 20px;
+    padding: 0 4px;
+  }
+
+  .pressionContainer {
+    vertical-align: bottom;
+    width: 134px;
+  }
+
+  .tableauMassages .circle {
+    margin-top: 6px;
+  }
+}
+
+@media print {
+  .prestationsSection {
+    color: black;
+  }
+  .deplacementLieux a.link-secondary {
+    color: black !important;
+  }
+
+  .hidePrint {
+    display: none;
+  }
+}
+
+#impressionAffichePrestation {
+  margin: 0 0 42px 0;
+  padding-top: 42px;
+}
+
+#logoImpressionAffichePrestation {
+  width: 28mm;
+  position: absolute;
+  top: 0;
+}
