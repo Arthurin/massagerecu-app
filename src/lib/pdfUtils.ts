@@ -56,7 +56,6 @@ export async function generatePDF(fields: ReceiptFields): Promise<Uint8Array> {
   // Ciblage de la première page
   const pages = pdfDoc.getPages();
   const firstPage = pages[0];
-  const { width, height } = firstPage.getSize();
 
   // Fonction utilitaire pour dessiner du texte avec fallback
   const draw = (

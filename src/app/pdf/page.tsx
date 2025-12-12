@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 export default function PdfPage() {
   const [pdfUrl, setPdfUrl] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const [sessionId, setSessionId] = useState("");
 
   // Nettoie l’URL du Blob à la fermeture ou régénération
   useEffect(() => {
