@@ -23,12 +23,20 @@ export async function POST(req: Request) {
 
     const pdfBytes = await generatePDF(fields);
 
+    const stream = new ReadableStream({
+      start(controller) {
+        controller.enqueue(pdfBytes);
+        controller.close();
+      },
+    });
+
     console.log("Pdf généré, renvoit au front-end...");
 
-    return new NextResponse(pdfBytes, {
+    return new NextResponse(stream, {
       headers: {
         "Content-Type": "application/pdf",
-        "Content-Disposition": `inline; filename="carte cadeau-${fields.nomDestinataire}.pdf"`,
+        "Content-Disposition": `inline; filename="carte-cadeau-${fields.nomDestinataire}.pdf"`,
+        "Content-Length": pdfBytes.length.toString(),
       },
     });
   } catch (err: any) {
