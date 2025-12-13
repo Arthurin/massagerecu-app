@@ -63,6 +63,10 @@ p {
   line-height: $line-height-lg;
 }
 
+.no-wrap {
+  white-space: nowrap;
+}
+
 // Spacing and heading styling for page sections
 .page-section {
   padding: 4rem 0;

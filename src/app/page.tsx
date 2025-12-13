@@ -48,27 +48,30 @@ export default function Home() {
         <div className="container text-center">
           <h2 className="section-heading text-uppercase">Actualités</h2>
           <h3 className="section-subheading text-muted">
-            Restez informé·e grâce à la newsletter ou aux réseaux sociaux (
-            <a
-              className="link-secondary"
-              href="https://fb.me/MassageRecu"
-              target="_blank"
-              aria-label="Facebook"
-              rel="noopener noreferrer"
-            >
-              <FontAwesomeIcon icon={faFacebookF} />
-            </a>{" "}
-            et{" "}
-            <a
-              className="link-secondary"
-              href="https://www.instagram.com/massage_recu/"
-              target="_blank"
-              aria-label="Instagram"
-              rel="noopener noreferrer"
-            >
-              <FontAwesomeIcon icon={faInstagram} />
-            </a>
-            ).
+            Restez informé·e grâce à la newsletter ou aux réseaux sociaux{" "}
+            <span className="no-wrap">
+              {"("}
+              <a
+                className="link-secondary"
+                href="https://fb.me/MassageRecu"
+                target="_blank"
+                aria-label="Facebook"
+                rel="noopener noreferrer"
+              >
+                <FontAwesomeIcon icon={faFacebookF} />
+              </a>
+              et{" "}
+              <a
+                className="link-secondary"
+                href="https://www.instagram.com/massage_recu/"
+                target="_blank"
+                aria-label="Instagram"
+                rel="noopener noreferrer"
+              >
+                <FontAwesomeIcon icon={faInstagram} />
+              </a>
+              ).
+            </span>
           </h3>
           <div className="text-center">
             <h3>Fermeture estivale 2025</h3>
