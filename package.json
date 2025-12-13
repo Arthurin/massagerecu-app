@@ -32,6 +32,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
+    "@types/bootstrap": "^5.2.10",
     "@types/node": "^20.19.22",
     "@types/nodemailer": "^7.0.2",
     "@types/react": "^19",

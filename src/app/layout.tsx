@@ -1,7 +1,8 @@
 import "@/styles/styles.scss";
 import { Metadata } from "next";
 import Script from "next/script";
-import BootstrapClient from "@/components/BootstrapClient";
+import BootstrapClient from "@/components/features/BootstrapClient";
+import BootstrapNavbarBehavior from "@/components/features/BootstrapNavbarBehavior";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { config } from "@fortawesome/fontawesome-svg-core";
@@ -27,18 +28,17 @@ export default function RootLayout({
       <body id="page-top" className={`antialiased`}>
         {/* Header */}
         <Header />
+        {/* Charge Bootstrap */}
+        <BootstrapClient />
+        {/* Charge les scripts pour réduire la taille du heeder et referme la barre de navigation lorsqu'il y a un menu déroulant qui reçoit un clic*/}
+        <BootstrapNavbarBehavior />
 
         {children}
 
         {/* Footer */}
         <Footer />
 
-        {/* Charge les scripts */}
         <BootstrapClient />
-        <Script
-          src="/js/scripts.js"
-          strategy="lazyOnload" // Charge après que la page soit complètement chargée
-        />
       </body>
     </html>
   );
