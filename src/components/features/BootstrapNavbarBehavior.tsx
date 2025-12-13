@@ -27,7 +27,7 @@ export default function BootstrapNavbarBehavior() {
     const navbarToggler =
       document.body.querySelector<HTMLElement>(".navbar-toggler");
     const responsiveNavItems = Array.from(
-      document.querySelectorAll("#navbarResponsive .nav-link")
+      document.querySelectorAll("#navbarResponsive a")
     );
 
     const handleNavItemClick = () => {
