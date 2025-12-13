@@ -18,9 +18,9 @@ export default function Home() {
           <h1 className="masthead-heading">
             Vos soins massages dans le secteur de Janzé-Rennes
           </h1>
-          <h2 className="masthead-subheading">
+          <div className="masthead-subheading">
             Venez vous évader à travers un voyage immobile.
-          </h2>
+          </div>
         </div>
       </header>
       {/* Services */}
