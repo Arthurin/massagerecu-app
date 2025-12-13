@@ -1,6 +1,6 @@
-import "@/styles/styles.scss";
 import { Metadata } from "next";
-import Script from "next/script";
+import { bellefair, roboto } from "@/styles/fonts";
+import "@/styles/styles.scss";
 import BootstrapClient from "@/components/features/BootstrapClient";
 import BootstrapNavbarBehavior from "@/components/features/BootstrapNavbarBehavior";
 import Header from "@/components/layout/Header";
@@ -25,7 +25,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="fr">
-      <body id="page-top" className={`antialiased`}>
+      <body
+        id="page-top"
+        className={`antialiased ${bellefair.variable} ${roboto.variable}`}
+      >
         {/* Header */}
         <Header />
         {/* Charge Bootstrap */}
