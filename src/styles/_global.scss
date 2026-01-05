@@ -67,6 +67,18 @@ p {
   white-space: nowrap;
 }
 
+.trafft-wrapper {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+@include media-breakpoint-down(md) {
+  .container:has(.trafft-wrapper) {
+    padding: 0;
+  }
+}
+
 // Spacing and heading styling for page sections
 .page-section {
   padding: 4rem 0;

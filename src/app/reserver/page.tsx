@@ -40,17 +40,19 @@ export default function Reserver() {
               pour ajuster le choix du massage.
             </p>
           </div>
+        </div>
+      </div>
 
-          <div className="col-11 espacement">
-            {/* Trafft embed handled by a client component */}
-            <TrafftEmbed
-              url="https://massagerecu.trafft.com"
-              lang="fr"
-              autoResize={1}
-              showSidebar={1}
-              style={{ width: "100%", height: 768 }}
-            />
-          </div>
+      <div className="container espacement">
+        <div className="trafft-wrapper">
+          {/* Trafft embed handled by a client component */}
+          <TrafftEmbed
+            url="https://massagerecu.trafft.com"
+            lang="fr"
+            autoResize={1}
+            showSidebar={1}
+            style={{ width: "100%", height: 768 }}
+          />
         </div>
       </div>
     </section>
