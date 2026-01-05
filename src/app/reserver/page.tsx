@@ -48,7 +48,7 @@ export default function Reserver() {
               lang="fr"
               autoResize={1}
               showSidebar={1}
-              style={{ minWidth: 320, height: 768 }}
+              style={{ width: "100%", height: 768 }}
             />
           </div>
         </div>
