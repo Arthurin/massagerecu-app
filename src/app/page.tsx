@@ -83,7 +83,6 @@ export default function Home() {
               src="/assets/img/news/fermeture.jpg"
               alt="Blessure au poignet"
               className="imageNews"
-              id="mastheadLogo"
               width={470}
               height={627}
               quality={90}
