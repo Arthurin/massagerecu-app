@@ -12,8 +12,12 @@ export default function Home() {
             src="/assets/img/logo.png"
             alt="Logo de Massage Reçu"
             id="mastheadLogo"
-            width={350}
-            height={350}
+            width={320}
+            height={320}
+            quality={90}
+            priority
+            placeholder="blur"
+            blurDataURL="/assets/img/logo.png?w=16&blur=20"
           />
           <h1 className="masthead-heading">
             Vos soins massages dans le secteur de Janzé-Rennes
