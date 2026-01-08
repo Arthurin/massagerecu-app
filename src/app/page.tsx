@@ -92,8 +92,9 @@ export default function Home() {
             <p>
               Suite à une fracture du poignet (une chûte en faisant du sport
               🤕), je me vois contraint de suspendre momentanément les massages.
-              Il est toujours possible d'acheter des cartes cadeaux. Les cartes
-              cadeaux en cours de validité seront prolongées d'un mois et demi.
+              <br />
+              Il est toujours possible d'acheter des cartes cadeaux, et celles
+              qui sont en cours de validité seront prolongées d'un mois et demi.
             </p>
             <p>Merci de votre compréhension !</p>
             <p>
