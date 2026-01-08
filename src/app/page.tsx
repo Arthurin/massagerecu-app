@@ -94,9 +94,9 @@ export default function Home() {
               🤕), je me vois contraint de suspendre momentanément les massages.
               Il est toujours possible d'acheter des cartes cadeaux. Les cartes
               cadeaux en cours de validité seront prolongées d'un mois et demi.
-              <br />
-              Merci de votre compréhension !
-              <br />
+            </p>
+            <p>Merci de votre compréhension !</p>
+            <p>
               Je vous souhaite une bonne année 2026, prenez soin de vous et
               faites attention aux chutes 😄
             </p>
@@ -127,7 +127,8 @@ export default function Home() {
               À compter du 1er décembre 2024, je reçois uniquement à Brie ! En
               effet, je ne propose plus les massages à St-Jacques de la Lande
               (sauf exception pour les cartes cadeaux en cours).
-              <br />
+            </p>
+            <p>
               J'espère que les Rennais·e·s ont apprécié ce service et que cela
               leur donnera envie de me retrouver à Brie 😁.
             </p>
