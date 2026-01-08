@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebookF, faInstagram } from "@fortawesome/free-brands-svg-icons";
+import NewsItem from "@/components/layout/NewsItem";
 
 export default function Home() {
   return (
@@ -77,8 +78,8 @@ export default function Home() {
               ).
             </span>
           </h3>
-          <div className="text-center newsInfoContainer">
-            <h3>Ré-ouverture à partir du 11/02/26</h3>
+
+          <NewsItem title="Ré-ouverture à partir du 11/02/26">
             <Image
               src="/assets/img/news/fermeture.jpg"
               alt="Blessure au poignet"
@@ -87,46 +88,50 @@ export default function Home() {
               height={627}
               quality={90}
             />
+
             <p>
               Suite à une fracture du poignet (une chûte en faisant du sport
               🤕), je me vois contraint de suspendre momentanément les massages.
               Il est toujours possible d'acheter des cartes cadeaux. Les cartes
               cadeaux en cours de validité seront prolongées d'un mois et demi.
-              <br /> Merci de votre compréhension ! <br /> Je vous souhaite une
-              bonne année 2026, prenez soin de vous et faites attention aux
-              chutes 😄
+              <br />
+              Merci de votre compréhension !
+              <br />
+              Je vous souhaite une bonne année 2026, prenez soin de vous et
+              faites attention aux chutes 😄
             </p>
-          </div>
-          <div className="text-center newsInfoContainer">
-            <h3>
-              29/30/31 Mai 2025 - Trois jours de massages dans le cadre du
-              festival Balilas !
-            </h3>
+          </NewsItem>
+
+          <NewsItem title="29/30/31 Mai 2025 - Trois jours de massages dans le cadre du festival Balilas">
             <p>
               Venez me retrouver au marché de créateurs·trices du festival
               Balilas, près du Gentieg à Janzé.
             </p>
-          </div>
-          <div className="text-center newsInfoContainer">
-            <h3>Une petite surprise spéciale St Valentin !</h3>
+          </NewsItem>
+
+          <NewsItem title="Une petite surprise spéciale St Valentin !">
             <p>
               J'ai le plaisir d'inviter Marie, une super masseuse, pour une
               collaboration sur 3 jours : le vendredi 14, le samedi 15 et le
               lundi 17 février 2025.
-              <br /> Profitez de l'occasion pour vous faire masser en duo ou
-              bien pour découvrir le massage à 4 mains 🥰.
             </p>
-          </div>
-          <div className="text-center newsInfoContainer">
-            <h3>Fermeture du cabinet à St-Jacques de la Lande</h3>
+
+            <p>
+              Profitez de l'occasion pour vous faire masser en duo ou découvrir
+              le massage à 4 mains 🥰.
+            </p>
+          </NewsItem>
+
+          <NewsItem title="Fermeture du cabinet à St-Jacques de la Lande">
             <p>
               À compter du 1er décembre 2024, je reçois uniquement à Brie ! En
               effet, je ne propose plus les massages à St-Jacques de la Lande
-              (sauf exception pour les cartes cadeaux en cours). <br />
+              (sauf exception pour les cartes cadeaux en cours).
+              <br />
               J'espère que les Rennais·e·s ont apprécié ce service et que cela
               leur donnera envie de me retrouver à Brie 😁.
             </p>
-          </div>
+          </NewsItem>
         </div>
       </section>
       {/* Video Section */}

@@ -21,11 +21,22 @@
 }
 
 .newsInfoContainer {
-  background-color: rgb(211, 241, 240);
-  margin: 0 0 20px 0;
-  padding: 1rem 0 0 0;
+  background-color: #e7f5f5;
+  margin-bottom: 20px;
   border-radius: 20px;
-  align-content: center;
-  justify-content: center;
-  gap: 15px 0;
+  overflow: hidden; /* important pour le radius */
+}
+
+.newsHeader {
+  background-color: #009d9b;
+  padding: 1rem;
+}
+
+.newsHeader h3 {
+  color: white;
+  margin: 0;
+}
+
+.newsBody {
+  padding: 1rem;
 }
