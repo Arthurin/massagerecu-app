@@ -77,15 +77,28 @@ export default function Home() {
               ).
             </span>
           </h3>
-          <div className="text-center">
-            <h3>Fermeture estivale 2025</h3>
+          <div className="text-center newsInfoContainer">
+            <h3>Ré-ouverture à partir du 11/02/26</h3>
+            <Image
+              src="/assets/img/news/fermeture.jpg"
+              alt="Blessure au poignet"
+              className="imageNews"
+              id="mastheadLogo"
+              width={470}
+              height={627}
+              quality={90}
+            />
             <p>
-              Je serais fermé du 26 juillet au 6 août, ainsi que du 26 août au
-              18 septembre. <br />
-              Bel été à vous 🌞
+              Suite à une fracture du poignet (une chûte en faisant du sport
+              🤕), je me vois contraint de suspendre momentanément les massages.
+              Il est toujours possible d'acheter des cartes cadeaux. Les cartes
+              cadeaux en cours de validité seront prolongées d'un mois et demi.
+              <br /> Merci de votre compréhension ! <br /> Je vous souhaite une
+              bonne année 2026, prenez soin de vous et faites attention aux
+              chutes 😄
             </p>
           </div>
-          <div className="text-center">
+          <div className="text-center newsInfoContainer">
             <h3>
               29/30/31 Mai 2025 - Trois jours de massages dans le cadre du
               festival Balilas !
@@ -95,17 +108,17 @@ export default function Home() {
               Balilas, près du Gentieg à Janzé.
             </p>
           </div>
-          <div className="text-center">
+          <div className="text-center newsInfoContainer">
             <h3>Une petite surprise spéciale St Valentin !</h3>
             <p>
               J'ai le plaisir d'inviter Marie, une super masseuse, pour une
               collaboration sur 3 jours : le vendredi 14, le samedi 15 et le
-              lundi 17 février.
+              lundi 17 février 2025.
               <br /> Profitez de l'occasion pour vous faire masser en duo ou
               bien pour découvrir le massage à 4 mains 🥰.
             </p>
           </div>
-          <div className="text-center">
+          <div className="text-center newsInfoContainer">
             <h3>Fermeture du cabinet à St-Jacques de la Lande</h3>
             <p>
               À compter du 1er décembre 2024, je reçois uniquement à Brie ! En
