@@ -20,33 +20,6 @@ const Header: React.FC = () => {
     { title: "Réserver", url: "/reserver" },
   ];
 
-  const renderItem = (title: string, url: string) => {
-    const isActive = pathname === url;
-    return (
-      <li className="nav-item" key={title}>
-        {title === "Réserver" ? (
-          <Link
-            className={`btn ${
-              isActive ? "btn-outline-primary" : "btn-primary"
-            } me-2 btnMenuCustom ms-lg-2 mt-2 mt-lg-0`}
-            href={`${url}`}
-            aria-current={isActive ? "page" : undefined}
-          >
-            Réserver
-          </Link>
-        ) : (
-          <Link
-            className={`nav-link ${isActive ? "active" : ""}`}
-            href={`${url}`}
-            aria-current={isActive ? "page" : undefined}
-          >
-            {title}
-          </Link>
-        )}
-      </li>
-    );
-  };
-
   return (
     <nav id="mainNav" className="navbar navbar-expand-lg fixed-top">
       <div className="container">

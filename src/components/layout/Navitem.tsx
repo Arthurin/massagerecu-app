@@ -10,8 +10,9 @@ export default function NavItem({
   isActive: boolean;
 }) {
   return (
-    <li className="nav-item">
+    <>
       {title === "Réserver" ? (
+        <li id="reserver-item" className="nav-item">
         <Link
           href={url}
           aria-current={isActive ? "page" : undefined}
@@ -21,7 +22,9 @@ export default function NavItem({
         >
           Réserver
         </Link>
+    </li>
       ) : (
+        <li className="nav-item">
         <Link
           href={url}
           aria-current={isActive ? "page" : undefined}
@@ -29,7 +32,8 @@ export default function NavItem({
         >
           {title}
         </Link>
+        </li>
       )}
-    </li>
+      </>
   );
 }
