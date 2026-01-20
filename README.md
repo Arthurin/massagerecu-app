@@ -19,18 +19,19 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 Pour tester l'envoi de mail : > npx tsx .\src\scripts\test-mail.ts
 Stripe m'envoit un mail de notification de paiement réussi, le mail au client est géré avec Nodmailer.
 
+Pour avoir les webhook de Stripe en local ouvrir un terminal et taper :
+(Pour se connecter, tous les 90 jours, il faut taper : stripe login)
+stripe listen --forward-to localhost:3000/api/webhook
+
 ## Tech Stack
 
 React 19
 NextJs 15
 Typescript
-API Stripe
+API Stripe 2025-08-27.basil
 Mail : Nodemailer + API Gmail + Sanitaze-html
 PDF : pdf-lib
 Tests : Vitest + Github Workflow
-
-Pour avoir les webhook de Stripe en local ouvrir un terminal et taper :
-stripe listen --forward-to localhost:3000/api/webhook
 
 Améliorations :
 
