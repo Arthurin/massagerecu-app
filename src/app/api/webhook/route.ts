@@ -41,7 +41,7 @@ export async function POST(req: NextRequest) {
         console.log(event.data);
         const paymentIntent = event.data.object;
         console.log(
-          `PaymentIntent for ${paymentIntent.amount} was successful!`
+          `Le paiement a été réussi (montant : ${paymentIntent.amount})`
         );
         // Then define and call a method to handle the successful payment intent.
         handlePaymentIntentSucceeded(paymentIntent);

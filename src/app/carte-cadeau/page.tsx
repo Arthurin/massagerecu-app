@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import CarteCadeauFlow from "@/components/features/carte-cadeau/CarteCadeauFlow";
 
 export const metadata: Metadata = {
   title: "Carte cadeau",
@@ -69,6 +70,9 @@ export default function CarteCadeauPage() {
             </div>
           </ol>
         </div>
+      </div>
+      <div className="container">
+        <CarteCadeauFlow />
       </div>
     </section>
   );

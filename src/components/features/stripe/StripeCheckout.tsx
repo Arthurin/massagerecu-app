@@ -12,7 +12,27 @@ import { StripeErrorBoundary } from "./StripeErrorBoundary";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY!);
 
-export default function CheckoutPage() {
+export interface StripeLineItem {
+  price: string;
+  quantity: number;
+}
+
+interface StripeCheckoutProps {
+  lineItems: StripeLineItem[];
+  checkoutData: {
+    purchaserEmail: string;
+    purchaserName: string;
+    recipientName: string;
+    message?: string;
+  };
+  onSuccess: () => void;
+}
+
+export default function StripeCheckout({
+  lineItems,
+  checkoutData,
+  onSuccess,
+}: StripeCheckoutProps) {
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -23,11 +43,7 @@ export default function CheckoutPage() {
         const response = await fetch("/api/checkout", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            lineItems: [
-              { price: "price_1RyCL1ENgi07PwIewz2vuZXv", quantity: 1 },
-            ],
-          }),
+          body: JSON.stringify({ lineItems, checkoutData }),
         });
 
         const data = await response.json();
@@ -122,7 +138,7 @@ export default function CheckoutPage() {
         elementsOptions: { appearance },
       }}
     >
-      <CheckoutForm />
+      <CheckoutForm onSuccess={onSuccess} email={checkoutData.purchaserEmail}/>
     </CheckoutProvider>
   );
 }
