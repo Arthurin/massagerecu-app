@@ -45,9 +45,24 @@ export default function CheckoutForm({
     });
 
     if (error) {
+      console.log(error);
       console.error(error.type);
-      const errorMessage =
+      let errorMessage =
         "Le paiement a échoué. Vérifiez vos informations ou veuillez me contacter en cas d'erreur répétée.";
+
+      switch (error.type) {
+        case "card_error":
+          errorMessage =
+            "Le paiement a échoué. Veuillez vérifier les informations saisies. " +
+            error.message;
+          break;
+        case "validation_error":
+          errorMessage =
+            "Le paiement n'a pu être effectué. Veuillez vérifier les informations saisies.";
+          break;
+        default:
+      }
+
       setMessage(errorMessage);
       onError?.(errorMessage);
       setIsLoading(false);
