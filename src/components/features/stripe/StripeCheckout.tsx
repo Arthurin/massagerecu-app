@@ -1,14 +1,14 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { CheckoutProvider } from "@stripe/react-stripe-js";
 import CheckoutForm from "./checkout-form";
 import {
   Appearance,
   loadStripe,
-  StripeCheckoutElementsOptions,
+  StripeElementsOptions,
 } from "@stripe/stripe-js";
-import { StripeErrorBoundary } from "./StripeErrorBoundary";
+
+import { Elements } from "@stripe/react-stripe-js";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY!);
 
@@ -72,8 +72,22 @@ export default function StripeCheckout({
     };
 
     fetchClientSecret();
-  }, []);
+  }, [lineItems, checkoutData]);
 
+  const appearance = {
+    theme: "stripe",
+    rules: {
+      ".Input": {
+        padding: "12px",
+        fontSize: "16px",
+      },
+      ".Label": {
+        fontWeight: "500",
+      },
+    },
+  } as const;
+
+  /** 
   // thème à choisir entre 'stripe', 'night', ou 'flat'
   const appearanceObject: Appearance = {
     theme: "stripe",
@@ -87,7 +101,7 @@ export default function StripeCheckout({
       },
     },
   };
-  /** 
+
     // Je peux également personnaliser davantage avec variables et rules
     variables: {
       colorPrimary: "#0570de",
@@ -109,12 +123,12 @@ export default function StripeCheckout({
       ".Input": {
         padding: "12px",
       },
-    },*/
+    },
 
   const appearance = useMemo<StripeCheckoutElementsOptions["appearance"]>(
     () => appearanceObject,
     []
-  );
+  );*/
 
   if (loading) return <div>Chargement du formulaire de paiement...</div>;
   if (errorMessage)
@@ -130,15 +144,21 @@ export default function StripeCheckout({
       </div>
     );
 
+  // Enable the skeleton loader UI for optimal loading.
+  const loader = "auto";
+  const elementsOptions: StripeElementsOptions = {
+    clientSecret,
+    appearance,
+    loader,
+  };
+
   return (
-    <CheckoutProvider
-      stripe={stripePromise!}
-      options={{
-        fetchClientSecret: async () => clientSecret!,
-        elementsOptions: { appearance },
-      }}
+    <Elements
+      stripe={stripePromise}
+      options={elementsOptions}
+      key={clientSecret}
     >
-      <CheckoutForm onSuccess={onSuccess} email={checkoutData.purchaserEmail}/>
-    </CheckoutProvider>
+      <CheckoutForm onSuccess={onSuccess} email={checkoutData.purchaserEmail} />
+    </Elements>
   );
 }

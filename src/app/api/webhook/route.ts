@@ -46,6 +46,30 @@ export async function POST(req: NextRequest) {
         // Then define and call a method to handle the successful payment intent.
         handlePaymentIntentSucceeded(paymentIntent);
         break;
+      case "payment_intent.payment_failed":
+        // Get the object affected
+        const paymentIntentError = event.data.object;
+
+        // Use stored information to get an error object
+        const error = paymentIntentError.last_payment_error;
+
+        // Use its type to choose a response
+        switch (error?.type) {
+          case "card_error":
+            console.log(`A payment error occurred: ${error.message}`);
+            break;
+          case "invalid_request_error":
+            console.log("An invalid request occurred.");
+            if (error.param) {
+              console.log(
+                `The parameter ${error.param} is invalid or missing.`
+              );
+            }
+            break;
+          default:
+            console.log("Another problem occurred, maybe unrelated to Stripe.");
+            break;
+        }
       default:
         // Unexpected event type
         console.log(`Unhandled event type ${event.type}.`);

@@ -1,7 +1,12 @@
 "use client";
 
-import { useCheckout, PaymentElement } from "@stripe/react-stripe-js";
-import { useState, FormEvent } from "react";
+import React, { useState, FormEvent } from "react";
+import {
+  PaymentElement,
+  useStripe,
+  useElements,
+} from "@stripe/react-stripe-js";
+import type { StripePaymentElementOptions } from "@stripe/stripe-js";
 
 interface CheckoutFormProps {
   email: string;
@@ -14,21 +19,35 @@ export default function CheckoutForm({
   onSuccess,
   onError,
 }: CheckoutFormProps) {
-  const checkout = useCheckout();
+  const stripe = useStripe();
+  const elements = useElements();
+
   const [message, setMessage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
+    if (!stripe || !elements) {
+      // Stripe.js hasn't yet loaded.
+      // Make sure to disable form submission until Stripe.js has loaded.
+      return;
+    }
+
     setIsLoading(true);
 
-    const result = await checkout.confirm({
-      email,
+    const { error } = await stripe.confirmPayment({
+      elements,
+      confirmParams: {
+        receipt_email: email,
+      },
+      redirect: "if_required",
     });
 
-    if (result.type === "error") {
-      const errorMessage = result.error.message ?? "Erreur lors du paiement.";
+    if (error) {
+      console.error(error.type);
+      const errorMessage =
+        "Le paiement a échoué. Vérifiez vos informations ou veuillez me contacter en cas d'erreur répétée.";
       setMessage(errorMessage);
       onError?.(errorMessage);
       setIsLoading(false);
@@ -40,19 +59,28 @@ export default function CheckoutForm({
     setIsLoading(false);
   };
 
+  const paymentElementOptions: StripePaymentElementOptions = {
+    layout: {
+      type: "accordion",
+      defaultCollapsed: false,
+      radios: true,
+      spacedAccordionItems: true,
+    },
+  };
+
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <h3>Votre commande</h3>
 
-      <PaymentElement id="payment-element" />
-
-      <button disabled={isLoading} id="submit">
-        {isLoading ? (
-          <div className="spinner">Paiement en cours...</div>
-        ) : (
-          `Payer ${checkout.total.total.amount} maintenant`
-        )}
-      </button>
+      <PaymentElement id="payment-element" options={paymentElementOptions} />
+      <div className="d-grid gap-2 mt-3">
+        <button
+          disabled={isLoading || !stripe || !elements}
+          className="btn btn-primary btn-lg py-2"
+        >
+          {isLoading ? "Paiement en cours…" : "Payer maintenant"}
+        </button>
+      </div>
       {/* Show any error or success messages */}
       {message && (
         <div id="payment-message" className="error">

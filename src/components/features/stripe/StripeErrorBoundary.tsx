@@ -30,7 +30,10 @@ export class StripeErrorBoundary extends React.Component<
     if (this.state.hasError) {
       return (
         <div className="p-4 bg-red-100 text-red-700 rounded">
-          <p>Une erreur est survenue avec Stripe :</p>
+          <p>
+            Une erreur est survenue avec le service de paiement en ligne.
+            Veuillez réessayer plus tard ou me contacter directement.
+          </p>
           <pre>{this.state.errorMessage}</pre>
         </div>
       );
