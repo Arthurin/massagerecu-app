@@ -16,23 +16,8 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
-
-
-Arborescence du projet :
-src/
-├─ app/
-│ ├─ api/
-│ │ └─ webhook/
-│ │ └─ route.ts
-│ ├─ checkout/
-│ └─ complete/
-├─ lib/
-│ ├─ stripe.ts
-│ └─ mailer.ts
-└─ lib/
-│ └─ mailer.ts
-
 Pour tester l'envoi de mail : > npx tsx .\src\scripts\test-mail.ts
+Stripe m'envoit un mail de notification de paiement réussi, le mail au client est géré avec Nodmailer.
 
 ## Tech Stack
 
@@ -50,4 +35,3 @@ stripe listen --forward-to localhost:3000/api/webhook
 Améliorations :
 
 - StripeErrorBoundary -> le mettre à jour et l'utiliser
-
