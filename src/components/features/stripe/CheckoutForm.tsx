@@ -76,7 +76,7 @@ export default function CheckoutForm({
 
   const paymentElementOptions: StripePaymentElementOptions = {
     layout: {
-      type: "accordion",
+      type: "tabs",
       defaultCollapsed: false,
       radios: true,
       spacedAccordionItems: true,

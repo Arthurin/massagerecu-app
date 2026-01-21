@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import CheckoutForm from "./checkout-form";
+import CheckoutForm from "./CheckoutForm";
 import {
   Appearance,
   loadStripe,
