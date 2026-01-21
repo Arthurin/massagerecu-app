@@ -53,7 +53,7 @@ export default function CheckoutForm({
       switch (error.type) {
         case "card_error":
           errorMessage =
-            "Le paiement a échoué. Veuillez vérifier les informations saisies. " +
+            "Le paiement a échoué. " +
             error.message;
           break;
         case "validation_error":
@@ -93,13 +93,13 @@ export default function CheckoutForm({
         >
           {isLoading ? "Paiement en cours…" : "Payer maintenant"}
         </button>
+        {/* Show any error or success messages */}
+        {message && (
+          <div id="payment-message" className="alert alert-danger text-center">
+            {message}
+          </div>
+        )}
       </div>
-      {/* Show any error or success messages */}
-      {message && (
-        <div id="payment-message" className="error">
-          {message}
-        </div>
-      )}
     </form>
   );
 }
