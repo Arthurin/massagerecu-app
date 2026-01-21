@@ -43,7 +43,7 @@ export async function POST(req: NextRequest) {
         console.log(
           `Le paiement a été réussi (montant : ${paymentIntent.amount})`
         );
-        // Then define and call a method to handle the successful payment intent.
+
         await handlePaymentIntentSucceeded(paymentIntent);
         break;
       case "payment_intent.payment_failed":
@@ -90,6 +90,13 @@ export async function POST(req: NextRequest) {
 async function handlePaymentIntentSucceeded(
   paymentIntent: Stripe.PaymentIntent
 ) {
+  if (paymentIntent.metadata?.processed === "true") {
+    console.log(
+      `⏭️ PaymentIntent ${paymentIntent.id} déjà traité, idempotence ok on ignore cet événement.`
+    );
+    return;
+  }
+
   const email =
     paymentIntent.receipt_email || paymentIntent.metadata?.purchaserEmail;
 
@@ -114,6 +121,14 @@ async function handlePaymentIntentSucceeded(
     currency: paymentIntent.currency.toUpperCase(),
     paymentId: paymentIntent.id,
     pdfBytes,
+  });
+
+  // gestion de l'idempotence : on marque le PaymentIntent comme traité si tout s'est bien passé
+  await stripe.paymentIntents.update(paymentIntent.id, {
+    metadata: {
+      ...paymentIntent.metadata,
+      processed: "true",
+    },
   });
 }
 
@@ -148,5 +163,8 @@ async function sendCustomEmail(
     });
   } catch (err: any) {
     console.error("❌ Erreur lors de l'envoi :", err);
+    throw new Error(
+      `Email delivery failed: ${err?.message ?? "unknown error"}`
+    );
   }
 }
