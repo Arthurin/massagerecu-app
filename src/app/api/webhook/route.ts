@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
           `Le paiement a été réussi (montant : ${paymentIntent.amount})`
         );
         // Then define and call a method to handle the successful payment intent.
-        handlePaymentIntentSucceeded(paymentIntent);
+        await handlePaymentIntentSucceeded(paymentIntent);
         break;
       case "payment_intent.payment_failed":
         // Get the object affected
@@ -70,6 +70,7 @@ export async function POST(req: NextRequest) {
             console.log("Another problem occurred, maybe unrelated to Stripe.");
             break;
         }
+        break;
       default:
         // Unexpected event type
         console.log(`Unhandled event type ${event.type}.`);
@@ -89,41 +90,13 @@ export async function POST(req: NextRequest) {
 async function handlePaymentIntentSucceeded(
   paymentIntent: Stripe.PaymentIntent
 ) {
-  // Extract customer email
-  let customerEmail;
 
-  // I expect receipt_email to be set
-  if (paymentIntent.receipt_email) {
-    customerEmail = paymentIntent.receipt_email;
-  }
+  const email =
+    paymentIntent.receipt_email ||
+    paymentIntent.metadata?.purchaserEmail;
 
-  // If email is stored in metadata
-  else if (paymentIntent.metadata && paymentIntent.metadata.email) {
-    customerEmail = paymentIntent.metadata.email;
-  }
-
-  // If there's a customer attached
-  else if (paymentIntent.customer) {
-    // Check if customer is already expanded (an object)
-    if (
-      typeof paymentIntent.customer === "object" &&
-      paymentIntent.customer !== null
-    ) {
-      // Check if it's a non-deleted customer with email
-      if (
-        !("deleted" in paymentIntent.customer) &&
-        "email" in paymentIntent.customer
-      ) {
-        customerEmail = paymentIntent.customer.email;
-      }
-    }
-    // If it's just an ID string, retrieve the customer
-    else if (typeof paymentIntent.customer === "string") {
-      const customer = await stripe.customers.retrieve(paymentIntent.customer);
-      if (!("deleted" in customer) && "email" in customer) {
-        customerEmail = customer.email;
-      }
-    }
+  if (!email) {
+    throw new Error("Aucun email trouvé pour ce paiement");
   }
 
   // Prépare les champs pour le PDF
@@ -138,15 +111,13 @@ async function handlePaymentIntentSucceeded(
 
   const pdfBytes = await generatePDF(fields);
 
-  if (customerEmail) {
-    // Send your own custom email
-    await sendCustomEmail(customerEmail as string, {
+    await sendCustomEmail(email as string, {
       amount: (paymentIntent.amount / 100).toFixed(2),
       currency: paymentIntent.currency.toUpperCase(),
       paymentId: paymentIntent.id,
       pdfBytes,
     });
-  }
+  
 }
 
 async function sendCustomEmail(

@@ -16,8 +16,13 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
-Pour tester l'envoi de mail : > npx tsx .\src\scripts\test-mail.ts
-Stripe m'envoit un mail de notification de paiement réussi, le mail au client est géré avec Nodmailer.
+NODEMAILER : me permet d'envoyer des mails au client depuis mon webhook en cas de paiement réussi.
+Utilisation de gmail avec App Password :
+https://nodemailer.com/usage/using-gmail
+Pour tester l'envoi de mail :
+
+> npx tsx .\src\scripts\test-mail.ts
+> Stripe m'envoit un mail de notification de paiement réussi
 
 Pour avoir les webhook de Stripe en local ouvrir un terminal et taper :
 (Pour se connecter, tous les 90 jours, il faut taper : stripe login)
