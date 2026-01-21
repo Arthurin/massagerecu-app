@@ -87,49 +87,6 @@ export default function StripeCheckout({
     },
   } as const;
 
-  /** 
-  // thème à choisir entre 'stripe', 'night', ou 'flat'
-  const appearanceObject: Appearance = {
-    theme: "stripe",
-    rules: {
-      ".AccordionItem": {
-        backgroundColor: "#f6f6f6",
-        boxShadow: "0px 1px 1px rgba(0, 0, 0, 0.03)",
-      },
-      ".Input": {
-        padding: "12px",
-      },
-    },
-  };
-
-    // Je peux également personnaliser davantage avec variables et rules
-    variables: {
-      colorPrimary: "#0570de",
-      colorBackground: "#ffffff",
-      colorText: "#30313d",
-      colorDanger: "#df1b41",
-      fontFamily: "Ideal Sans, system-ui, sans-serif",
-      spacingUnit: "2px",
-      borderRadius: "4px",
-    },
-    rules: {
-      ".Tab": {
-        border: "1px solid #E0E6EB",
-        boxShadow: "0px 1px 1px rgba(0, 0, 0, 0.03)",
-      },
-      ".Tab:hover": {
-        color: "var(--colorText)",
-      },
-      ".Input": {
-        padding: "12px",
-      },
-    },
-
-  const appearance = useMemo<StripeCheckoutElementsOptions["appearance"]>(
-    () => appearanceObject,
-    []
-  );*/
-
   if (loading) return <div>Chargement du formulaire de paiement...</div>;
   if (errorMessage)
     return (
