@@ -78,8 +78,6 @@ export default function CheckoutForm({
     layout: {
       type: "tabs",
       defaultCollapsed: false,
-      radios: true,
-      spacedAccordionItems: true,
     },
   };
 
