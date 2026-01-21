@@ -90,34 +90,31 @@ export async function POST(req: NextRequest) {
 async function handlePaymentIntentSucceeded(
   paymentIntent: Stripe.PaymentIntent
 ) {
-
   const email =
-    paymentIntent.receipt_email ||
-    paymentIntent.metadata?.purchaserEmail;
+    paymentIntent.receipt_email || paymentIntent.metadata?.purchaserEmail;
 
   if (!email) {
     throw new Error("Aucun email trouvé pour ce paiement");
   }
 
-  // Prépare les champs pour le PDF
   const fields = {
-    nomDestinataire: "Nom du bénéfiaire",
-    nomAcheteur: "Nom de l'acheteur",
-    montant: "60 €",
-    dateExpiration: "30/04/2025",
-    idCarteCadeau: "311025-1",
+    nomDestinataire: paymentIntent.metadata?.recipientName ?? "",
+    nomAcheteur: paymentIntent.metadata?.purchaserName ?? "",
+    montant: `${(paymentIntent.amount / 100).toFixed(2)} €`,
+    dateExpiration: new Date(
+      Date.now() + 183 * 24 * 60 * 60 * 1000
+    ).toLocaleDateString("fr-FR"),
+    idCarteCadeau: paymentIntent.id,
   };
-  //new Date().toLocaleDateString("fr-FR")
 
   const pdfBytes = await generatePDF(fields);
 
-    await sendCustomEmail(email as string, {
-      amount: (paymentIntent.amount / 100).toFixed(2),
-      currency: paymentIntent.currency.toUpperCase(),
-      paymentId: paymentIntent.id,
-      pdfBytes,
-    });
-  
+  await sendCustomEmail(email, {
+    amount: (paymentIntent.amount / 100).toFixed(2),
+    currency: paymentIntent.currency.toUpperCase(),
+    paymentId: paymentIntent.id,
+    pdfBytes,
+  });
 }
 
 async function sendCustomEmail(
