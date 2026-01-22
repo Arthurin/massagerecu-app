@@ -9,30 +9,14 @@ import {
 } from "@stripe/stripe-js";
 
 import { Elements } from "@stripe/react-stripe-js";
+import { StripeInputProps } from "./types";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY!);
 
-export interface StripeLineItem {
-  price: string;
-  quantity: number;
-}
-
-interface StripeCheckoutProps {
-  lineItems: StripeLineItem[];
-  checkoutData: {
-    purchaserEmail: string;
-    purchaserName: string;
-    recipientName: string;
-    message?: string;
-  };
-  onSuccess: () => void;
-}
-
 export default function StripeCheckout({
-  lineItems,
   checkoutData,
   onSuccess,
-}: StripeCheckoutProps) {
+}: StripeInputProps) {
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -43,7 +27,7 @@ export default function StripeCheckout({
         const response = await fetch("/api/checkout", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ lineItems, checkoutData }),
+          body: JSON.stringify({ checkoutData }),
         });
 
         const data = await response.json();
@@ -72,7 +56,7 @@ export default function StripeCheckout({
     };
 
     fetchClientSecret();
-  }, [lineItems, checkoutData]);
+  }, [checkoutData]);
 
   const appearance = {
     theme: "stripe",

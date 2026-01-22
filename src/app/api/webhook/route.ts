@@ -6,6 +6,12 @@ import Stripe from "stripe";
 import { sendMail } from "@/lib/mailer";
 import { generatePDF } from "@/lib/pdfUtils";
 
+import * as GoogleSheets from "@/lib/googleSheets";
+import { MASSAGE_CATALOG } from "@/lib/catalog/massageCatalog";
+import { extractFromStripeMetadata } from "@/lib/stripe/metaData";
+import { StripeCarteCadeauMetadata } from "@/lib/stripe/types";
+import { MassageCatalogItem } from "@/lib/catalog/types";
+
 // Configure body parser for webhooks
 export const config = {
   api: {
@@ -39,10 +45,7 @@ export async function POST(req: NextRequest) {
     switch (event.type) {
       case "payment_intent.succeeded":
         console.log(event.data);
-        const paymentIntent = event.data.object;
-        console.log(
-          `Le paiement a été réussi (montant : ${paymentIntent.amount})`
-        );
+        const paymentIntent = event.data.object as Stripe.PaymentIntent;
 
         await handlePaymentIntentSucceeded(paymentIntent);
         break;
@@ -90,12 +93,71 @@ export async function POST(req: NextRequest) {
 async function handlePaymentIntentSucceeded(
   paymentIntent: Stripe.PaymentIntent
 ) {
+  console.log(`Le paiement a été réussi (id : ${paymentIntent.id})`);
   if (paymentIntent.metadata?.processed === "true") {
     console.log(
-      `⏭️ PaymentIntent ${paymentIntent.id} déjà traité, idempotence ok on ignore cet événement.`
+      `⏭️ PaymentIntent ${paymentIntent.id} déjà traité par le webhook, idempotence ok on ignore cet événement.`
     );
     return;
   }
+
+  // 🔁 Idempotence google sheet
+  const alreadyProcessed = await GoogleSheets.isPaymentAlreadyProcessed(
+    paymentIntent.id
+  );
+
+  if (alreadyProcessed) {
+    console.log(
+      `↩️ Idempotence remarquée car l'entrée ${paymentIntent.id} est déjà présente dans le tableau.`
+    );
+    return NextResponse.json({ received: true });
+  }
+
+  // on récupère les metadata et on vérifie qu'elles sont valides
+  const metadata = extractFromStripeMetadata(paymentIntent.metadata);
+
+  const catalogItem = MASSAGE_CATALOG[metadata.stripeProductId];
+
+  if (!catalogItem) {
+    throw new Error(
+      "Massage inconnu dans le catalogue, id :" + metadata.stripeProductId
+    );
+  }
+
+  // expected Amount
+  const safePrice = catalogItem.unitPrice * Number(metadata.quantity) * 100;
+
+  if (paymentIntent.amount !== safePrice) {
+    // log + alerte
+    throw new Error(
+      "Montant incohérent avec les données du metadata – possible fraude"
+    );
+  }
+
+  const data = getGiftCardFullData(
+    paymentIntent.id,
+    safePrice,
+    catalogItem,
+    metadata
+  );
+
+  await GoogleSheets.appendRow([
+    data.giftId, // N° du bon
+    "", // MASSAGE FAIT, laisser vide
+    data.expirationDate, // Date d'expiration
+    data.recipientName, // Bénéficiaire
+    data.purchaserName, // Acheteur
+    data.giftTitle, // Titre
+    "", // Déclaration, laisser vide
+    "vente en ligne", // Règlement
+    data.purchaserEmail, // Contact
+    data.purchaseDate, // Date d'achat
+    data.message, // Message
+  ]);
+
+  console.log(
+    `✅ Carte cadeau ${paymentIntent.id} enregistrée dans Google Sheet`
+  );
 
   const email =
     paymentIntent.receipt_email || paymentIntent.metadata?.purchaserEmail;
@@ -104,21 +166,18 @@ async function handlePaymentIntentSucceeded(
     throw new Error("Aucun email trouvé pour ce paiement");
   }
 
-  const fields = {
-    nomDestinataire: paymentIntent.metadata?.recipientName ?? "",
-    nomAcheteur: paymentIntent.metadata?.purchaserName ?? "",
-    montant: `${(paymentIntent.amount / 100).toFixed(2)} €`,
-    dateExpiration: new Date(
-      Date.now() + 183 * 24 * 60 * 60 * 1000
-    ).toLocaleDateString("fr-FR"),
-    idCarteCadeau: paymentIntent.id,
+  const pdfFields = {
+    nomDestinataire: data.recipientName,
+    nomAcheteur: data.purchaserName,
+    montant: data.priceWithCurrency,
+    dateExpiration: data.expirationDate,
+    idCarteCadeau: data.giftId,
   };
 
-  const pdfBytes = await generatePDF(fields);
+  const pdfBytes = await generatePDF(pdfFields);
 
-  await sendCustomEmail(email, {
-    amount: (paymentIntent.amount / 100).toFixed(2),
-    currency: paymentIntent.currency.toUpperCase(),
+  await sendCustomEmail(data.purchaserEmail, {
+    amount: data.priceWithCurrency,
     paymentId: paymentIntent.id,
     pdfBytes,
   });
@@ -136,7 +195,6 @@ async function sendCustomEmail(
   customerEmail: string,
   paymentInfos: {
     amount: string;
-    currency: string;
     paymentId: string;
     pdfBytes: any;
   }
@@ -146,10 +204,10 @@ async function sendCustomEmail(
     await sendMail({
       to: customerEmail,
       subject: "[Massage Reçu] Merci pour votre achat !",
-      text: `Bonjour, votre paiement d’un montant de ${paymentInfos.amount}€ a bien été reçu. Merci pour votre achat ! 🌿`,
+      text: `Bonjour, votre paiement d’un montant de ${paymentInfos.amount} a bien été reçu. Merci pour votre achat ! 🌿`,
       html: `
         <p>Bonjour,</p>
-        <p>Votre paiement d’un montant de <strong>${paymentInfos.amount}€</strong> a bien été reçu.</p>
+        <p>Votre paiement d’un montant de <strong>${paymentInfos.amount}</strong> a bien été reçu.</p>
         <p>Merci pour votre achat et à très bientôt 🌿</p>
         <p><em>Massage Reçu</em></p>
       `,
@@ -167,4 +225,32 @@ async function sendCustomEmail(
       `Email delivery failed: ${err?.message ?? "unknown error"}`
     );
   }
+}
+
+function getGiftCardFullData(
+  id: string,
+  safePrice: number,
+  catalogItem: MassageCatalogItem,
+  metadata: StripeCarteCadeauMetadata
+) {
+  const price = (safePrice / 100).toFixed();
+  const today = Date.now();
+  const title =
+    metadata.quantity !== "1"
+      ? `${catalogItem.title} (x${metadata.quantity})`
+      : catalogItem.title;
+  return {
+    giftId: id,
+    giftTitle: title,
+    recipientName: metadata.recipientName ?? "",
+    purchaserName: metadata.purchaserName ?? "",
+    price: price,
+    priceWithCurrency: `${price}€`,
+    purchaserEmail: metadata.purchaserEmail ?? "",
+    message: metadata.message ?? "",
+    purchaseDate: new Date(today * 1000).toLocaleDateString("fr-FR"),
+    expirationDate: new Date(
+      today + 183 * 24 * 60 * 60 * 1000
+    ).toLocaleDateString("fr-FR"),
+  };
 }

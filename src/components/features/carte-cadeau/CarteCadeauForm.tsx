@@ -64,7 +64,7 @@ export default function CarteCadeauForm({ initialData, onSubmit }: Props) {
           onChange={handleChange("purchaserEmail")}
           required
         />
-      </label>      
+      </label>
       {emailError && <p className="error">{emailError}</p>}
 
       <label>

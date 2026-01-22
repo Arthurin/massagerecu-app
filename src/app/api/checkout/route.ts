@@ -1,26 +1,8 @@
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import { stripe } from "@/lib/stripe";
-
-/**
- * Types attendus depuis le frontend
- */
-interface LineItem {
-  price: string;
-  quantity: number;
-}
-
-interface CheckoutData {
-  purchaserEmail: string;
-  purchaserName: string;
-  recipientName: string;
-  message?: string;
-}
-
-interface CheckoutRequestBody {
-  lineItems: LineItem[];
-  checkoutData: CheckoutData;
-}
+import { StripeInputProps } from "@/components/features/stripe/types";
+import { exportToStripeMetadata } from "@/lib/stripe/metaData";
 
 /**
  * POST /api/checkout
@@ -30,15 +12,8 @@ export async function POST(req: Request) {
     /* ----------------------------------
      * 1️⃣ Lecture et validation du body
      * ---------------------------------- */
-    const body = (await req.json()) as CheckoutRequestBody;
-    const { lineItems, checkoutData } = body;
-
-    if (!lineItems || lineItems.length === 0) {
-      return NextResponse.json(
-        { error: "lineItems manquant, commande incorrecte" },
-        { status: 400 }
-      );
-    }
+    const body = (await req.json()) as StripeInputProps; //Type attendu depuis le frontend
+    const { checkoutData } = body;
 
     if (!checkoutData?.purchaserEmail) {
       return NextResponse.json(
@@ -47,31 +22,49 @@ export async function POST(req: Request) {
       );
     }
 
+    const metadata = exportToStripeMetadata({
+      purchaserName: checkoutData.purchaserName,
+      purchaserEmail: checkoutData.purchaserEmail,
+      recipientName: checkoutData.recipientName,
+      message: checkoutData.message,
+      quantity: checkoutData.quantity.toString(),
+      stripeProductId: checkoutData.stripeProductId,
+    });
+
     /* ----------------------------------
      * 2️⃣ Récupération sécurisée des prix Stripe
      * ---------------------------------- */
     let amount = 0;
 
-    for (const item of lineItems) {
-      if (!item.price || !item.quantity) {
-        return NextResponse.json(
-          { error: "commande (lineItem) invalide" },
-          { status: 400 }
-        );
-      }
-
-      // 🔐 récupération du prix depuis Stripe (anti-fraude)
-      const price = await stripe.prices.retrieve(item.price);
-
-      if (!price.unit_amount) {
-        return NextResponse.json(
-          { error: "Quantité d'achat invalide" },
-          { status: 400 }
-        );
-      }
-
-      amount += price.unit_amount * item.quantity;
+    if (!checkoutData.stripeProductId || !checkoutData.quantity) {
+      return NextResponse.json(
+        { error: "commande invalide, prix/quantité manquante" },
+        { status: 400 }
+      );
     }
+
+    const quantity = checkoutData.quantity;
+
+    // 🔐 récupération du prix depuis Stripe (anti-fraude)
+    const priceProductId = await stripe.prices.retrieve(
+      checkoutData.stripeProductId
+    );
+    console.log("PRIX", priceProductId);
+    if (!priceProductId.unit_amount) {
+      return NextResponse.json(
+        { error: "Prix Stripe invalide" },
+        { status: 400 }
+      );
+    }
+    if (priceProductId.currency !== "eur") {
+      throw new Error("Devise non supportée");
+    }
+
+    if (quantity <= 0 || quantity > 15) {
+      throw new Error("Quantité invalide");
+    }
+
+    amount += priceProductId.unit_amount * quantity;
 
     if (amount <= 0) {
       return NextResponse.json({ error: "Montant invalide" }, { status: 400 });
@@ -92,13 +85,7 @@ export async function POST(req: Request) {
         enabled: true,
       },
 
-      metadata: {
-        purchaserName: checkoutData.purchaserName,
-        purchaserEmail: checkoutData.purchaserEmail,
-        recipientName: checkoutData.recipientName,
-        message: checkoutData.message ?? "",
-        productType: "carte_cadeau",
-      },
+      metadata: metadata,
     });
 
     /* ----------------------------------

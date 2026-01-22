@@ -1,15 +1,14 @@
 export interface MassageOption {
-  id: string;
   title: string;
-  price: number;
-  stripePriceId: string;
+  unitPrice: number;
+  stripeProductId: string;
 }
 
 export interface CarteCadeauFormData {
   purchaserName: string;
   purchaserEmail: string;
   recipientName: string;
-  message?: string;
+  message: string;
   quantity: number;
 }
 

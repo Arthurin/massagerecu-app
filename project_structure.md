@@ -1,13 +1,13 @@
 # 📁 massagerecu-app - Project Structure
 
-*Generated on: 1/17/2026*
+*Generated on: 1/22/2026, 11:34:43 AM*
 
 ## 📋 Quick Overview
 
 | Metric | Value |
 |--------|-------|
-| 📄 Total Files | 109 |
-| 📁 Total Folders | 39 |
+| 📄 Total Files | 114 |
+| 📁 Total Folders | 40 |
 | 🌳 Max Depth | 4 levels |
 | 🛠️ Tech Stack | React, Next.js, TypeScript, CSS, Sass/SCSS, Node.js |
 
@@ -25,15 +25,15 @@
 
 ### By File Type
 
-- ⚛️ **.tsx** (React TypeScript files): 26 files (23.9%)
-- 🔷 **.ts** (TypeScript files): 17 files (15.6%)
-- 🎨 **.scss** (Sass stylesheets): 16 files (14.7%)
-- 🖼️ **.webp** (WebP images): 12 files (11.0%)
-- 🖼️ **.png** (PNG images): 12 files (11.0%)
-- ⚙️ **.json** (JSON files): 4 files (3.7%)
-- 🎨 **.svg** (SVG images): 4 files (3.7%)
-- 📕 **.pdf** (PDF files): 3 files (2.8%)
-- 📖 **.md** (Markdown files): 2 files (1.8%)
+- ⚛️ **.tsx** (React TypeScript files): 29 files (25.4%)
+- 🔷 **.ts** (TypeScript files): 18 files (15.8%)
+- 🎨 **.scss** (Sass stylesheets): 16 files (14.0%)
+- 🖼️ **.webp** (WebP images): 12 files (10.5%)
+- 🖼️ **.png** (PNG images): 12 files (10.5%)
+- ⚙️ **.json** (JSON files): 4 files (3.5%)
+- 🎨 **.svg** (SVG images): 4 files (3.5%)
+- 📖 **.md** (Markdown files): 3 files (2.6%)
+- 📕 **.pdf** (PDF files): 3 files (2.6%)
 - 📄 **.mjs** (Other files): 2 files (1.8%)
 - 🖼️ **.jpg** (JPEG images): 2 files (1.8%)
 - 🎨 **.css** (Stylesheets): 2 files (1.8%)
@@ -47,20 +47,20 @@
 
 ### By Category
 
-- **Assets**: 32 files (29.4%)
-- **React**: 26 files (23.9%)
-- **Styles**: 18 files (16.5%)
-- **TypeScript**: 17 files (15.6%)
-- **Docs**: 6 files (5.5%)
-- **Config**: 5 files (4.6%)
-- **Other**: 3 files (2.8%)
+- **Assets**: 32 files (28.1%)
+- **React**: 29 files (25.4%)
+- **TypeScript**: 18 files (15.8%)
+- **Styles**: 18 files (15.8%)
+- **Docs**: 7 files (6.1%)
+- **Config**: 5 files (4.4%)
+- **Other**: 3 files (2.6%)
 - **DevOps**: 1 files (0.9%)
 - **Web**: 1 files (0.9%)
 
 ### 📁 Largest Directories
 
-- **root**: 109 files
-- **src**: 65 files
+- **root**: 114 files
+- **src**: 69 files
 - **public**: 31 files
 - **public\assets\img**: 30 files
 - **public\assets**: 30 files
@@ -82,6 +82,7 @@ massagerecu-app/
 ├── 🟡 🔒 **package-lock.json**
 ├── 🔴 📦 **package.json**
 ├── 📄 postcss.config.mjs
+├── 📖 project_structure.md
 ├── 🌐 public/
 │   ├── 📦 assets/
 │   │   └── 📂 img/
@@ -137,10 +138,6 @@ massagerecu-app/
 │   │   │   │   └── 🔷 route.ts
 │   │   ├── 📂 carte-cadeau/
 │   │   │   └── ⚛️ page.tsx
-│   │   ├── 📂 checkout/
-│   │   │   ├── ⚛️ checkout-form.tsx
-│   │   │   ├── ⚛️ page.tsx
-│   │   │   └── ⚛️ StripeErrorBoundary.tsx
 │   │   ├── 📂 complete/
 │   │   │   └── ⚛️ page.tsx
 │   │   ├── 📂 conditions-generales-de-vente/
@@ -166,7 +163,16 @@ massagerecu-app/
 │   │   ├── 📂 features/
 │   │   │   ├── ⚛️ BootstrapClient.tsx
 │   │   │   ├── ⚛️ BootstrapNavbarBehavior.tsx
+│   │   │   ├── 📂 carte-cadeau/
+│   │   │   │   ├── ⚛️ CarteCadeauFlow.tsx
+│   │   │   │   ├── ⚛️ CarteCadeauForm.tsx
+│   │   │   │   ├── ⚛️ MassageSelector.tsx
+│   │   │   │   └── 🔷 types.ts
 │   │   │   ├── ⚛️ Newsletter.tsx
+│   │   │   ├── 📂 stripe/
+│   │   │   │   ├── ⚛️ CheckoutForm.tsx
+│   │   │   │   ├── ⚛️ StripeCheckout.tsx
+│   │   │   │   └── ⚛️ StripeErrorBoundary.tsx
 │   │   │   └── ⚛️ TrafftEmbed.tsx
 │   │   └── 📂 layout/
 │   │   │   ├── ⚛️ Cgv.tsx
