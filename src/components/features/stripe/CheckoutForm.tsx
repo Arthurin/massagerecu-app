@@ -36,7 +36,7 @@ export default function CheckoutForm({
 
     setIsLoading(true);
 
-    const { error } = await stripe.confirmPayment({
+    const result = await stripe.confirmPayment({
       elements,
       confirmParams: {
         receipt_email: email,
@@ -44,17 +44,14 @@ export default function CheckoutForm({
       redirect: "if_required",
     });
 
-    if (error) {
-      console.log(error);
-      console.error(error.type);
+    if (result.error) {
+      console.error(result.error);
       let errorMessage =
         "Le paiement a échoué. Vérifiez vos informations ou veuillez me contacter en cas d'erreur répétée.";
 
-      switch (error.type) {
+      switch (result.error.type) {
         case "card_error":
-          errorMessage =
-            "Le paiement a échoué. " +
-            error.message;
+          errorMessage = "Le paiement a échoué. " + result.error.message;
           break;
         case "validation_error":
           errorMessage =
@@ -69,8 +66,16 @@ export default function CheckoutForm({
       return;
     }
 
-    // Paiement confirmé
-    onSuccess();
+    if (result.paymentIntent?.status === "succeeded") {
+      // Paiement confirmé
+      onSuccess();
+    } else {
+      console.error(
+        "résultat du paiement dans un état inconnu, paymentIntent.status est est attendu avec la valeur succeeded",
+        result.paymentIntent
+      );
+    }
+
     setIsLoading(false);
   };
 
