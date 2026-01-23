@@ -5,6 +5,7 @@ import MassageSelector from "./MassageSelector";
 import CarteCadeauForm from "./CarteCadeauForm";
 import { MassageOption, CarteCadeauOrder } from "./types";
 import StripeCheckout from "@/components/features/stripe/StripeCheckout";
+import PaymentSuccess from "./PaymentSuccess";
 
 type Step = "select" | "form" | "payment" | "success";
 
@@ -58,17 +59,7 @@ export default function CarteCadeauFlow() {
       )}
 
       {step === "success" && order && (
-        <div className="success">
-          <h2>✅ Paiement confirmé</h2>
-          <p>
-            La carte cadeau pour <strong>{order.massage.title}</strong> a bien
-            été achetée.
-          </p>
-          <p>
-            Un email a été envoyé à{" "}
-            <strong>{order.formData.purchaserEmail}</strong>.
-          </p>
-        </div>
+        <PaymentSuccess purchaserEmail={order.formData.purchaserEmail} />
       )}
     </>
   );
