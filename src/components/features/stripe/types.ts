@@ -4,7 +4,7 @@ export interface StripeInputProps {
     purchaserName: string;
     recipientName: string;
     message: string;
-    stripeProductId: string;
+    massagePriceId: string;
     quantity: number;
   };
   onSuccess: () => void;

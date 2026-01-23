@@ -1,6 +1,7 @@
 import {
   STRIPE_CARTE_CADEAU_METADATA_KEYS,
   StripeCarteCadeauMetadata,
+  OPTIONAL_METADATA_KEYS,
 } from "./types";
 import Stripe from "stripe";
 
@@ -15,8 +16,8 @@ export function exportToStripeMetadata(
     purchaserName: data.purchaserName,
     purchaserEmail: data.purchaserEmail,
     recipientName: data.recipientName,
-    message: data.message,
-    stripeProductId: data.stripeProductId,
+    message: data.message ?? "",
+    massagePriceId: data.massagePriceId,
     quantity: data.quantity,
   };
 }
@@ -32,9 +33,19 @@ export function extractFromStripeMetadata(
 
   for (const key of STRIPE_CARTE_CADEAU_METADATA_KEYS) {
     const value = metadata[key];
-    if (!value) {
-      throw new Error(`Metadata Stripe manquante : ${key}`);
+
+    const isOptional = (OPTIONAL_METADATA_KEYS as readonly string[]).includes(
+      key
+    );
+
+    if (value === undefined || value === null) {
+      throw new Error(`Metadata Stripe absente : ${key}`);
     }
+
+    if (!isOptional && value.trim() === "") {
+      throw new Error(`Metadata Stripe vide : ${key}`);
+    }
+
     result[key] = value;
   }
 

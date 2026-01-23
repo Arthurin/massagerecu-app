@@ -3,7 +3,7 @@ export interface StripeCarteCadeauMetadata {
   purchaserEmail: string;
   recipientName: string;
   message: string;
-  stripeProductId: string;
+  massagePriceId: string;
   quantity: string;
 }
 
@@ -12,6 +12,9 @@ export const STRIPE_CARTE_CADEAU_METADATA_KEYS = [
   "purchaserEmail",
   "recipientName",
   "message",
-  "stripeProductId",
+  "massagePriceId",
   "quantity",
 ] as const;
+
+export const OPTIONAL_METADATA_KEYS = ["message"] as const;
+type OptionalKey = (typeof OPTIONAL_METADATA_KEYS)[number]; //message must exist but it can be the empty value ''

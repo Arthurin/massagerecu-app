@@ -3,6 +3,7 @@ import Stripe from "stripe";
 import { stripe } from "@/lib/stripe";
 import { StripeInputProps } from "@/components/features/stripe/types";
 import { exportToStripeMetadata } from "@/lib/stripe/metaData";
+import { createCheckoutIdempotencyKey } from "@/lib/stripe/idempotency";
 
 /**
  * POST /api/checkout
@@ -28,7 +29,7 @@ export async function POST(req: Request) {
       recipientName: checkoutData.recipientName,
       message: checkoutData.message,
       quantity: checkoutData.quantity.toString(),
-      stripeProductId: checkoutData.stripeProductId,
+      massagePriceId: checkoutData.massagePriceId,
     });
 
     /* ----------------------------------
@@ -36,7 +37,7 @@ export async function POST(req: Request) {
      * ---------------------------------- */
     let amount = 0;
 
-    if (!checkoutData.stripeProductId || !checkoutData.quantity) {
+    if (!checkoutData.massagePriceId || !checkoutData.quantity) {
       return NextResponse.json(
         { error: "commande invalide, prix/quantité manquante" },
         { status: 400 }
@@ -47,7 +48,7 @@ export async function POST(req: Request) {
 
     // 🔐 récupération du prix depuis Stripe (anti-fraude)
     const priceProductId = await stripe.prices.retrieve(
-      checkoutData.stripeProductId
+      checkoutData.massagePriceId
     );
     console.log("PRIX", priceProductId);
     if (!priceProductId.unit_amount) {
@@ -73,20 +74,30 @@ export async function POST(req: Request) {
     /* ----------------------------------
      * 3️⃣ Création du PaymentIntent
      * ---------------------------------- */
-    const paymentIntent = await stripe.paymentIntents.create({
-      amount,
-      currency: "eur",
-
-      // email utilisé par Stripe (reçus, conformité)
-      receipt_email: checkoutData.purchaserEmail,
-
-      // paiement embarqué, sans redirection
-      automatic_payment_methods: {
-        enabled: true,
-      },
-
-      metadata: metadata,
+    const idempotencyKey = createCheckoutIdempotencyKey({
+      purchaserEmail: checkoutData.purchaserEmail,
+      massagePriceId: checkoutData.massagePriceId,
+      quantity: checkoutData.quantity,
     });
+    const paymentIntent = await stripe.paymentIntents.create(
+      {
+        amount,
+        currency: "eur",
+
+        // email utilisé par Stripe (reçus, conformité)
+        receipt_email: checkoutData.purchaserEmail,
+
+        // paiement embarqué, sans redirection
+        automatic_payment_methods: {
+          enabled: true,
+        },
+
+        metadata: metadata,
+      },
+      {
+        idempotencyKey,
+      }
+    );
 
     /* ----------------------------------
      * 4️⃣ Réponse au frontend

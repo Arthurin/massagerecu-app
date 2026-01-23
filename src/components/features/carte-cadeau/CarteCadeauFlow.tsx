@@ -16,7 +16,9 @@ export default function CarteCadeauFlow() {
   useEffect(() => {
     fetch("/api/catalog")
       .then((res) => res.json())
-      .then((data) => setMassageCatalog(data.items));
+      .then((data) => {
+        setMassageCatalog(data.items);
+      });
   }, []);
 
   return (
@@ -48,9 +50,8 @@ export default function CarteCadeauFlow() {
             purchaserName: order.formData.purchaserName,
             recipientName: order.formData.recipientName,
             message: order.formData.message,
-            stripeProductId: order.massage.stripeProductId,
+            massagePriceId: order.massage.massagePriceId,
             quantity: order.formData.quantity,
-            massageTitle: order.massage.title,
           }}
           onSuccess={() => setStep("success")}
         />

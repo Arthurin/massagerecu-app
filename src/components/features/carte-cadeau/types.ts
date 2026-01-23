@@ -1,7 +1,7 @@
 export interface MassageOption {
   title: string;
   unitPrice: number;
-  stripeProductId: string;
+  massagePriceId: string;
 }
 
 export interface CarteCadeauFormData {

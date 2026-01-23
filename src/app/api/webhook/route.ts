@@ -116,11 +116,11 @@ async function handlePaymentIntentSucceeded(
   // on récupère les metadata et on vérifie qu'elles sont valides
   const metadata = extractFromStripeMetadata(paymentIntent.metadata);
 
-  const catalogItem = MASSAGE_CATALOG[metadata.stripeProductId];
+  const catalogItem = MASSAGE_CATALOG[metadata.massagePriceId];
 
   if (!catalogItem) {
     throw new Error(
-      "Massage inconnu dans le catalogue, id :" + metadata.stripeProductId
+      "Massage inconnu dans le catalogue, id :" + metadata.massagePriceId
     );
   }
 
@@ -128,9 +128,13 @@ async function handlePaymentIntentSucceeded(
   const safePrice = catalogItem.unitPrice * Number(metadata.quantity) * 100;
 
   if (paymentIntent.amount !== safePrice) {
+    console.log("quantité : ", Number(metadata.quantity));
+    console.log("unitPrice : ", catalogItem.unitPrice);
+    console.log("safePrice ", safePrice);
+    console.log("amount ", paymentIntent.amount);
     // log + alerte
     throw new Error(
-      "Montant incohérent avec les données du metadata – possible fraude"
+      "Incohérence montant / metadata (possible fraude ou bien le catalogue des prix n'est pas à jour avec les prix du dashboard Stripe)"
     );
   }
 

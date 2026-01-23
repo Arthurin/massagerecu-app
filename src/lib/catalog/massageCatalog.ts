@@ -1,15 +1,23 @@
 import { MassageCatalogItem } from "./types";
+const PRICE_1H = "price_1SsTFMENgi07PwIeppJAywo6";
+const PRICE_1H30 = "price_1SsW2qENgi07PwIe9kc2OuMu";
+const PRICE_2H = "price_1SsW3IENgi07PwIeXvu7BHJ7";
 
 export const MASSAGE_CATALOG: Record<string, MassageCatalogItem> = {
-  price_1RyCL1ENgi07PwIewz2vuZXv: {
-    title: "Massage 1h",
+  [PRICE_1H]: {
+    title: "Massage au choix 1h",
     unitPrice: 60,
-    stripeProductId: "price_1RyCL1ENgi07PwIewz2vuZXv",
+    massagePriceId: PRICE_1H,
   },
-  "massage-2h": {
-    title: "Massage 2h",
+  [PRICE_1H30]: {
+    title: "Massage au choix 1h30",
     unitPrice: 80,
-    stripeProductId: "price_2IyIjhfhghjyFjwIewz2vuZXv",
+    massagePriceId: PRICE_1H30,
+  },
+  [PRICE_2H]: {
+    title: "Massage au choix 2h",
+    unitPrice: 100,
+    massagePriceId: PRICE_2H,
   },
 } as const;
 
