@@ -6,7 +6,6 @@ export interface MassageOption {
 
 export interface CarteCadeauFormData {
   purchaserName: string;
-  purchaserEmail: string;
   recipientName: string;
   message: string;
   quantity: number;

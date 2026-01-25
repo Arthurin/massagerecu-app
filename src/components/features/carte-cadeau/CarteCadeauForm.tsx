@@ -3,8 +3,6 @@
 import { useState } from "react";
 import { CarteCadeauFormData } from "./types";
 
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
 interface Props {
   initialData?: Partial<CarteCadeauFormData>;
   onSubmit: (data: CarteCadeauFormData) => void;
@@ -13,7 +11,6 @@ interface Props {
 export default function CarteCadeauForm({ initialData, onSubmit }: Props) {
   const [form, setForm] = useState<CarteCadeauFormData>({
     purchaserName: initialData?.purchaserName ?? "",
-    purchaserEmail: initialData?.purchaserEmail ?? "",
     recipientName: initialData?.recipientName ?? "",
     message: initialData?.message ?? "",
     quantity: initialData?.quantity ?? 1,
@@ -27,13 +24,6 @@ export default function CarteCadeauForm({ initialData, onSubmit }: Props) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (!emailRegex.test(form.purchaserEmail)) {
-      setEmailError("Adresse email invalide");
-      return;
-    }
-
-    setEmailError(null);
     onSubmit(form);
   };
 
@@ -47,7 +37,18 @@ export default function CarteCadeauForm({ initialData, onSubmit }: Props) {
       <h2>Informations de la carte-cadeau</h2>
 
       <label>
-        Ton nom
+        Quantité
+        <input
+          type="number"
+          value={form.quantity}
+          min={1}
+          onChange={handleChange("quantity")}
+          required
+        />
+      </label>
+
+      <label>
+        Votre nom
         <input
           type="text"
           value={form.purchaserName}
@@ -55,17 +56,6 @@ export default function CarteCadeauForm({ initialData, onSubmit }: Props) {
           required
         />
       </label>
-
-      <label>
-        Ton e-mail
-        <input
-          type="email"
-          value={form.purchaserEmail}
-          onChange={handleChange("purchaserEmail")}
-          required
-        />
-      </label>
-      {emailError && <p className="error">{emailError}</p>}
 
       <label>
         Nom du destinataire
@@ -80,17 +70,6 @@ export default function CarteCadeauForm({ initialData, onSubmit }: Props) {
       <label>
         Message (facultatif)
         <textarea value={form.message} onChange={handleChange("message")} />
-      </label>
-
-      <label>
-        Quantité
-        <input
-          type="number"
-          value={form.quantity}
-          min={1}
-          onChange={handleChange("quantity")}
-          required
-        />
       </label>
 
       <button type="submit">Continuer vers le paiement</button>

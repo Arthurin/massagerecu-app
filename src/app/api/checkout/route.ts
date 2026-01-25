@@ -16,16 +16,8 @@ export async function POST(req: Request) {
     const body = (await req.json()) as StripeInputProps; //Type attendu depuis le frontend
     const { checkoutData } = body;
 
-    if (!checkoutData?.purchaserEmail) {
-      return NextResponse.json(
-        { error: "checkoutData.purchaserEmail manquant" },
-        { status: 400 }
-      );
-    }
-
     const metadata = exportToStripeMetadata({
       purchaserName: checkoutData.purchaserName,
-      purchaserEmail: checkoutData.purchaserEmail,
       recipientName: checkoutData.recipientName,
       message: checkoutData.message,
       quantity: checkoutData.quantity.toString(),
@@ -75,7 +67,7 @@ export async function POST(req: Request) {
      * 3️⃣ Création du PaymentIntent
      * ---------------------------------- */
     const idempotencyKey = createCheckoutIdempotencyKey({
-      purchaserEmail: checkoutData.purchaserEmail,
+      purchaserName: checkoutData.purchaserName,
       massagePriceId: checkoutData.massagePriceId,
       quantity: checkoutData.quantity,
     });
@@ -83,9 +75,6 @@ export async function POST(req: Request) {
       {
         amount,
         currency: "eur",
-
-        // email utilisé par Stripe (reçus, conformité)
-        receipt_email: checkoutData.purchaserEmail,
 
         // paiement embarqué, sans redirection
         automatic_payment_methods: {

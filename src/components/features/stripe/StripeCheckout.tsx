@@ -99,7 +99,7 @@ export default function StripeCheckout({
       options={elementsOptions}
       key={clientSecret}
     >
-      <CheckoutForm onSuccess={onSuccess} email={checkoutData.purchaserEmail} />
+      <CheckoutForm onSuccess={onSuccess} />
     </Elements>
   );
 }

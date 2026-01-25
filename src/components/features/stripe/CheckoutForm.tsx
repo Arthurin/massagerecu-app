@@ -4,18 +4,18 @@ import React, { useState, FormEvent } from "react";
 import {
   PaymentElement,
   useStripe,
+  AddressElement,
+  LinkAuthenticationElement,
   useElements,
 } from "@stripe/react-stripe-js";
 import type { StripePaymentElementOptions } from "@stripe/stripe-js";
 
 interface CheckoutFormProps {
-  email: string;
   onSuccess: () => void;
   onError?: (message: string) => void;
 }
 
 export default function CheckoutForm({
-  email,
   onSuccess,
   onError,
 }: CheckoutFormProps) {
@@ -38,9 +38,6 @@ export default function CheckoutForm({
 
     const result = await stripe.confirmPayment({
       elements,
-      confirmParams: {
-        receipt_email: email,
-      },
       redirect: "if_required",
     });
 
@@ -88,9 +85,24 @@ export default function CheckoutForm({
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <h3>Votre commande</h3>
+      <h3>Coordonnées</h3>
 
+      {/* Email + Link */}
+      <LinkAuthenticationElement />
+
+      {/* Adresse de facturation */}
+      <AddressElement
+        options={{
+          mode: "billing",
+          fields: {
+            phone: "never",
+          },
+        }}
+      />
+
+      <h3>Paiement</h3>
       <PaymentElement id="payment-element" options={paymentElementOptions} />
+
       <div className="d-grid gap-2 mt-3">
         <button
           disabled={isLoading || !stripe || !elements}

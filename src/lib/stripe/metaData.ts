@@ -14,7 +14,6 @@ export function exportToStripeMetadata(
 ): Stripe.MetadataParam {
   return {
     purchaserName: data.purchaserName,
-    purchaserEmail: data.purchaserEmail,
     recipientName: data.recipientName,
     message: data.message ?? "",
     massagePriceId: data.massagePriceId,

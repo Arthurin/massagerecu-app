@@ -94,6 +94,18 @@ async function handlePaymentIntentSucceeded(
   paymentIntent: Stripe.PaymentIntent
 ) {
   console.log(`Le paiement a été réussi (id : ${paymentIntent.id})`);
+
+  if (!paymentIntent.latest_charge) {
+    throw new Error("No charge found on PaymentIntent");
+  }
+
+  const charge = await stripe.charges.retrieve(
+    paymentIntent.latest_charge as string
+  );
+
+  const email = charge.billing_details.email;
+  const address = charge.billing_details.address;
+
   if (paymentIntent.metadata?.processed === "true") {
     console.log(
       `⏭️ PaymentIntent ${paymentIntent.id} déjà traité par le webhook, idempotence ok on ignore cet événement.`
@@ -111,6 +123,12 @@ async function handlePaymentIntentSucceeded(
       `↩️ Idempotence remarquée car l'entrée ${paymentIntent.id} est déjà présente dans le tableau.`
     );
     return NextResponse.json({ received: true });
+  }
+
+  console.log(`Traitement de la commande en cours pour ${email}`);
+
+  if (!email) {
+    throw new Error("Aucun email trouvé pour ce paiement");
   }
 
   // on récupère les metadata et on vérifie qu'elles sont valides
@@ -154,7 +172,7 @@ async function handlePaymentIntentSucceeded(
     data.giftTitle, // Titre
     "", // Déclaration, laisser vide
     "vente en ligne", // Règlement
-    data.purchaserEmail, // Contact
+    email, // Contact
     data.purchaseDate, // Date d'achat
     data.message, // Message
   ]);
@@ -162,13 +180,6 @@ async function handlePaymentIntentSucceeded(
   console.log(
     `✅ Carte cadeau ${paymentIntent.id} enregistrée dans Google Sheet`
   );
-
-  const email =
-    paymentIntent.receipt_email || paymentIntent.metadata?.purchaserEmail;
-
-  if (!email) {
-    throw new Error("Aucun email trouvé pour ce paiement");
-  }
 
   const pdfFields = {
     nomDestinataire: data.recipientName,
@@ -180,7 +191,7 @@ async function handlePaymentIntentSucceeded(
 
   const pdfBytes = await generatePDF(pdfFields);
 
-  await sendCustomEmail(data.purchaserEmail, {
+  await sendCustomEmail(email, {
     amount: data.priceWithCurrency,
     paymentId: paymentIntent.id,
     pdfBytes,
@@ -224,9 +235,8 @@ async function sendCustomEmail(
       ],
     });
   } catch (err: any) {
-    console.error("❌ Erreur lors de l'envoi :", err);
     throw new Error(
-      `Email delivery failed: ${err?.message ?? "unknown error"}`
+      `Erreur lors de l'envoi : ${err?.message ?? "erreur inconnue"}`
     );
   }
 }
@@ -250,7 +260,6 @@ function getGiftCardFullData(
     purchaserName: metadata.purchaserName ?? "",
     price: price,
     priceWithCurrency: `${price}€`,
-    purchaserEmail: metadata.purchaserEmail ?? "",
     message: metadata.message ?? "",
     purchaseDate: new Date(today * 1000).toLocaleDateString("fr-FR"),
     expirationDate: new Date(

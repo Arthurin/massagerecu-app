@@ -1,6 +1,5 @@
 export interface StripeInputProps {
   checkoutData: {
-    purchaserEmail: string;
     purchaserName: string;
     recipientName: string;
     message: string;

@@ -47,7 +47,6 @@ export default function CarteCadeauFlow() {
       {step === "payment" && order && (
         <StripeCheckout
           checkoutData={{
-            purchaserEmail: order.formData.purchaserEmail,
             purchaserName: order.formData.purchaserName,
             recipientName: order.formData.recipientName,
             message: order.formData.message,
@@ -59,7 +58,7 @@ export default function CarteCadeauFlow() {
       )}
 
       {step === "success" && order && (
-        <PaymentSuccess purchaserEmail={order.formData.purchaserEmail} />
+        <PaymentSuccess purchaserEmail={"purchaserEmail"} />
       )}
     </>
   );

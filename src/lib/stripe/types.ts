@@ -1,6 +1,5 @@
 export interface StripeCarteCadeauMetadata {
   purchaserName: string;
-  purchaserEmail: string;
   recipientName: string;
   message: string;
   massagePriceId: string;
@@ -9,7 +8,6 @@ export interface StripeCarteCadeauMetadata {
 
 export const STRIPE_CARTE_CADEAU_METADATA_KEYS = [
   "purchaserName",
-  "purchaserEmail",
   "recipientName",
   "message",
   "massagePriceId",
