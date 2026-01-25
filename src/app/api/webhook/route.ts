@@ -11,6 +11,7 @@ import { MASSAGE_CATALOG } from "@/lib/catalog/massageCatalog";
 import { extractFromStripeMetadata } from "@/lib/stripe/metaData";
 import { StripeCarteCadeauMetadata } from "@/lib/stripe/types";
 import { MassageCatalogItem } from "@/lib/catalog/types";
+import { savePaymentResult } from "@/lib/stripe/paymentResults";
 
 // Configure body parser for webhooks
 export const config = {
@@ -102,6 +103,13 @@ async function handlePaymentIntentSucceeded(
   const charge = await stripe.charges.retrieve(
     paymentIntent.latest_charge as string
   );
+  
+  // sauvegarde des infos de paiement pour consultation ultérieure
+  savePaymentResult(paymentIntent.id, {
+    email: charge.billing_details.email ?? null,
+    billingAddress: charge.billing_details.address ?? null,
+    createdAt: Date.now(),
+  });
 
   if (paymentIntent.metadata?.processed === "true") {
     console.log(

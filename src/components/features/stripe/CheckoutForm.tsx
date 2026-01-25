@@ -11,7 +11,7 @@ import {
 import type { StripePaymentElementOptions } from "@stripe/stripe-js";
 
 interface CheckoutFormProps {
-  onSuccess: () => void;
+  onSuccess: (paymentIntentId: string) => void;
   onError?: (message: string) => void;
 }
 
@@ -67,7 +67,7 @@ export default function CheckoutForm({
 
     if (result.paymentIntent?.status === "succeeded") {
       // Paiement confirmé
-      onSuccess();
+      onSuccess(result.paymentIntent.id);
     } else {
       console.error(
         "résultat du paiement dans un état inconnu, paymentIntent.status est est attendu avec la valeur succeeded",

@@ -12,5 +12,5 @@ export interface StripeMetaData {
 export interface StripeCheckoutProps {
   massage: MassageOption;
   checkoutData: CarteCadeauFormData;
-  onSuccess: () => void;
+  onSuccess: (paymentIntentId: string) => void;
 }

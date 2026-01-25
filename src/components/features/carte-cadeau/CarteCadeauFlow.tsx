@@ -17,6 +17,7 @@ export default function CarteCadeauFlow() {
   const [massage, setMassage] = useState<MassageOption | null>(null);
   const [formData, setFormData] = useState<CarteCadeauFormData | null>(null);
   const [massageCatalog, setMassageCatalog] = useState<MassageOption[]>([]);
+  const [paymentIntentId, setPaymentIntentId] = useState<string>("");
 
   useEffect(() => {
     fetch("/api/catalog")
@@ -63,11 +64,14 @@ export default function CarteCadeauFlow() {
         <StripeCheckout
           massage={massage}
           checkoutData={formData}
-          onSuccess={() => goToStep(4)}
+          onSuccess={(id) => {
+            setPaymentIntentId(id);
+            goToStep(4);
+          }}
         />
       )}
 
-      {step === 4 && <PaymentSuccess purchaserEmail={"test2"} />}
+      {step === 4 && <PaymentSuccess paymentIntentId={paymentIntentId} />}
     </div>
   );
 }
