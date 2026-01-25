@@ -6,18 +6,21 @@ interface PaymentSuccessProps {
   paymentIntentId: string;
 }
 
-const MAX_RETRIES = 10;
+type PaymentStatus = "processing" | "completed" | "failed" | "error";
+
+const MAX_RETRIES = 20;
 const RETRY_DELAY_MS = 1000;
 
 export default function PaymentSuccess({
   paymentIntentId,
 }: PaymentSuccessProps) {
+  const [status, setStatus] = useState<PaymentStatus>("processing");
   const [email, setEmail] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!paymentIntentId) {
       console.error("paymentIntentId is empty");
+      setStatus("error");
       return;
     }
 
@@ -38,35 +41,34 @@ export default function PaymentSuccess({
             return;
           }
 
-          // autre erreur → on arrête
-          throw new Error("Failed to fetch payment result");
+          throw new Error("Le résultat du traitement de la commande est indisponible");
         }
 
         const data = await res.json();
-
         if (cancelled) return;
 
         if (data.status === "completed") {
-          setEmail(data.email);
-          setLoading(false);
-          return;
-        }
-        
-        if (data.status === "failed") {
-          setLoading(false);
+          setEmail(data.email ?? null);
+          setStatus("completed");
           return;
         }
 
+        if (data.status === "failed") {
+          setStatus("failed");
+          return;
+        }
+
+        // processing → retry
         if (retries < MAX_RETRIES) {
           retries++;
           setTimeout(fetchResult, RETRY_DELAY_MS);
         } else {
-          setLoading(false);
+          setStatus("error");
         }
       } catch (err) {
         if (!cancelled) {
           console.error(err);
-          setLoading(false);
+          setStatus("error");
         }
       }
     };
@@ -79,35 +81,74 @@ export default function PaymentSuccess({
   }, [paymentIntentId]);
 
   return (
-    <div className="max-w-xl mx-auto p-6 bg-green-50 border border-green-200 rounded-lg space-y-4">
-      <h2 className="text-xl font-semibold text-green-800">
-        ✅ Paiement confirmé
+    <div className="max-w-xl mx-auto p-6 rounded-lg border space-y-4">
+      {/* TITRE */}
+      <h2 className="text-xl font-semibold">
+        {status === "completed"
+          ? "✅ Paiement confirmé"
+          : status === "processing"
+          ? "⏳ Traitement en cours"
+          : "❌ Problème lors du traitement"}
       </h2>
 
-      <p className="text-green-900">
-        Merci pour votre achat. Votre paiement a bien été pris en compte.
-      </p>
-
-      <p className="text-green-900">
-        Votre carte cadeau est en cours de préparation.{" "}
-        {loading && <span>Chargement des informations…</span>}
-      </p>
-
-      {email ? (
-        <p className="text-green-900">
-          📧 Elle sera envoyée par email à l'adresse suivante :
-          <br />
-          <strong>{email}</strong>
-        </p>
-      ) : (
-        <p className="text-green-900">📧 Elle sera envoyée par email.</p>
+      {/* PROCESSING */}
+      {status === "processing" && (
+        <>
+          <div className="flex items-center gap-3">
+            <div className="animate-spin h-5 w-5 border-2 border-gray-300 border-t-transparent rounded-full" />
+            <p>
+              Votre paiement a bien été pris en compte.
+              <br />
+              Nous préparons votre carte cadeau…
+            </p>
+          </div>
+          <p className="text-sm text-gray-600">
+            Cette étape peut prendre quelques instants.
+          </p>
+        </>
       )}
 
-      <p className="text-sm text-green-700">
-        ⏳ L'envoi peut prendre quelques minutes.
-        <br />
-        Pensez à vérifier votre dossier spam si besoin.
-      </p>
+      {/* SUCCESS */}
+      {status === "completed" && (
+        <>
+          <p>🎉 Votre carte cadeau a été générée avec succès.</p>
+
+          {email ? (
+            <p>
+              📧 Elle vient d'être envoyée à :
+              <br />
+              <strong>{email}</strong>
+            </p>
+          ) : (
+            <p>📧 Elle va vous être envoyée par email.</p>
+          )}
+
+          <p className="text-sm text-gray-600">
+            Pensez à vérifier votre dossier spam si nécessaire.
+          </p>
+        </>
+      )}
+
+      {/* FAILED / ERROR */}
+      {(status === "failed" || status === "error") && (
+        <>
+          <p>
+            Votre paiement a bien été effectué, mais une erreur est survenue
+            lors de la finalisation de votre commande.
+          </p>
+
+          <p>
+            👉{" "}
+            <a
+              href="mailto:massagerecu@gmail.com"
+              aria-label="Contacter moi par email"
+            >
+              Contactez-moi par email
+            </a>{" "}
+            afin que je règle la situation rapidement.
+          </p>
+        </>
+      )}
     </div>
   );
 }

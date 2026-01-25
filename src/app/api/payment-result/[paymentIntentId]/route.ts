@@ -5,7 +5,7 @@ export async function GET(
   _req: Request,
   { params }: { params: { paymentIntentId: string } }
 ) {
-  const { paymentIntentId } = await params;
+  const { paymentIntentId } = params;
 
   if (!paymentIntentId) {
     return NextResponse.json(
@@ -16,11 +16,14 @@ export async function GET(
 
   const result = getPaymentResult(paymentIntentId);
 
+  console.log("[API payment-result] requested id:", paymentIntentId);
+  console.log("[API payment-result] current store:", result);
+
   if (!result) {
     return NextResponse.json({ error: "Result not found" }, { status: 404 });
   }
-return NextResponse.json({
-  status: result.status,
-  email: result.email ?? null,
-});
+  return NextResponse.json({
+    status: result.status,
+    email: result.email ?? null,
+  });
 }

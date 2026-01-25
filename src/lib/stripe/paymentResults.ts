@@ -22,8 +22,11 @@ export function savePaymentResult(
   paymentIntentId: string,
   result: PaymentResult
 ) {
+  console.log("[STORE] before saving payment result", result);
   cleanup(); // nettoyage avant chaque insertion
   store.set(paymentIntentId, result);
+  console.log("[STORE] after save", store.get(paymentIntentId));
+  console.log("[STORE] store size", store.size);
 }
 
 export function getPaymentResult(paymentIntentId: string) {
