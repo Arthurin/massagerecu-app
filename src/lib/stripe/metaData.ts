@@ -13,7 +13,6 @@ export function exportToStripeMetadata(
   data: StripeCarteCadeauMetadata
 ): Stripe.MetadataParam {
   return {
-    purchaserName: data.purchaserName,
     recipientName: data.recipientName,
     message: data.message ?? "",
     massagePriceId: data.massagePriceId,

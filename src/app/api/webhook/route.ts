@@ -103,9 +103,6 @@ async function handlePaymentIntentSucceeded(
     paymentIntent.latest_charge as string
   );
 
-  const email = charge.billing_details.email;
-  const address = charge.billing_details.address;
-
   if (paymentIntent.metadata?.processed === "true") {
     console.log(
       `⏭️ PaymentIntent ${paymentIntent.id} déjà traité par le webhook, idempotence ok on ignore cet événement.`
@@ -123,12 +120,6 @@ async function handlePaymentIntentSucceeded(
       `↩️ Idempotence remarquée car l'entrée ${paymentIntent.id} est déjà présente dans le tableau.`
     );
     return NextResponse.json({ received: true });
-  }
-
-  console.log(`Traitement de la commande en cours pour ${email}`);
-
-  if (!email) {
-    throw new Error("Aucun email trouvé pour ce paiement");
   }
 
   // on récupère les metadata et on vérifie qu'elles sont valides
@@ -160,19 +151,22 @@ async function handlePaymentIntentSucceeded(
     paymentIntent.id,
     safePrice,
     catalogItem,
-    metadata
+    metadata,
+    charge
   );
+
+  console.log(`Traitement de la commande en cours pour ${data.buyerEmail}`);
 
   await GoogleSheets.appendRow([
     data.giftId, // N° du bon
     "", // MASSAGE FAIT, laisser vide
     data.expirationDate, // Date d'expiration
     data.recipientName, // Bénéficiaire
-    data.purchaserName, // Acheteur
+    data.buyerName, // Acheteur
     data.giftTitle, // Titre
     "", // Déclaration, laisser vide
     "vente en ligne", // Règlement
-    email, // Contact
+    data.buyerEmail, // Contact
     data.purchaseDate, // Date d'achat
     data.message, // Message
   ]);
@@ -183,7 +177,7 @@ async function handlePaymentIntentSucceeded(
 
   const pdfFields = {
     nomDestinataire: data.recipientName,
-    nomAcheteur: data.purchaserName,
+    nomAcheteur: data.buyerName,
     montant: data.priceWithCurrency,
     dateExpiration: data.expirationDate,
     idCarteCadeau: data.giftId,
@@ -191,7 +185,7 @@ async function handlePaymentIntentSucceeded(
 
   const pdfBytes = await generatePDF(pdfFields);
 
-  await sendCustomEmail(email, {
+  await sendCustomEmail(data.buyerEmail, {
     amount: data.priceWithCurrency,
     paymentId: paymentIntent.id,
     pdfBytes,
@@ -245,7 +239,8 @@ function getGiftCardFullData(
   id: string,
   safePrice: number,
   catalogItem: MassageCatalogItem,
-  metadata: StripeCarteCadeauMetadata
+  metadata: StripeCarteCadeauMetadata,
+  charge: Stripe.Charge
 ) {
   const price = (safePrice / 100).toFixed();
   const today = Date.now();
@@ -253,11 +248,27 @@ function getGiftCardFullData(
     metadata.quantity !== "1"
       ? `${catalogItem.title} (x${metadata.quantity})`
       : catalogItem.title;
+
+  const email = charge.billing_details.email;
+  if (email === null) {
+    throw new Error(
+      "Le mail de l'acheteur n'a pas pu être récupéré pour ce paiement (charge.billing_details.email est null)"
+    );
+  }
+  const address = charge.billing_details.address;
+  const buyerName = charge.billing_details.name;
+  if (buyerName === null) {
+    throw new Error(
+      "Le nom de l'acheteur pour ce paiement n'a pas pu être récupéré (charge.billing_details.name est null)"
+    );
+  }
+
   return {
     giftId: id,
     giftTitle: title,
     recipientName: metadata.recipientName ?? "",
-    purchaserName: metadata.purchaserName ?? "",
+    buyerName: buyerName,
+    buyerEmail: email,
     price: price,
     priceWithCurrency: `${price}€`,
     message: metadata.message ?? "",

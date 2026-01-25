@@ -41,6 +41,8 @@ export default function CheckoutForm({
       redirect: "if_required",
     });
 
+    console.log("Résultat du paiement :", result);
+
     if (result.error) {
       console.error(result.error);
       let errorMessage =

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import { stripe } from "@/lib/stripe";
-import { StripeInputProps } from "@/components/features/stripe/types";
+import { StripeMetaData } from "@/components/features/stripe/types";
 import { exportToStripeMetadata } from "@/lib/stripe/metaData";
 import { createCheckoutIdempotencyKey } from "@/lib/stripe/idempotency";
 
@@ -13,11 +13,10 @@ export async function POST(req: Request) {
     /* ----------------------------------
      * 1️⃣ Lecture et validation du body
      * ---------------------------------- */
-    const body = (await req.json()) as StripeInputProps; //Type attendu depuis le frontend
+    const body = (await req.json()) as StripeMetaData; //Type attendu depuis le frontend
     const { checkoutData } = body;
 
     const metadata = exportToStripeMetadata({
-      purchaserName: checkoutData.purchaserName,
       recipientName: checkoutData.recipientName,
       message: checkoutData.message,
       quantity: checkoutData.quantity.toString(),
@@ -67,7 +66,7 @@ export async function POST(req: Request) {
      * 3️⃣ Création du PaymentIntent
      * ---------------------------------- */
     const idempotencyKey = createCheckoutIdempotencyKey({
-      purchaserName: checkoutData.purchaserName,
+      recipientName: checkoutData.recipientName,
       massagePriceId: checkoutData.massagePriceId,
       quantity: checkoutData.quantity,
     });

@@ -3,15 +3,19 @@
 import { useEffect, useState } from "react";
 import MassageSelector from "./MassageSelector";
 import CarteCadeauForm from "./CarteCadeauForm";
-import { MassageOption, CarteCadeauOrder } from "./types";
-import StripeCheckout from "@/components/features/stripe/StripeCheckout";
+import StripeCheckout from "../stripe/StripeCheckout";
 import PaymentSuccess from "./PaymentSuccess";
+import StepIndicator from "./StepIndicator";
+import { MassageOption, CarteCadeauOrder, CarteCadeauFormData } from "./types";
 
-type Step = "select" | "form" | "payment" | "success";
+type Step = 1 | 2 | 3 | 4 | 5;
 
 export default function CarteCadeauFlow() {
-  const [order, setOrder] = useState<CarteCadeauOrder | null>(null);
-  const [step, setStep] = useState<Step>("select");
+  const [step, setStep] = useState<Step>(1);
+  const [maxStepReached, setMaxStepReached] = useState<Step>(1);
+
+  const [massage, setMassage] = useState<MassageOption | null>(null);
+  const [formData, setFormData] = useState<CarteCadeauFormData | null>(null);
   const [massageCatalog, setMassageCatalog] = useState<MassageOption[]>([]);
 
   useEffect(() => {
@@ -22,44 +26,48 @@ export default function CarteCadeauFlow() {
       });
   }, []);
 
+  const goToStep = (next: Step) => {
+    setStep(next);
+    setMaxStepReached((prev) => (next > prev ? next : prev));
+  };
+
   return (
-    <>
-      {step === "select" && (
+    <div className="max-w-xl mx-auto">
+      <StepIndicator
+        currentStep={step}
+        maxStepReached={maxStepReached}
+        onStepClick={(s) => s <= maxStepReached && setStep(s as Step)}
+      />
+
+      {step === 1 && (
         <MassageSelector
           options={massageCatalog}
-          onSelect={(massage) => {
-            setOrder({ massage, formData: {} as any });
-            setStep("form");
+          onSelect={(m) => {
+            setMassage(m);
+            goToStep(2);
           }}
         />
       )}
 
-      {step === "form" && order && (
+      {step === 2 && massage && (
         <CarteCadeauForm
-          initialData={order.formData}
-          onSubmit={(formData) => {
-            setOrder({ massage: order.massage, formData });
-            setStep("payment");
+          massage={massage}
+          onSubmit={(data) => {
+            setFormData(data);
+            goToStep(3);
           }}
         />
       )}
 
-      {step === "payment" && order && (
+      {step === 3 && massage && formData && (
         <StripeCheckout
-          checkoutData={{
-            purchaserName: order.formData.purchaserName,
-            recipientName: order.formData.recipientName,
-            message: order.formData.message,
-            massagePriceId: order.massage.massagePriceId,
-            quantity: order.formData.quantity,
-          }}
-          onSuccess={() => setStep("success")}
+          massage={massage}
+          checkoutData={formData}
+          onSuccess={() => goToStep(4)}
         />
       )}
 
-      {step === "success" && order && (
-        <PaymentSuccess purchaserEmail={"purchaserEmail"} />
-      )}
-    </>
+      {step === 4 && <PaymentSuccess purchaserEmail={"test2"} />}
+    </div>
   );
 }

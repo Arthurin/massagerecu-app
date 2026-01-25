@@ -5,12 +5,12 @@ import crypto from "crypto";
  * pour une intention de paiement donnée
  */
 export function createCheckoutIdempotencyKey(input: {
-  purchaserName: string;
+  recipientName: string;
   massagePriceId: string;
   quantity: number;
 }): string {
   const raw = [
-    input.purchaserName.toLowerCase(),
+    input.recipientName.toLowerCase(),
     input.massagePriceId,
     input.quantity,
   ].join("|");

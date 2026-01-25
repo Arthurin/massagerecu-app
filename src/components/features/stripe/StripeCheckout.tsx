@@ -1,25 +1,29 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import CheckoutForm from "./CheckoutForm";
+import { useEffect, useState } from "react";
 import {
   Appearance,
   loadStripe,
   StripeElementsOptions,
 } from "@stripe/stripe-js";
-
 import { Elements } from "@stripe/react-stripe-js";
-import { StripeInputProps } from "./types";
+
+import CheckoutForm from "./CheckoutForm";
+import { MassageOption } from "../carte-cadeau/types";
+import { StripeCheckoutProps } from "./types";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY!);
 
 export default function StripeCheckout({
+  massage,
   checkoutData,
   onSuccess,
-}: StripeInputProps) {
+}: StripeCheckoutProps) {
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+
+  const totalAmount = checkoutData.quantity * massage.unitPrice;
 
   useEffect(() => {
     const fetchClientSecret = async () => {
@@ -27,16 +31,19 @@ export default function StripeCheckout({
         const response = await fetch("/api/checkout", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ checkoutData }),
+          body: JSON.stringify({
+            checkoutData: {
+              ...checkoutData,
+              massagePriceId: massage.massagePriceId,
+            },
+          }),
         });
 
         const data = await response.json();
         console.log(data);
 
         if (!response.ok || !data.clientSecret) {
-          throw new Error(
-            data.error || "Impossible de récupérer le clientSecret Stripe"
-          );
+          throw new Error(data.error || "Impossible de créer le paiement");
         }
 
         setClientSecret(data.clientSecret);
@@ -56,50 +63,59 @@ export default function StripeCheckout({
     };
 
     fetchClientSecret();
-  }, [checkoutData]);
+  }, [massage, checkoutData]);
 
-  const appearance = {
+  if (loading) {
+    return <p>Chargement du paiement…</p>;
+  }
+
+  if (errorMessage) {
+    return <div className="alert alert-danger">{errorMessage}</div>;
+  }
+
+  if (!clientSecret) {
+    return <div className="alert alert-danger">clientSecret manquant</div>;
+  }
+
+  const appearance: Appearance = {
     theme: "stripe",
-    rules: {
-      ".Input": {
-        padding: "12px",
-        fontSize: "16px",
-      },
-      ".Label": {
-        fontWeight: "500",
-      },
-    },
-  } as const;
+  };
 
-  if (loading) return <div>Chargement du formulaire de paiement...</div>;
-  if (errorMessage)
-    return (
-      <div className="p-6 bg-red-100 text-red-800 rounded-lg">
-        ⚠️ {errorMessage}
-      </div>
-    );
-  if (!clientSecret)
-    return (
-      <div className="p-6 bg-red-100 text-red-800 rounded-lg">
-        ⚠️ clientSecret manquant
-      </div>
-    );
-
-  // Enable the skeleton loader UI for optimal loading.
-  const loader = "auto";
   const elementsOptions: StripeElementsOptions = {
     clientSecret,
     appearance,
-    loader,
+    loader: "auto",
   };
 
   return (
-    <Elements
-      stripe={stripePromise}
-      options={elementsOptions}
-      key={clientSecret}
-    >
-      <CheckoutForm onSuccess={onSuccess} />
-    </Elements>
+    <div className="space-y-6">
+      {/* 🧾 RÉCAP COMMANDE */}
+      <div className="p-4 rounded-lg border bg-gray-50">
+        <h3 className="text-lg font-semibold mb-2">
+          Récapitulatif de votre commande
+        </h3>
+
+        <ul className="text-sm space-y-1">
+          <li>
+            <strong>Produit :</strong> {massage.title}
+          </li>
+          <li>
+            <strong>Quantité :</strong> {checkoutData.quantity}
+          </li>
+          <li>
+            <strong>Total :</strong> {totalAmount.toFixed(0)} €
+          </li>
+        </ul>
+      </div>
+
+      {/* 💳 STRIPE */}
+      <Elements
+        stripe={stripePromise}
+        options={elementsOptions}
+        key={clientSecret}
+      >
+        <CheckoutForm onSuccess={onSuccess} />
+      </Elements>
+    </div>
   );
 }
