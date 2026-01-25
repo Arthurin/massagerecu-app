@@ -19,6 +19,7 @@ export const config = {
     bodyParser: false,
   },
 };
+export const runtime = "nodejs";
 
 export async function POST(req: NextRequest) {
   const body = await req.text();
