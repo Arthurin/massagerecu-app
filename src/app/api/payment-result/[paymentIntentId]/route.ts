@@ -6,7 +6,7 @@ export async function GET(
   { params }: { params: { paymentIntentId: string } }
 ) {
   const { paymentIntentId } = await params;
-  
+
   if (!paymentIntentId) {
     return NextResponse.json(
       { error: "paymentIntentId manquant" },
@@ -19,6 +19,8 @@ export async function GET(
   if (!result) {
     return NextResponse.json({ error: "Result not found" }, { status: 404 });
   }
-
-  return NextResponse.json(result);
+return NextResponse.json({
+  status: result.status,
+  email: result.email ?? null,
+});
 }

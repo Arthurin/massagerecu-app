@@ -1,7 +1,7 @@
 export interface PaymentResult {
   email: string | null;
-  billingAddress: any | null;
   createdAt: number;
+  status: "processing" | "completed" | "post-treatment-failed";
 }
 
 const store = new Map<string, PaymentResult>();

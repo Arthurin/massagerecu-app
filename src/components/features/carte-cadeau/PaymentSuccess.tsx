@@ -46,10 +46,18 @@ export default function PaymentSuccess({
 
         if (cancelled) return;
 
-        if (data.email) {
+        if (data.status === "completed") {
           setEmail(data.email);
           setLoading(false);
-        } else if (retries < MAX_RETRIES) {
+          return;
+        }
+        
+        if (data.status === "failed") {
+          setLoading(false);
+          return;
+        }
+
+        if (retries < MAX_RETRIES) {
           retries++;
           setTimeout(fetchResult, RETRY_DELAY_MS);
         } else {
