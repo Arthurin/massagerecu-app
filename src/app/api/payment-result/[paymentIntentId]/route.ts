@@ -1,11 +1,11 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { getPaymentResult } from "@/lib/stripe/paymentResults";
 
 export async function GET(
-  _req: Request,
-  { params }: { params: { paymentIntentId: string } }
+  _req: NextRequest,
+  { params }: { params: Promise<{ paymentIntentId: string }>}
 ) {
-  const { paymentIntentId } = params;
+  const { paymentIntentId } = await params;
 
   if (!paymentIntentId) {
     return NextResponse.json(
