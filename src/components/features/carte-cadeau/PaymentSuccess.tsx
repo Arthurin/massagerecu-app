@@ -8,8 +8,9 @@ interface PaymentSuccessProps {
 
 type PaymentStatus = "processing" | "completed" | "failed" | "error";
 
-const MAX_RETRIES = 20;
+const MAX_RETRIES = 15;
 const RETRY_DELAY_MS = 1000;
+const INITIAL_DELAY_MS = 1500;
 
 export default function PaymentSuccess({
   paymentIntentId,
@@ -41,7 +42,9 @@ export default function PaymentSuccess({
             return;
           }
 
-          throw new Error("Le résultat du traitement de la commande est indisponible");
+          throw new Error(
+            "Le résultat du traitement de la commande est indisponible"
+          );
         }
 
         const data = await res.json();
@@ -73,10 +76,11 @@ export default function PaymentSuccess({
       }
     };
 
-    fetchResult();
+    const initialTimeout = setTimeout(fetchResult, INITIAL_DELAY_MS);
 
     return () => {
       cancelled = true;
+      clearTimeout(initialTimeout);
     };
   }, [paymentIntentId]);
 
