@@ -1,7 +1,7 @@
 export interface PaymentResult {
   email: string | null;
   createdAt: number;
-  status: "processing" | "completed" | "post-treatment-failed";
+  status: "processing" | "completed" | "failed";
 }
 
 const store = new Map<string, PaymentResult>();
@@ -22,10 +22,19 @@ export function savePaymentResult(
   paymentIntentId: string,
   result: PaymentResult
 ) {
-  console.log("[STORE] before saving payment result", result);
-  cleanup(); // nettoyage avant chaque insertion
-  store.set(paymentIntentId, result);
-  console.log("[STORE] after save", store.get(paymentIntentId));
+  console.log("[STORE] Saving payment for paymentIntentId : ", paymentIntentId);
+
+  cleanup();
+
+  const previous = store.get(paymentIntentId);
+
+  store.set(paymentIntentId, {
+    ...previous,
+    ...result,
+    createdAt: result.createdAt ?? previous?.createdAt ?? Date.now(),
+  });
+
+  console.log("[STORE] after save :", store.get(paymentIntentId));
   console.log("[STORE] store size", store.size);
 }
 

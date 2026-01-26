@@ -214,7 +214,7 @@ async function handlePaymentIntentSucceeded(
     });
   } catch (err) {
     savePaymentResult(paymentIntent.id, {
-      status: "post-treatment-failed",
+      status: "failed",
       email: charge.billing_details.email ?? null,
       createdAt: Date.now(),
     });

@@ -6,7 +6,7 @@ interface PaymentSuccessProps {
   paymentIntentId: string;
 }
 
-type PaymentStatus = "processing" | "completed" | "failed" | "error";
+type PaymentStatus = "init" | "processing" | "completed" | "failed" | "error";
 
 const MAX_RETRIES = 15;
 const RETRY_DELAY_MS = 1000;
@@ -15,7 +15,7 @@ const INITIAL_DELAY_MS = 1500;
 export default function PaymentSuccess({
   paymentIntentId,
 }: PaymentSuccessProps) {
-  const [status, setStatus] = useState<PaymentStatus>("processing");
+  const [status, setStatus] = useState<PaymentStatus>("init");
   const [email, setEmail] = useState<string | null>(null);
 
   useEffect(() => {
@@ -61,11 +61,16 @@ export default function PaymentSuccess({
           return;
         }
 
+        if (data.status === "processing") {
+          setStatus("processing");
+        }
+
         // processing → retry
         if (retries < MAX_RETRIES) {
           retries++;
           setTimeout(fetchResult, RETRY_DELAY_MS);
         } else {
+          // trop de retries
           setStatus("error");
         }
       } catch (err) {
@@ -90,20 +95,22 @@ export default function PaymentSuccess({
       <h2 className="text-xl font-semibold">
         {status === "completed"
           ? "✅ Paiement confirmé"
-          : status === "processing"
+          : status === "processing" || status === "init"
           ? "⏳ Traitement en cours"
           : "❌ Problème lors du traitement"}
       </h2>
 
       {/* PROCESSING */}
-      {status === "processing" && (
+      {(status === "init" || status === "processing") && (
         <>
           <div className="flex items-center gap-3">
             <div className="animate-spin h-5 w-5 border-2 border-gray-300 border-t-transparent rounded-full" />
             <p>
               Votre paiement a bien été pris en compte.
               <br />
-              Nous préparons votre carte cadeau…
+              {status === "init"
+                ? "Enregistrement de votre commande…"
+                : "Préparation de votre carte cadeau…"}
             </p>
           </div>
           <p className="text-sm text-gray-600">
@@ -149,7 +156,8 @@ export default function PaymentSuccess({
             >
               Contactez-moi par email
             </a>{" "}
-            afin que je règle la situation rapidement.
+            afin que je règle la situation rapidement. Je suis désolé pour la
+            gêne occasionnée.
           </p>
         </>
       )}
