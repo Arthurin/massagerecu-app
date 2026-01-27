@@ -34,6 +34,7 @@ Bootstrap 5.1.3
 React 19
 NextJs 15
 Typescript
+Neon (Postgres)
 API Stripe 2025-08-27.basil avec intégration avancée : API Payment Element + l'interface utilisateur Elements
 Mail : Nodemailer + API Gmail + Sanitaze-html
 PDF : pdf-lib

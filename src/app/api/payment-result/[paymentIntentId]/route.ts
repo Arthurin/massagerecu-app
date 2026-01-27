@@ -3,7 +3,7 @@ import { getPaymentResult } from "@/lib/stripe/paymentResults";
 
 export async function GET(
   _req: NextRequest,
-  { params }: { params: Promise<{ paymentIntentId: string }>}
+  { params }: { params: Promise<{ paymentIntentId: string }> }
 ) {
   const { paymentIntentId } = await params;
 
@@ -14,7 +14,7 @@ export async function GET(
     );
   }
 
-  const result = getPaymentResult(paymentIntentId);
+  const result = await getPaymentResult(paymentIntentId);
 
   console.log("[API payment-result] requested id:", paymentIntentId);
   console.log("[API payment-result] current store:", result);

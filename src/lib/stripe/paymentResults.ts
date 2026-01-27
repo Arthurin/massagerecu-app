@@ -1,44 +1,31 @@
-export interface PaymentResult {
-  email: string | null;
-  createdAt: number;
-  status: "processing" | "completed" | "failed";
-}
+import { pool } from "@/lib/db/client";
 
-const store = new Map<string, PaymentResult>();
-
-const TTL_MS = 30 * 60 * 1000; // 30 minutes
-
-function cleanup() {
-  const now = Date.now();
-
-  for (const [key, value] of store.entries()) {
-    if (now - value.createdAt > TTL_MS) {
-      store.delete(key);
-    }
-  }
-}
-
-export function savePaymentResult(
+export async function savePaymentResult(
   paymentIntentId: string,
-  result: PaymentResult
+  { status, email }: { status: string; email: string | null }
 ) {
-  console.log("[STORE] Saving payment for paymentIntentId : ", paymentIntentId);
-
-  cleanup();
-
-  const previous = store.get(paymentIntentId);
-
-  store.set(paymentIntentId, {
-    ...previous,
-    ...result,
-    createdAt: result.createdAt ?? previous?.createdAt ?? Date.now(),
-  });
-
-  console.log("[STORE] after save :", store.get(paymentIntentId));
-  console.log("[STORE] store size", store.size);
+  await pool.query(
+    `
+    INSERT INTO payment_results (payment_intent_id, status, email)
+    VALUES ($1, $2, $3)
+    ON CONFLICT (payment_intent_id)
+    DO UPDATE SET
+      status = EXCLUDED.status,
+      email = COALESCE(EXCLUDED.email, payment_results.email)
+    `,
+    [paymentIntentId, status, email]
+  );
 }
 
-export function getPaymentResult(paymentIntentId: string) {
-  cleanup(); // nettoyage avant lecture
-  return store.get(paymentIntentId) ?? null;
+export async function getPaymentResult(paymentIntentId: string) {
+  const { rows } = await pool.query(
+    `
+    SELECT status, email
+    FROM payment_results
+    WHERE payment_intent_id = $1
+    `,
+    [paymentIntentId]
+  );
+
+  return rows[0] ?? null;
 }

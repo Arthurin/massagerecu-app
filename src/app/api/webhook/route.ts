@@ -106,10 +106,9 @@ async function handlePaymentIntentSucceeded(
   );
   try {
     // marquage du paiement comme "en cours de traitement"
-    savePaymentResult(paymentIntent.id, {
+    await savePaymentResult(paymentIntent.id, {
       status: "processing",
-      email: charge.billing_details.email ?? null,
-      createdAt: Date.now(),
+      email:charge.billing_details.email ?? null,
     });
 
     if (paymentIntent.metadata?.processed === "true") {
@@ -207,16 +206,15 @@ async function handlePaymentIntentSucceeded(
         processed: "true",
       },
     });
-    savePaymentResult(paymentIntent.id, {
+    //traitement terminé, on met à jour en base
+    await savePaymentResult(paymentIntent.id, {
       status: "completed",
-      email: charge.billing_details.email ?? null,
-      createdAt: Date.now(),
+      email:data.buyerEmail,
     });
   } catch (err) {
-    savePaymentResult(paymentIntent.id, {
-      status: "failed",
-      email: charge.billing_details.email ?? null,
-      createdAt: Date.now(),
+    await savePaymentResult(paymentIntent.id, {
+      status: "completed",
+      email:charge.billing_details.email ?? null,
     });
   }
 }
