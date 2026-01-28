@@ -144,10 +144,7 @@ async function handlePaymentIntentSucceeded(
     );
   }
 
-  const dateCreation = new Date();
-  const dateExpiration = dateCreation;
-  dateExpiration.setMonth(dateExpiration.getMonth() + 6); // expire dans 6 mois
-  const giftId = await generateGiftcardId(dateCreation);
+  const giftId = await generateGiftcardId(new Date());
 
   const data = getGiftCardFullData(
     giftId,
@@ -163,8 +160,8 @@ async function handlePaymentIntentSucceeded(
     paymentIntentId,
     buyerName: data.buyerName,
     recipientName: data.recipientName,
-    dateCreation: dateCreation,
-    dateExpiration: dateExpiration,
+    dateCreation: data.dateCreation,
+    dateExpiration: data.dateExpiration,
     title: data.giftTitle,
     quantity: data.quantity,
     email: data.buyerEmail,
@@ -182,7 +179,7 @@ async function handlePaymentIntentSucceeded(
       nomDestinataire: data.recipientName,
       nomAcheteur: data.buyerName,
       montant: data.priceWithCurrency,
-      dateExpiration: data.expirationDate,
+      dateExpiration: data.dateExpiration.toLocaleDateString("fr-FR"),
       idCarteCadeau: data.giftId,
     };
 
@@ -247,7 +244,7 @@ async function sendCustomEmail(
     });
   } catch (err: any) {
     throw new Error(
-      `Erreur lors de l'envoi : ${err?.message ?? "erreur inconnue"}`
+      `Erreur lors de l'envoi par mail : ${err?.message ?? "erreur inconnue"}`
     );
   }
 }
@@ -261,7 +258,9 @@ function getGiftCardFullData(
   paymentId: string
 ) {
   const price = (safePrice / 100).toFixed();
-  const today = Date.now();
+  const dateCreation = new Date();
+  const dateExpiration = new Date();
+  dateExpiration.setMonth(dateExpiration.getMonth() + 6); // expire dans 6 mois
   const title =
     metadata.quantity !== "1"
       ? `${catalogItem.title} (x${metadata.quantity})`
@@ -273,6 +272,7 @@ function getGiftCardFullData(
       "Le mail de l'acheteur n'a pas pu être récupéré pour ce paiement (charge.billing_details.email est null)"
     );
   }
+  console.log("charge data : ", charge);
   const address = charge.billing_details.address;
   const buyerName = charge.billing_details.name;
   if (buyerName === null) {
@@ -291,10 +291,8 @@ function getGiftCardFullData(
     priceWithCurrency: `${price}€`,
     quantity: Number(metadata.quantity ?? 1),
     message: metadata.message ?? "",
-    purchaseDate: new Date(today * 1000).toLocaleDateString("fr-FR"),
-    expirationDate: new Date(
-      today + 183 * 24 * 60 * 60 * 1000
-    ).toLocaleDateString("fr-FR"),
+    dateCreation: dateCreation,
+    dateExpiration: dateExpiration,
     paymentId: paymentId,
   };
 }
