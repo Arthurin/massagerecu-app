@@ -6,12 +6,18 @@ import Stripe from "stripe";
 import { sendMail } from "@/lib/mailer";
 import { generatePDF } from "@/lib/pdfUtils";
 
-import * as GoogleSheets from "@/lib/googleSheets";
 import { MASSAGE_CATALOG } from "@/lib/catalog/massageCatalog";
 import { extractFromStripeMetadata } from "@/lib/stripe/metaData";
 import { StripeCarteCadeauMetadata } from "@/lib/stripe/types";
 import { MassageCatalogItem } from "@/lib/catalog/types";
-import { savePaymentResult } from "@/lib/stripe/paymentResults";
+
+import {
+  createGiftcard,
+  generateGiftcardId,
+  giftcardExistsByPaymentIntent,
+  GiftCardInsert,
+  updateGiftCardStatusByPaymentIntent,
+} from "@/lib/db/cartecadeau";
 
 // Configure body parser for webhooks
 export const config = {
@@ -95,7 +101,16 @@ export async function POST(req: NextRequest) {
 async function handlePaymentIntentSucceeded(
   paymentIntent: Stripe.PaymentIntent
 ) {
-  console.log(`Le paiement a été réussi (id : ${paymentIntent.id})`);
+  const paymentIntentId = paymentIntent.id;
+
+  console.log(`Le paiement a été réussi (id : ${paymentIntentId})`);
+
+  // 🔒 Idempotence Stripe
+  const alreadyExists = await giftcardExistsByPaymentIntent(paymentIntentId);
+  if (alreadyExists) {
+    console.log("Carte cadeau déjà créée pour", paymentIntentId);
+    return NextResponse.json({ received: true });
+  }
 
   if (!paymentIntent.latest_charge) {
     throw new Error("No charge found on PaymentIntent");
@@ -104,85 +119,65 @@ async function handlePaymentIntentSucceeded(
   const charge = await stripe.charges.retrieve(
     paymentIntent.latest_charge as string
   );
+  // on récupère les metadata et on vérifie qu'elles sont valides
+  const metadata = extractFromStripeMetadata(paymentIntent.metadata);
+
+  const catalogItem = MASSAGE_CATALOG[metadata.massagePriceId];
+
+  if (!catalogItem) {
+    throw new Error(
+      "Massage inconnu dans le catalogue, id :" + metadata.massagePriceId
+    );
+  }
+
+  // expected Amount
+  const safePrice = catalogItem.unitPrice * Number(metadata.quantity) * 100;
+
+  if (paymentIntent.amount !== safePrice) {
+    console.log("quantité : ", Number(metadata.quantity));
+    console.log("unitPrice : ", catalogItem.unitPrice);
+    console.log("safePrice ", safePrice);
+    console.log("amount ", paymentIntent.amount);
+    // log + alerte
+    throw new Error(
+      "Incohérence montant / metadata (possible fraude ou bien le catalogue des prix n'est pas à jour avec les prix du dashboard Stripe)"
+    );
+  }
+
+  const dateCreation = new Date();
+  const dateExpiration = dateCreation;
+  dateExpiration.setMonth(dateExpiration.getMonth() + 6); // expire dans 6 mois
+  const giftId = await generateGiftcardId(dateCreation);
+
+  const data = getGiftCardFullData(
+    giftId,
+    safePrice,
+    catalogItem,
+    metadata,
+    charge,
+    paymentIntentId
+  );
+
+  const giftcard: GiftCardInsert = {
+    id: giftId,
+    paymentIntentId,
+    buyerName: data.buyerName,
+    recipientName: data.recipientName,
+    dateCreation: dateCreation,
+    dateExpiration: dateExpiration,
+    title: data.giftTitle,
+    quantity: data.quantity,
+    email: data.buyerEmail,
+    message: data.message,
+    status: "processing",
+    isTaxCollected: false,
+    isExpired: false,
+  };
+
+  await createGiftcard(giftcard);
+  console.log(`Traitement de la commande en cours pour ${data.buyerEmail}`);
+
   try {
-    // marquage du paiement comme "en cours de traitement"
-    await savePaymentResult(paymentIntent.id, {
-      status: "processing",
-      email:charge.billing_details.email ?? null,
-    });
-
-    if (paymentIntent.metadata?.processed === "true") {
-      console.log(
-        `⏭️ PaymentIntent ${paymentIntent.id} déjà traité par le webhook, idempotence ok on ignore cet événement.`
-      );
-      return;
-    }
-
-    // 🔁 Idempotence google sheet
-    const alreadyProcessed = await GoogleSheets.isPaymentAlreadyProcessed(
-      paymentIntent.id
-    );
-
-    if (alreadyProcessed) {
-      console.log(
-        `↩️ Idempotence remarquée car l'entrée ${paymentIntent.id} est déjà présente dans le tableau.`
-      );
-      return NextResponse.json({ received: true });
-    }
-
-    // on récupère les metadata et on vérifie qu'elles sont valides
-    const metadata = extractFromStripeMetadata(paymentIntent.metadata);
-
-    const catalogItem = MASSAGE_CATALOG[metadata.massagePriceId];
-
-    if (!catalogItem) {
-      throw new Error(
-        "Massage inconnu dans le catalogue, id :" + metadata.massagePriceId
-      );
-    }
-
-    // expected Amount
-    const safePrice = catalogItem.unitPrice * Number(metadata.quantity) * 100;
-
-    if (paymentIntent.amount !== safePrice) {
-      console.log("quantité : ", Number(metadata.quantity));
-      console.log("unitPrice : ", catalogItem.unitPrice);
-      console.log("safePrice ", safePrice);
-      console.log("amount ", paymentIntent.amount);
-      // log + alerte
-      throw new Error(
-        "Incohérence montant / metadata (possible fraude ou bien le catalogue des prix n'est pas à jour avec les prix du dashboard Stripe)"
-      );
-    }
-
-    const data = getGiftCardFullData(
-      paymentIntent.id,
-      safePrice,
-      catalogItem,
-      metadata,
-      charge
-    );
-
-    console.log(`Traitement de la commande en cours pour ${data.buyerEmail}`);
-
-    await GoogleSheets.appendRow([
-      data.giftId, // N° du bon
-      "", // MASSAGE FAIT, laisser vide
-      data.expirationDate, // Date d'expiration
-      data.recipientName, // Bénéficiaire
-      data.buyerName, // Acheteur
-      data.giftTitle, // Titre
-      "", // Déclaration, laisser vide
-      "vente en ligne", // Règlement
-      data.buyerEmail, // Contact
-      data.purchaseDate, // Date d'achat
-      data.message, // Message
-    ]);
-
-    console.log(
-      `✅ Carte cadeau ${paymentIntent.id} enregistrée dans Google Sheet`
-    );
-
     const pdfFields = {
       nomDestinataire: data.recipientName,
       nomAcheteur: data.buyerName,
@@ -206,16 +201,19 @@ async function handlePaymentIntentSucceeded(
         processed: "true",
       },
     });
+
     //traitement terminé, on met à jour en base
-    await savePaymentResult(paymentIntent.id, {
-      status: "completed",
-      email:data.buyerEmail,
-    });
+    await updateGiftCardStatusByPaymentIntent(paymentIntentId, "completed");
+    console.log(
+      `✅ Traitement terminé de la carte cadeau (paymentintentid :${paymentIntentId})`
+    );
   } catch (err) {
-    await savePaymentResult(paymentIntent.id, {
-      status: "completed",
-      email:charge.billing_details.email ?? null,
-    });
+    console.error(
+      `Erreur lors de l'envoi de l'email (paymentintentid :${paymentIntentId})`,
+      err
+    );
+
+    await updateGiftCardStatusByPaymentIntent(paymentIntentId, "failed");
   }
 }
 
@@ -259,7 +257,8 @@ function getGiftCardFullData(
   safePrice: number,
   catalogItem: MassageCatalogItem,
   metadata: StripeCarteCadeauMetadata,
-  charge: Stripe.Charge
+  charge: Stripe.Charge,
+  paymentId: string
 ) {
   const price = (safePrice / 100).toFixed();
   const today = Date.now();
@@ -290,10 +289,12 @@ function getGiftCardFullData(
     buyerEmail: email,
     price: price,
     priceWithCurrency: `${price}€`,
+    quantity: Number(metadata.quantity ?? 1),
     message: metadata.message ?? "",
     purchaseDate: new Date(today * 1000).toLocaleDateString("fr-FR"),
     expirationDate: new Date(
       today + 183 * 24 * 60 * 60 * 1000
     ).toLocaleDateString("fr-FR"),
+    paymentId: paymentId,
   };
 }

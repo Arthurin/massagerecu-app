@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getPaymentResult } from "@/lib/stripe/paymentResults";
+import { getGiftcardByPaymentIntent } from "@/lib/db/cartecadeau";
 
 export async function GET(
   _req: NextRequest,
@@ -14,10 +14,13 @@ export async function GET(
     );
   }
 
-  const result = await getPaymentResult(paymentIntentId);
+  const result = await getGiftcardByPaymentIntent(paymentIntentId);
 
-  console.log("[API payment-result] requested id:", paymentIntentId);
-  console.log("[API payment-result] current store:", result);
+  console.log(
+    "[API payment-result] requested id, result:",
+    paymentIntentId,
+    result
+  );
 
   if (!result) {
     return NextResponse.json({ error: "Result not found" }, { status: 404 });
