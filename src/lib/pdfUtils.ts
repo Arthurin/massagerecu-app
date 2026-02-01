@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import { PDFDocument, StandardFonts, rgb, PDFFont } from "pdf-lib";
+import { PDFDocument, StandardFonts, rgb, PDFFont, PDFPage } from "pdf-lib";
 
 export type ReceiptFields = {
   nomDestinataire: string;
@@ -139,7 +139,7 @@ export async function generatePDF(fields: ReceiptFields): Promise<Uint8Array> {
     const pos = DEFAULT_POSITIONS.message;
     const safeMessage = sanitizeText(message);
 
-    drawCenteredTextBlock({
+    drawJustifiedTextBlock({
       page: firstPage,
       text: safeMessage,
       font: italicFont,
@@ -255,5 +255,98 @@ export function drawCenteredTextBlock({
       font,
       color: rgb(0, 0, 0),
     });
+  });
+}
+
+interface JustifiedTextOptions {
+  page: PDFPage;
+  text: string;
+  font: PDFFont;
+  fontSize: number;
+  boxX: number;
+  boxY: number;
+  boxWidth: number;
+  boxHeight: number;
+  lineHeight?: number;
+}
+
+export function drawJustifiedTextBlock({
+  page,
+  text,
+  font,
+  fontSize,
+  boxX,
+  boxY,
+  boxWidth,
+  boxHeight,
+  lineHeight = fontSize * 1.3,
+}: JustifiedTextOptions) {
+  if (!text.trim()) return;
+
+  // --- 1. Découpage en mots
+  const words = text.replace(/\s+/g, " ").trim().split(" ");
+
+  const lines: string[][] = [];
+  let currentLine: string[] = [];
+
+  for (const word of words) {
+    const testLine = [...currentLine, word].join(" ");
+    const testWidth = font.widthOfTextAtSize(testLine, fontSize);
+
+    if (testWidth > boxWidth && currentLine.length > 0) {
+      lines.push(currentLine);
+      currentLine = [word];
+    } else {
+      currentLine.push(word);
+    }
+  }
+  if (currentLine.length) lines.push(currentLine);
+
+  // --- 2. Calcul du nombre max de lignes
+  const maxLines = Math.floor(boxHeight / lineHeight);
+  const visibleLines = lines.slice(0, maxLines);
+
+  // --- 3. Centrage vertical
+  const totalHeight = visibleLines.length * lineHeight;
+  let y = boxY + boxHeight - (boxHeight - totalHeight) / 2 - fontSize;
+
+  // --- 4. Dessin ligne par ligne
+  visibleLines.forEach((lineWords, index) => {
+    const isLastLine = index === visibleLines.length - 1;
+    const textWidth = font.widthOfTextAtSize(lineWords.join(" "), fontSize);
+
+    let x = boxX;
+
+    if (!isLastLine && lineWords.length > 1) {
+      // --- Justification
+      const gaps = lineWords.length - 1;
+      const extraSpace = (boxWidth - textWidth) / gaps;
+
+      let cursorX = x;
+
+      lineWords.forEach((word, i) => {
+        page.drawText(word, {
+          x: cursorX,
+          y,
+          size: fontSize,
+          font,
+        });
+
+        cursorX +=
+          font.widthOfTextAtSize(word, fontSize) +
+          font.widthOfTextAtSize(" ", fontSize) +
+          (i < gaps ? extraSpace : 0);
+      });
+    } else {
+      // --- Dernière ligne → alignée à gauche
+      page.drawText(lineWords.join(" "), {
+        x,
+        y,
+        size: fontSize,
+        font,
+      });
+    }
+
+    y -= lineHeight;
   });
 }
