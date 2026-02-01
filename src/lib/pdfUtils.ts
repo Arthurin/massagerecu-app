@@ -8,7 +8,7 @@ export type ReceiptFields = {
   soin: string;
   dateExpiration: string;
   idCarteCadeau: string;
-  message:string;
+  message: string;
 };
 
 const TEMPLATE_PATH = path.join(
@@ -30,7 +30,7 @@ const DEFAULT_POSITIONS: Record<
   nomDestinataire: { x: 126.5, y: 394.9, size: 12 },
   nomAcheteur: { x: 126.5, y: 350, size: 12 },
   dateExpiration: { x: 126.5, y: 305.6, size: 12 },
-  message: { x: 330, y: 440, size: 11 },
+  message: { x: 330, y: 330, size: 12 },
   idCarteCadeau: { x: 467.9, y: 305.6, size: 11 },
 };
 
@@ -74,6 +74,7 @@ export async function generatePDF(fields: ReceiptFields): Promise<Uint8Array> {
   const pdfDoc = await PDFDocument.load(templateBytes);
 
   const font = await embedFont(pdfDoc);
+  const italicFont = await pdfDoc.embedFont(StandardFonts.HelveticaOblique);
 
   // Ciblage de la première page
   const pages = pdfDoc.getPages();
@@ -98,8 +99,14 @@ export async function generatePDF(fields: ReceiptFields): Promise<Uint8Array> {
   };
 
   // Récupère les valeurs et dessine si présentes
-  const { nomDestinataire, nomAcheteur, soin, dateExpiration, idCarteCadeau, message } =
-    fields;
+  const {
+    nomDestinataire,
+    nomAcheteur,
+    soin,
+    dateExpiration,
+    idCarteCadeau,
+    message,
+  } = fields;
 
   if (nomDestinataire) {
     const pos = DEFAULT_POSITIONS.nomDestinataire;
@@ -130,9 +137,123 @@ export async function generatePDF(fields: ReceiptFields): Promise<Uint8Array> {
 
   if (message) {
     const pos = DEFAULT_POSITIONS.message;
-    draw(message, pos.x, pos.y, pos.size);
+    const safeMessage = sanitizeText(message);
+
+    drawCenteredTextBlock({
+      page: firstPage,
+      text: safeMessage,
+      font: italicFont,
+      fontSize: pos.size || 12,
+      boxX: pos.x,
+      boxY: pos.y,
+      boxWidth: 190,
+      boxHeight: 130,
+    });
   }
-  
+
   const bytes = await pdfDoc.save();
   return bytes;
+}
+
+function sanitizeText(input?: string | null): string {
+  if (!input) return "";
+
+  return input
+    .replace(/\r\n/g, "\n")
+    .replace(/\r/g, "\n")
+    .replace(/\t/g, " ")
+    .slice(0, 800); // limite raisonnable pour une carte cadeau
+}
+
+/* ============================================================
+   Wrap du texte selon une largeur donnée
+   ============================================================ */
+function wrapTextByWidth(
+  text: string,
+  font: PDFFont,
+  fontSize: number,
+  maxWidth: number
+): string[] {
+  const words = text.split(" ");
+  const lines: string[] = [];
+  let currentLine = "";
+
+  for (const word of words) {
+    const candidate = currentLine ? `${currentLine} ${word}` : word;
+    const candidateWidth = font.widthOfTextAtSize(candidate, fontSize);
+
+    if (candidateWidth <= maxWidth) {
+      currentLine = candidate;
+    } else {
+      if (currentLine) lines.push(currentLine);
+      currentLine = word;
+    }
+  }
+
+  if (currentLine) {
+    lines.push(currentLine);
+  }
+
+  return lines;
+}
+
+/* ============================================================
+   Dessin du texte :
+   - wrap automatique
+   - hauteur max automatique
+   - centrage vertical
+   - centrage horizontal
+   ============================================================ */
+export function drawCenteredTextBlock({
+  page,
+  text,
+  font,
+  fontSize,
+  boxX,
+  boxY,
+  boxWidth,
+  boxHeight,
+}: {
+  page: any;
+  text?: string | null;
+  font: PDFFont;
+  fontSize: number;
+  boxX: number;
+  boxY: number;
+  boxWidth: number;
+  boxHeight: number;
+}) {
+  const safeText = sanitizeText(text);
+  if (!safeText) return;
+
+  const lineHeight = fontSize * 1.3;
+
+  // 1️⃣ wrap selon la largeur
+  const wrappedLines = wrapTextByWidth(safeText, font, fontSize, boxWidth);
+
+  // 2️⃣ calcul automatique du nombre max de lignes
+  const maxLines = Math.floor(boxHeight / lineHeight);
+
+  const visibleLines = wrappedLines.slice(0, maxLines);
+
+  // 3️⃣ hauteur réelle du texte
+  const textBlockHeight = visibleLines.length * lineHeight;
+
+  // 4️⃣ point de départ vertical (centrage)
+  const startY =
+    boxY + (boxHeight - textBlockHeight) / 2 + textBlockHeight - fontSize;
+
+  // 5️⃣ dessin ligne par ligne avec centrage horizontal
+  visibleLines.forEach((line, index) => {
+    const lineWidth = font.widthOfTextAtSize(line, fontSize);
+    const centeredX = boxX + (boxWidth - lineWidth) / 2;
+
+    page.drawText(line, {
+      x: centeredX,
+      y: startY - index * lineHeight,
+      size: fontSize,
+      font,
+      color: rgb(0, 0, 0),
+    });
+  });
 }
