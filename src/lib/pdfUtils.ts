@@ -138,7 +138,7 @@ export async function generatePDF(fields: ReceiptFields): Promise<Uint8Array> {
   if (message) {
     const pos = DEFAULT_POSITIONS.message;
     const safeMessage = sanitizeText(message);
-
+    // le message ne doit pas dépasser 250 caractères pour être sûr que tout rentre
     drawJustifiedTextBlock({
       page: firstPage,
       text: safeMessage,
@@ -285,7 +285,6 @@ export function drawJustifiedTextBlock({
 
   // --- 1. Découpage en mots
   const words = text.replace(/\s+/g, " ").trim().split(" ");
-
   const lines: string[][] = [];
   let currentLine: string[] = [];
 
@@ -302,17 +301,42 @@ export function drawJustifiedTextBlock({
   }
   if (currentLine.length) lines.push(currentLine);
 
-  // --- 2. Calcul du nombre max de lignes
+  // --- 2. Limite de lignes par hauteur
   const maxLines = Math.floor(boxHeight / lineHeight);
-  const visibleLines = lines.slice(0, maxLines);
+  let visibleLines = lines.slice(0, maxLines);
 
-  // --- 3. Centrage vertical
+  const isTruncated = lines.length > maxLines;
+
+  // --- 3. Si tronqué → ajouter […]
+  if (isTruncated && visibleLines.length > 0) {
+    const ellipsis = "[…]";
+    const ellipsisWidth = font.widthOfTextAtSize(ellipsis, fontSize);
+
+    const lastLine = [...visibleLines[visibleLines.length - 1]];
+
+    while (lastLine.length > 0) {
+      const testLine = lastLine.join(" ");
+      const testWidth = font.widthOfTextAtSize(testLine, fontSize);
+
+      if (testWidth + ellipsisWidth <= boxWidth) {
+        lastLine.push(ellipsis);
+        break;
+      }
+
+      lastLine.pop();
+    }
+
+    visibleLines[visibleLines.length - 1] = lastLine;
+  }
+
+  // --- 4. Centrage vertical
   const totalHeight = visibleLines.length * lineHeight;
   let y = boxY + boxHeight - (boxHeight - totalHeight) / 2 - fontSize;
 
-  // --- 4. Dessin ligne par ligne
+  // --- 5. Dessin ligne par ligne
   visibleLines.forEach((lineWords, index) => {
     const isLastLine = index === visibleLines.length - 1;
+
     const textWidth = font.widthOfTextAtSize(lineWords.join(" "), fontSize);
 
     let x = boxX;
@@ -338,7 +362,7 @@ export function drawJustifiedTextBlock({
           (i < gaps ? extraSpace : 0);
       });
     } else {
-      // --- Dernière ligne → alignée à gauche
+      // --- Dernière ligne (non justifiée)
       page.drawText(lineWords.join(" "), {
         x,
         y,
