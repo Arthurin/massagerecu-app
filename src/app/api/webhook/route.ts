@@ -178,17 +178,19 @@ async function handlePaymentIntentSucceeded(
     const pdfFields = {
       nomDestinataire: data.recipientName,
       nomAcheteur: data.buyerName,
-      montant: data.priceWithCurrency,
+      soin: data.giftTitle,
       dateExpiration: data.dateExpiration.toLocaleDateString("fr-FR"),
       idCarteCadeau: data.giftId,
+      message: data.message,
     };
 
     const pdfBytes = await generatePDF(pdfFields);
 
     await sendCustomEmail(data.buyerEmail, {
       amount: data.priceWithCurrency,
-      paymentId: paymentIntent.id,
+      giftId: data.giftId,
       pdfBytes,
+      recipientName: data.recipientName,
     });
 
     // gestion de l'idempotence : on marque le PaymentIntent comme traité si tout s'est bien passé
@@ -218,16 +220,18 @@ async function sendCustomEmail(
   customerEmail: string,
   paymentInfos: {
     amount: string;
-    paymentId: string;
+    giftId: string;
     pdfBytes: any;
+    recipientName: string;
   }
 ) {
   console.log(`Let's send an email to ${customerEmail}...`);
+  const filename = `Carte cadeau n°${paymentInfos.giftId}_${paymentInfos.recipientName}.pdf`;
   try {
     await sendMail({
       to: customerEmail,
-      subject: "[Massage Reçu] Merci pour votre achat !",
-      text: `Bonjour, votre paiement d’un montant de ${paymentInfos.amount} a bien été reçu. Merci pour votre achat ! 🌿`,
+      subject: "[Massage Reçu] Voici votre carte cadeau",
+      text: `Bonjour, votre paiement d'’un montant de ${paymentInfos.amount} a bien été reçu. Merci pour votre achat et à très bientôt ! 🌿`,
       html: `
         <p>Bonjour,</p>
         <p>Votre paiement d’un montant de <strong>${paymentInfos.amount}</strong> a bien été reçu.</p>
@@ -236,7 +240,7 @@ async function sendCustomEmail(
       `,
       attachments: [
         {
-          filename: "recu.pdf",
+          filename: filename,
           content: Buffer.from(paymentInfos.pdfBytes), // <--- conversion du Uint8Array en Buffer
           contentType: "application/pdf",
         },

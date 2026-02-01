@@ -19,6 +19,8 @@ export async function POST(req: Request) {
       montant: body.montant || "-- €",
       dateExpiration: "30/04/2025",
       idCarteCadeau: "311025-1",
+      soin: "Massage relaxant 60min",
+      message: body.message || "Profite bien de ton massage !",
     };
 
     const pdfBytes = await generatePDF(fields);

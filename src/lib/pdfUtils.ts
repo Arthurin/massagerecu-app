@@ -5,9 +5,10 @@ import { PDFDocument, StandardFonts, rgb, PDFFont } from "pdf-lib";
 export type ReceiptFields = {
   nomDestinataire: string;
   nomAcheteur: string;
-  montant: string;
+  soin: string;
   dateExpiration: string;
   idCarteCadeau: string;
+  message:string;
 };
 
 const TEMPLATE_PATH = path.join(
@@ -25,11 +26,12 @@ const DEFAULT_POSITIONS: Record<
   keyof Required<ReceiptFields>,
   { x: number; y: number; size?: number; color?: [number, number, number] }
 > = {
-  nomDestinataire: { x: 120, y: 441, size: 12 },
-  nomAcheteur: { x: 120, y: 397, size: 12 },
-  montant: { x: 120, y: 353, size: 12 },
-  dateExpiration: { x: 120, y: 309.7, size: 12 },
-  idCarteCadeau: { x: 478, y: 309.7, size: 11 },
+  soin: { x: 126.5, y: 440, size: 12 },
+  nomDestinataire: { x: 126.5, y: 394.9, size: 12 },
+  nomAcheteur: { x: 126.5, y: 350, size: 12 },
+  dateExpiration: { x: 126.5, y: 305.6, size: 12 },
+  message: { x: 330, y: 440, size: 11 },
+  idCarteCadeau: { x: 467.9, y: 305.6, size: 11 },
 };
 
 async function loadTemplateBytes(): Promise<Uint8Array> {
@@ -41,6 +43,26 @@ async function loadTemplateBytes(): Promise<Uint8Array> {
 
 async function embedFont(pdfDoc: PDFDocument): Promise<PDFFont> {
   return pdfDoc.embedFont(StandardFonts.Helvetica);
+}
+
+export async function downloadPDF(fields: ReceiptFields) {
+  const date = new Date();
+  const dateJourHeureMinute = `j${String(date.getDate()).padStart(
+    2,
+    "0"
+  )} ${String(date.getHours()).padStart(2, "0")}h${String(
+    date.getMinutes()
+  ).padStart(2, "0")}`;
+  const outputPath = path.join(
+    process.cwd(),
+    "temp_test_pdf",
+    `test_généré_${dateJourHeureMinute}.pdf`
+  );
+
+  const pdf: Uint8Array = await generatePDF(fields);
+  fs.writeFileSync(outputPath, pdf);
+
+  console.log(`✅ PDF généré : ${outputPath}`);
 }
 
 /**
@@ -76,13 +98,8 @@ export async function generatePDF(fields: ReceiptFields): Promise<Uint8Array> {
   };
 
   // Récupère les valeurs et dessine si présentes
-  const {
-    nomDestinataire,
-    nomAcheteur,
-    montant,
-    dateExpiration,
-    idCarteCadeau,
-  } = fields;
+  const { nomDestinataire, nomAcheteur, soin, dateExpiration, idCarteCadeau, message } =
+    fields;
 
   if (nomDestinataire) {
     const pos = DEFAULT_POSITIONS.nomDestinataire;
@@ -94,9 +111,9 @@ export async function generatePDF(fields: ReceiptFields): Promise<Uint8Array> {
     draw(nomAcheteur, pos.x, pos.y, pos.size);
   }
 
-  if (montant) {
-    const pos = DEFAULT_POSITIONS.montant;
-    draw(montant, pos.x, pos.y, pos.size);
+  if (soin) {
+    const pos = DEFAULT_POSITIONS.soin;
+    draw(soin, pos.x, pos.y, pos.size);
   }
 
   if (dateExpiration) {
@@ -111,6 +128,11 @@ export async function generatePDF(fields: ReceiptFields): Promise<Uint8Array> {
 
   // Si besoin d'ajouter du texte multi-lignes, tu peux implémenter un wrap simple ici.
 
+  if (message) {
+    const pos = DEFAULT_POSITIONS.message;
+    draw(message, pos.x, pos.y, pos.size);
+  }
+  
   const bytes = await pdfDoc.save();
   return bytes;
 }

@@ -1,6 +1,6 @@
 /**
  * Script utilitaire pour calibrer les coordonnées (x,y) d'un template PDF.
- * Exécuter avec :  npx tsx .\src\script\pdf-calibrator.ts
+ * Exécuter avec :  npx tsx .\src\scripts\pdf-calibrator.ts
  */
 
 import fs from "fs";
@@ -41,8 +41,8 @@ async function main() {
     const colorBold = rgb(0.6, 0.6, 0.6); // gris plus foncé
     const textColor = rgb(0.2, 0.2, 0.2); // presque noir
 
-    // Lignes horizontales (Y)
-    for (let y = 0; y <= height; y += 5) {
+    // Lignes horizontales (Y) mettre y=1 ou 5 en fonction de la précision du calibrage
+    for (let y = 0; y <= height; y += 1) {
       const isBold = y % 10 === 0;
       page.drawLine({
         start: { x: 0, y },
@@ -63,7 +63,8 @@ async function main() {
     }
 
     // Lignes verticales (X)
-    for (let x = 0; x <= width; x += 5) {
+    // pareil pour x mettre +=1 ou 5 en fonction de la précision souhaitée
+    for (let x = 0; x <= width; x += 1) {
       const isBold = x % 10 === 0;
       page.drawLine({
         start: { x, y: 0 },
