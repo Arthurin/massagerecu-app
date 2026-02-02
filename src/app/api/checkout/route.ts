@@ -5,6 +5,11 @@ import { StripeMetaData } from "@/components/features/stripe/types";
 import { exportToStripeMetadata } from "@/lib/stripe/metaData";
 import { createCheckoutIdempotencyKey } from "@/lib/stripe/idempotency";
 
+function sanitizeText(input: string | null): string {
+  if (!input) return "";
+  return input.replace(/[<>]/g, "");
+}
+
 /**
  * POST /api/checkout
  */
@@ -17,10 +22,10 @@ export async function POST(req: Request) {
     const { checkoutData } = body;
 
     const metadata = exportToStripeMetadata({
-      recipientName: checkoutData.recipientName,
-      message: checkoutData.message,
+      recipientName: sanitizeText(checkoutData.recipientName),
+      message: sanitizeText(checkoutData.message),
       quantity: checkoutData.quantity.toString(),
-      massagePriceId: checkoutData.massagePriceId,
+      massagePriceId: sanitizeText(checkoutData.massagePriceId),
     });
 
     /* ----------------------------------
