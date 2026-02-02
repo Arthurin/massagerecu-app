@@ -23,6 +23,7 @@ export default function CheckoutForm({
   const elements = useElements();
 
   const [message, setMessage] = useState<string | null>(null);
+  const [errorDetails, setErrorDetails] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleSubmit = async (e: FormEvent) => {
@@ -45,21 +46,31 @@ export default function CheckoutForm({
 
     if (result.error) {
       console.error(result.error);
-      let errorMessage =
-        "Le paiement a échoué. Vérifiez vos informations ou veuillez me contacter en cas d'erreur répétée.";
+      let errorMessage = "Le paiement a échoué.";
+      let errorMessageDetails =
+        result.error.message ??
+        "Si le problème persiste contactez-moi : j'aime résoudre les bugs 🤓";
 
       switch (result.error.type) {
         case "card_error":
-          errorMessage = "Le paiement a échoué. " + result.error.message;
+          errorMessage = "La tentative de paiement a échoué.";
           break;
         case "validation_error":
           errorMessage =
-            "Le paiement n'a pu être effectué. Veuillez vérifier les informations saisies.";
+            "Les champs sont incomplets ou erronés. Veuillez vérifier les informations saisies.";
+          errorMessageDetails = ` Vous pouvez refuser de donner votre adresse pour la facturation.
+            Dans ce cas une adresse factice fera l'affaire : "refus - 35000 Rennes".`;
+          break;
+        case "invalid_request_error":
+          errorMessage = result.error.message ?? "Le paiement a échoué.";
+          errorMessageDetails =
+            "Veuillez rafraichir la page et réessayer. Si le problème persiste contactez-moi : j'aime résoudre les bugs 🤓";
           break;
         default:
       }
 
       setMessage(errorMessage);
+      setErrorDetails(errorMessageDetails);
       onError?.(errorMessage);
       setIsLoading(false);
       return;
@@ -116,6 +127,12 @@ export default function CheckoutForm({
         {message && (
           <div id="payment-message" className="alert alert-danger text-center">
             {message}
+            {errorDetails && (
+              <>
+                <br />
+                {errorDetails}
+              </>
+            )}
           </div>
         )}
       </div>
