@@ -230,7 +230,7 @@ async function sendCustomEmail(
   try {
     await sendMail({
       to: customerEmail,
-      subject: "[Massage Reçu] Voici votre carte cadeau",
+      subject: "Voici votre carte cadeau",
       text: `Bonjour, votre paiement d'’un montant de ${paymentInfos.amount} a bien été reçu. Merci pour votre achat et à très bientôt ! 🌿`,
       html: `
         <p>Bonjour,</p>
