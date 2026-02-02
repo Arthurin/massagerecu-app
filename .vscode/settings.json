@@ -6,5 +6,5 @@
     "typescript",
     "typescriptreact"
   ],
-  "eslint.run": "onType"
+  "eslint.debug": true
 }

@@ -303,7 +303,7 @@ export function drawJustifiedTextBlock({
 
   // --- 2. Limite de lignes par hauteur
   const maxLines = Math.floor(boxHeight / lineHeight);
-  let visibleLines = lines.slice(0, maxLines);
+  const visibleLines = lines.slice(0, maxLines);
 
   const isTruncated = lines.length > maxLines;
 
@@ -339,7 +339,7 @@ export function drawJustifiedTextBlock({
 
     const textWidth = font.widthOfTextAtSize(lineWords.join(" "), fontSize);
 
-    let x = boxX;
+    const x = boxX;
 
     if (!isLastLine && lineWords.length > 1) {
       // --- Justification
