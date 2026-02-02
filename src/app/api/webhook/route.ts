@@ -277,7 +277,6 @@ function getGiftCardFullData(
     );
   }
   console.log("charge data : ", charge);
-  const address = charge.billing_details.address;
   const buyerName = charge.billing_details.name;
   if (buyerName === null) {
     throw new Error(
