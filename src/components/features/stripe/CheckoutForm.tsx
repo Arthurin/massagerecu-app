@@ -1,5 +1,6 @@
 "use client";
 
+import type { Ref } from "react";
 import React, { useState, FormEvent } from "react";
 import {
   PaymentElement,
@@ -13,11 +14,13 @@ import type { StripePaymentElementOptions } from "@stripe/stripe-js";
 interface CheckoutFormProps {
   onSuccess: (paymentIntentId: string) => void;
   onError?: (message: string) => void;
+  formRef?: Ref<HTMLFormElement>;
 }
 
 export default function CheckoutForm({
   onSuccess,
   onError,
+  formRef,
 }: CheckoutFormProps) {
   const stripe = useStripe();
   const elements = useElements();
@@ -97,7 +100,7 @@ export default function CheckoutForm({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form ref={formRef} onSubmit={handleSubmit} className="space-y-4">
       <h3>Coordonnées</h3>
 
       {/* Email + Link */}

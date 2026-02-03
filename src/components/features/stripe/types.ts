@@ -1,3 +1,4 @@
+import type { Ref } from "react";
 import { CarteCadeauFormData, MassageOption } from "../carte-cadeau/types";
 
 export interface StripeMetaData {
@@ -13,4 +14,5 @@ export interface StripeCheckoutProps {
   massage: MassageOption;
   checkoutData: CarteCadeauFormData;
   onSuccess: (paymentIntentId: string) => void;
+  formRef?: Ref<HTMLFormElement>;
 }

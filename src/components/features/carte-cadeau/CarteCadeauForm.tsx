@@ -1,17 +1,40 @@
 "use client";
 
-import { useState, FormEvent } from "react";
+import type { Ref } from "react";
+import { useEffect, useState, FormEvent } from "react";
 import { MassageOption, CarteCadeauFormData } from "./types";
 
 interface Props {
   massage: MassageOption;
   onSubmit: (data: CarteCadeauFormData) => void;
+  initialData?: CarteCadeauFormData | null;
+  formRef?: Ref<HTMLFormElement>;
 }
 
-export default function CarteCadeauForm({ massage, onSubmit }: Props) {
-  const [recipientName, setRecipientName] = useState("");
-  const [message, setMessage] = useState("");
-  const [quantity, setQuantity] = useState(1);
+export default function CarteCadeauForm({
+  massage,
+  onSubmit,
+  initialData,
+  formRef,
+}: Props) {
+  const [recipientName, setRecipientName] = useState(
+    initialData?.recipientName ?? ""
+  );
+  const [message, setMessage] = useState(initialData?.message ?? "");
+  const [quantity, setQuantity] = useState(initialData?.quantity ?? 1);
+
+  useEffect(() => {
+    if (!initialData) {
+      setRecipientName("");
+      setMessage("");
+      setQuantity(1);
+      return;
+    }
+
+    setRecipientName(initialData.recipientName ?? "");
+    setMessage(initialData.message ?? "");
+    setQuantity(initialData.quantity ?? 1);
+  }, [initialData]);
 
   const totalPrice = quantity * massage.unitPrice;
 
@@ -26,7 +49,7 @@ export default function CarteCadeauForm({ massage, onSubmit }: Props) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
       {/* 🧾 Titre produit */}
       <div className="p-4 rounded-lg bg-gray-50 border">
         <h2 className="text-lg font-semibold">

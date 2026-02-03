@@ -1,12 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import MassageSelector from "./MassageSelector";
 import CarteCadeauForm from "./CarteCadeauForm";
 import StripeCheckout from "../stripe/StripeCheckout";
 import PaymentSuccess from "./PaymentSuccess";
 import StepIndicator from "./StepIndicator";
-import { MassageOption, CarteCadeauOrder, CarteCadeauFormData } from "./types";
+import { MassageOption, CarteCadeauFormData } from "./types";
 
 type Step = 1 | 2 | 3 | 4 | 5;
 
@@ -18,6 +18,8 @@ export default function CarteCadeauFlow() {
   const [formData, setFormData] = useState<CarteCadeauFormData | null>(null);
   const [massageCatalog, setMassageCatalog] = useState<MassageOption[]>([]);
   const [paymentIntentId, setPaymentIntentId] = useState<string>("");
+  const formRef = useRef<HTMLFormElement | null>(null);
+  const checkoutFormRef = useRef<HTMLFormElement | null>(null);
 
   useEffect(() => {
     fetch("/api/catalog")
@@ -37,7 +39,32 @@ export default function CarteCadeauFlow() {
       <StepIndicator
         currentStep={step}
         maxStepReached={maxStepReached}
-        onStepClick={(s) => s <= maxStepReached && setStep(s as Step)}
+        onStepClick={(s) => {
+          const targetStep = s as Step;
+
+          if (targetStep === step) {
+            return;
+          }
+
+          if (targetStep < step) {
+            setStep(targetStep);
+            return;
+          }
+
+          if (step === 2 && targetStep === 3) {
+            formRef.current?.requestSubmit();
+            return;
+          }
+
+          if (step === 3 && targetStep === 4) {
+            checkoutFormRef.current?.requestSubmit();
+            return;
+          }
+
+          if (targetStep <= maxStepReached) {
+            setStep(targetStep);
+          }
+        }}
       />
 
       {step === 1 && (
@@ -53,6 +80,8 @@ export default function CarteCadeauFlow() {
       {step === 2 && massage && (
         <CarteCadeauForm
           massage={massage}
+          initialData={formData}
+          formRef={formRef}
           onSubmit={(data) => {
             setFormData(data);
             goToStep(3);
@@ -64,6 +93,7 @@ export default function CarteCadeauFlow() {
         <StripeCheckout
           massage={massage}
           checkoutData={formData}
+          formRef={checkoutFormRef}
           onSuccess={(id) => {
             setPaymentIntentId(id);
             goToStep(4);

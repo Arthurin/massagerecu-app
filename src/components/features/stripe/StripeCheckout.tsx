@@ -9,7 +9,6 @@ import {
 import { Elements } from "@stripe/react-stripe-js";
 
 import CheckoutForm from "./CheckoutForm";
-import { MassageOption } from "../carte-cadeau/types";
 import { StripeCheckoutProps } from "./types";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY!);
@@ -18,6 +17,7 @@ export default function StripeCheckout({
   massage,
   checkoutData,
   onSuccess,
+  formRef,
 }: StripeCheckoutProps) {
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -51,7 +51,7 @@ export default function StripeCheckout({
         if (err instanceof Error) {
           console.error("Erreur API Checkout :", err.message);
           setErrorMessage(
-            "Impossible de charger le formulaire de paiement. Veuillez réessayer plus tard."
+            "Impossible de charger le formulaire de paiement. Veuillez réessayer plus tard.",
           );
         } else {
           console.error("Erreur API Checkout inconnue :", err);
@@ -114,7 +114,7 @@ export default function StripeCheckout({
         options={elementsOptions}
         key={clientSecret}
       >
-        <CheckoutForm onSuccess={onSuccess} />
+        <CheckoutForm onSuccess={onSuccess} formRef={formRef} />
       </Elements>
     </div>
   );

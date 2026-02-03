@@ -16,7 +16,9 @@ export default function StepIndicator({
   return (
     <div className="flex gap-2 justify-center mb-6">
       {steps.map((step) => {
-        const disabled = step > maxStepReached;
+        const canClickNextStep =
+          step === currentStep + 1 && (currentStep === 2 || currentStep === 3);
+        const disabled = step > maxStepReached && !canClickNextStep;
         return (
           <button
             key={step}
