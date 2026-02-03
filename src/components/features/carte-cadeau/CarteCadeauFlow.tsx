@@ -25,6 +25,7 @@ export default function CarteCadeauFlow() {
   const [checkoutAddress, setCheckoutAddress] = useState<
     StripeAddressElementOptions["defaultValues"] | null
   >(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     fetch("/api/catalog")
@@ -34,13 +35,20 @@ export default function CarteCadeauFlow() {
       });
   }, []);
 
+  useEffect(() => {
+    containerRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, [step]);
+
   const goToStep = (next: Step) => {
     setStep(next);
     setMaxStepReached((prev) => (next > prev ? next : prev));
   };
 
   return (
-    <div className="max-w-xl mx-auto">
+    <div
+      ref={containerRef}
+      className="max-w-xl mx-auto px-4 sm:px-6 py-6 transition-all duration-300"
+    >
       {step !== 4 && (
         <StepIndicator
           currentStep={step}
