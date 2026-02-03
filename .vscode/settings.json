@@ -6,5 +6,8 @@
     "typescript",
     "typescriptreact"
   ],
-  "eslint.debug": true
+  "eslint.debug": true,
+  "files.associations": {
+    "tailwind.css": "postcss"
+  }
 }

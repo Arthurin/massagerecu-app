@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import { bellefair, roboto } from "@/styles/fonts";
+import "@/styles/tailwind.css";
 import "@/styles/styles.scss";
 import BootstrapClient from "@/components/features/BootstrapClient";
 import BootstrapNavbarBehavior from "@/components/features/BootstrapNavbarBehavior";

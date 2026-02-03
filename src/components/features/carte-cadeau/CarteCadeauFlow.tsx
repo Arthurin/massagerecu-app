@@ -36,7 +36,10 @@ export default function CarteCadeauFlow() {
   }, []);
 
   useEffect(() => {
-    containerRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    containerRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
   }, [step]);
 
   const goToStep = (next: Step) => {
@@ -54,30 +57,30 @@ export default function CarteCadeauFlow() {
           currentStep={step}
           maxStepReached={maxStepReached}
           onStepClick={(s) => {
-          const targetStep = s as Step;
+            const targetStep = s as Step;
 
-          if (targetStep === step) {
-            return;
-          }
+            if (targetStep === step) {
+              return;
+            }
 
-          if (targetStep < step) {
-            setStep(targetStep);
-            return;
-          }
+            if (targetStep < step) {
+              setStep(targetStep);
+              return;
+            }
 
-          if (step === 2 && targetStep === 3) {
-            formRef.current?.requestSubmit();
-            return;
-          }
+            if (step === 2 && targetStep === 3) {
+              formRef.current?.requestSubmit();
+              return;
+            }
 
-          if (step === 3 && targetStep === 4) {
-            checkoutFormRef.current?.requestSubmit();
-            return;
-          }
+            if (step === 3 && targetStep === 4) {
+              checkoutFormRef.current?.requestSubmit();
+              return;
+            }
 
-          if (targetStep <= maxStepReached) {
-            setStep(targetStep);
-          }
+            if (targetStep <= maxStepReached) {
+              setStep(targetStep);
+            }
           }}
         />
       )}
