@@ -113,7 +113,7 @@ export default function CheckoutForm({
   };
 
   return (
-    <form ref={formRef} onSubmit={handleSubmit} className="space-y-4">
+    <form ref={formRef} onSubmit={handleSubmit} className="tw:space-y-4">
       <h3>Coordonnées</h3>
 
       {/* Email + Link */}

@@ -90,9 +90,9 @@ export default function PaymentSuccess({
   }, [paymentIntentId]);
 
   return (
-    <div className="max-w-xl mx-auto p-6 rounded-lg border space-y-4">
+    <div className="tw:max-w-xl tw:mx-auto tw:p-6 tw:rounded-lg tw:border tw:space-y-4">
       {/* TITRE */}
-      <h2 className="text-xl font-semibold">
+      <h2 className="tw:text-xl tw:font-semibold">
         {status === "completed"
           ? "✅ Paiement confirmé"
           : status === "processing" || status === "init"
@@ -103,8 +103,8 @@ export default function PaymentSuccess({
       {/* PROCESSING */}
       {(status === "init" || status === "processing") && (
         <>
-          <div className="flex items-center gap-3">
-            <div className="animate-spin h-5 w-5 border-2 border-gray-300 border-t-transparent rounded-full" />
+          <div className="tw:flex tw:items-center tw:gap-3">
+            <div className="tw:animate-spin tw:h-5 tw:w-5 tw:border-2 tw:border-gray-300 tw:border-t-transparent tw:rounded-full" />
             <p>
               Votre paiement a bien été pris en compte.
               <br />
@@ -113,7 +113,7 @@ export default function PaymentSuccess({
                 : "Préparation de votre carte cadeau…"}
             </p>
           </div>
-          <p className="text-sm text-gray-600">
+          <p className="tw:text-sm tw:text-gray-600">
             Cette étape peut prendre quelques instants.
           </p>
         </>
@@ -134,7 +134,7 @@ export default function PaymentSuccess({
             <p>📧 Elle va vous être envoyée par email.</p>
           )}
 
-          <p className="text-sm text-gray-600">
+          <p className="tw:text-sm tw:text-gray-600">
             Pensez à vérifier votre dossier spam si nécessaire.
           </p>
         </>

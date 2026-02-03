@@ -49,52 +49,54 @@ export default function CarteCadeauForm({
   };
 
   return (
-    <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
+    <form ref={formRef} onSubmit={handleSubmit} className="tw:space-y-6">
       {/* 🧾 Titre produit */}
-      <div className="p-4 rounded-lg bg-gray-50 border">
-        <h2 className="text-lg font-semibold">
+      <div className="tw:p-4 tw:rounded-lg tw:bg-gray-50 tw:border">
+        <h2 className="tw:text-lg tw:font-semibold">
           Carte cadeau – {massage.title}
         </h2>
-        <p className="text-sm text-gray-600">
+        <p className="tw:text-sm tw:text-gray-600">
           {quantity} × {massage.unitPrice.toFixed(0)} € ={" "}
           <strong>{totalPrice.toFixed(0)} €</strong>
         </p>
       </div>
 
       {/* 🎁 Bénéficiaire */}
-      <div className="space-y-2">
-        <label className="block text-sm font-medium">Nom du bénéficiaire</label>
+      <div className="tw:space-y-2">
+        <label className="tw:block tw:text-sm tw:font-medium">
+          Nom du bénéficiaire
+        </label>
         <input
           type="text"
           required
           value={recipientName}
           onChange={(e) => setRecipientName(e.target.value)}
-          className="w-full rounded-md border px-3 py-2"
+          className="tw:w-full tw:rounded-md tw:border tw:px-3 tw:py-2"
           placeholder="Personne à qui offrir"
         />
       </div>
 
       {/* ✍️ Message */}
-      <div className="space-y-2">
-        <label className="block text-sm font-medium">
+      <div className="tw:space-y-2">
+        <label className="tw:block tw:text-sm tw:font-medium">
           Message personnalisé (optionnel)
         </label>
         <textarea
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          className="w-full rounded-md border px-3 py-2"
+          className="tw:w-full tw:rounded-md tw:border tw:px-3 tw:py-2"
           rows={3}
           placeholder="Un petit mot pour accompagner la carte cadeau"
         />
       </div>
 
       {/* 🔢 Quantité */}
-      <div className="space-y-2">
-        <label className="block text-sm font-medium">Quantité</label>
+      <div className="tw:space-y-2">
+        <label className="tw:block tw:text-sm tw:font-medium">Quantité</label>
         <select
           value={quantity}
           onChange={(e) => setQuantity(Number(e.target.value))}
-          className="w-full rounded-md border px-3 py-2"
+          className="tw:w-full tw:rounded-md tw:border tw:px-3 tw:py-2"
         >
           {[1, 2, 3, 4, 5].map((q) => (
             <option key={q} value={q}>
@@ -105,10 +107,10 @@ export default function CarteCadeauForm({
       </div>
 
       {/* ➡️ CTA */}
-      <div className="pt-4">
+      <div className="tw:pt-4">
         <button
           type="submit"
-          className="w-full btn btn-primary btn-lg"
+          className="tw:w-full btn btn-primary btn-lg"
           disabled={!recipientName || quantity < 1}
         >
           Continuer

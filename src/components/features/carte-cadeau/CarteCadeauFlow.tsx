@@ -50,7 +50,7 @@ export default function CarteCadeauFlow() {
   return (
     <div
       ref={containerRef}
-      className="max-w-xl mx-auto px-4 sm:px-6 py-6 transition-all duration-300"
+      className="tw:max-w-xl tw:mx-auto tw:px-4 sm:tw:px-6 tw:py-6 tw:transition-all tw:duration-300"
     >
       {step !== 4 && (
         <StepIndicator

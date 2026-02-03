@@ -14,7 +14,7 @@ export default function StepIndicator({
   const steps = [1, 2, 3, 4];
 
   return (
-    <div className="flex gap-3 justify-center mb-6">
+    <div className="tw:flex tw:gap-3 tw:justify-center tw:mb-6">
       {steps.map((step) => {
         const canClickNextStep =
           step === currentStep + 1 && (currentStep === 2 || currentStep === 3);
@@ -22,10 +22,10 @@ export default function StepIndicator({
         const isCurrent = step === currentStep;
         const isReached = step <= maxStepReached;
         const baseClass =
-          "rounded-full transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-300";
-        const currentClass = "w-4 h-4 bg-blue-500 ring-4 ring-blue-100";
-        const reachedClass = "w-3.5 h-3.5 bg-blue-500";
-        const upcomingClass = "w-3.5 h-3.5 bg-blue-100";
+          "tw:rounded-full tw:transition-colors tw:duration-300 tw:focus:outline-none tw:focus-visible:ring-2 tw:focus-visible:ring-blue-300";
+        const currentClass = "tw:w-4 tw:h-4 tw:bg-blue-500 tw:ring-4 tw:ring-blue-100";
+        const reachedClass = "tw:w-3.5 tw:h-3.5 tw:bg-blue-500";
+        const upcomingClass = "tw:w-3.5 tw:h-3.5 tw:bg-blue-100";
         return (
           <button
             key={step}
@@ -38,9 +38,13 @@ export default function StepIndicator({
                 : isReached
                 ? reachedClass
                 : upcomingClass
-            } ${disabled ? "opacity-60 cursor-not-allowed" : "hover:bg-blue-400"}`}
+            } ${
+              disabled
+                ? "tw:opacity-60 tw:cursor-not-allowed"
+                : "hover:tw:bg-blue-400"
+            }`}
           >
-            <span className="sr-only">{step}</span>
+            <span className="tw:sr-only">{step}</span>
           </button>
         );
       })}

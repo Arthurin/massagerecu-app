@@ -92,14 +92,14 @@ export default function StripeCheckout({
   };
 
   return (
-    <div className="space-y-6">
+    <div className="tw:space-y-6">
       {/* 🧾 RÉCAP COMMANDE */}
-      <div className="p-4 rounded-lg border bg-gray-50">
-        <h3 className="text-lg font-semibold mb-2">
+      <div className="tw:p-4 tw:rounded-lg tw:border tw:bg-gray-50">
+        <h3 className="tw:text-lg tw:font-semibold tw:mb-2">
           Récapitulatif de votre commande
         </h3>
 
-        <ul className="text-sm space-y-1">
+        <ul className="tw:text-sm tw:space-y-1">
           <li>
             <strong>Produit :</strong> {massage.title}
           </li>

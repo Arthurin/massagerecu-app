@@ -29,7 +29,7 @@ export class StripeErrorBoundary extends React.Component<
   override render() {
     if (this.state.hasError) {
       return (
-        <div className="p-4 bg-red-100 text-red-700 rounded">
+        <div className="tw:p-4 tw:bg-red-100 tw:text-red-700 tw:rounded">
           <p>
             Une erreur est survenue avec le service de paiement en ligne.
             Veuillez réessayer plus tard ou me contacter directement.
