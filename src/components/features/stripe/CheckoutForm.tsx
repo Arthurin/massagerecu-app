@@ -1,12 +1,7 @@
 "use client";
 
 import type { Ref } from "react";
-import React, {
-  useState,
-  useImperativeHandle,
-  useCallback,
-  FormEvent,
-} from "react";
+import React, { useState, FormEvent } from "react";
 import {
   PaymentElement,
   useStripe,
@@ -19,15 +14,10 @@ import type {
   StripePaymentElementOptions,
 } from "@stripe/stripe-js";
 
-export interface CheckoutFormPersistHandle {
-  persistContactDetails: () => Promise<void>;
-}
-
 interface CheckoutFormProps {
   onSuccess: (paymentIntentId: string) => void;
   onError?: (message: string) => void;
   formRef?: Ref<HTMLFormElement>;
-  persistRef?: Ref<CheckoutFormPersistHandle>;
   defaultEmail?: string;
   addressDefaultValues?: StripeAddressElementOptions["defaultValues"] | null;
   onEmailChange?: (email: string) => void;
@@ -40,7 +30,6 @@ export default function CheckoutForm({
   onSuccess,
   onError,
   formRef,
-  persistRef,
   defaultEmail,
   addressDefaultValues,
   onEmailChange,
@@ -52,30 +41,6 @@ export default function CheckoutForm({
   const [message, setMessage] = useState<string | null>(null);
   const [errorDetails, setErrorDetails] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  const persistContactDetails = useCallback(async () => {
-    if (!elements) {
-      return;
-    }
-
-    const addressElement = elements.getElement(AddressElement);
-    if (!addressElement) {
-      return;
-    }
-
-    const result = await addressElement.getValue();
-    if (result?.value) {
-      onAddressChange?.(result.value);
-    }
-  }, [elements, onAddressChange]);
-
-  useImperativeHandle(
-    persistRef,
-    () => ({
-      persistContactDetails,
-    }),
-    [persistContactDetails],
-  );
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -169,6 +134,24 @@ export default function CheckoutForm({
           fields: {
             phone: "never",
           },
+        }}
+        onChange={(event) => {
+          if (event.complete) {
+            onAddressChange?.({
+              name: event.value.name,
+              firstName: event.value.firstName,
+              lastName: event.value.lastName,
+              address: {
+                line1: event.value.address.line1,
+                line2: event.value.address.line2 ?? undefined,
+                city: event.value.address.city,
+                state: event.value.address.state,
+                postal_code: event.value.address.postal_code,
+                country: event.value.address.country,
+              },
+              phone: event.value.phone,
+            });
+          }
         }}
       />
 

@@ -18,7 +18,6 @@ export default function StripeCheckout({
   checkoutData,
   onSuccess,
   formRef,
-  persistRef,
   email,
   addressDefaultValues,
   onEmailChange,
@@ -122,7 +121,6 @@ export default function StripeCheckout({
         <CheckoutForm
           onSuccess={onSuccess}
           formRef={formRef}
-          persistRef={persistRef}
           defaultEmail={email}
           addressDefaultValues={addressDefaultValues}
           onEmailChange={onEmailChange}

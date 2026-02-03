@@ -8,7 +8,6 @@ import StripeCheckout from "../stripe/StripeCheckout";
 import PaymentSuccess from "./PaymentSuccess";
 import StepIndicator from "./StepIndicator";
 import { MassageOption, CarteCadeauFormData } from "./types";
-import type { CheckoutFormPersistHandle } from "../stripe/CheckoutForm";
 
 type Step = 1 | 2 | 3 | 4 | 5;
 
@@ -22,7 +21,6 @@ export default function CarteCadeauFlow() {
   const [paymentIntentId, setPaymentIntentId] = useState<string>("");
   const formRef = useRef<HTMLFormElement | null>(null);
   const checkoutFormRef = useRef<HTMLFormElement | null>(null);
-  const checkoutPersistRef = useRef<CheckoutFormPersistHandle | null>(null);
   const [checkoutEmail, setCheckoutEmail] = useState<string>("");
   const [checkoutAddress, setCheckoutAddress] = useState<
     StripeAddressElementOptions["defaultValues"] | null
@@ -43,10 +41,11 @@ export default function CarteCadeauFlow() {
 
   return (
     <div className="max-w-xl mx-auto">
-      <StepIndicator
-        currentStep={step}
-        maxStepReached={maxStepReached}
-        onStepClick={async (s) => {
+      {step !== 4 && (
+        <StepIndicator
+          currentStep={step}
+          maxStepReached={maxStepReached}
+          onStepClick={(s) => {
           const targetStep = s as Step;
 
           if (targetStep === step) {
@@ -54,9 +53,6 @@ export default function CarteCadeauFlow() {
           }
 
           if (targetStep < step) {
-            if (step === 3) {
-              await checkoutPersistRef.current?.persistContactDetails();
-            }
             setStep(targetStep);
             return;
           }
@@ -74,8 +70,9 @@ export default function CarteCadeauFlow() {
           if (targetStep <= maxStepReached) {
             setStep(targetStep);
           }
-        }}
-      />
+          }}
+        />
+      )}
 
       {step === 1 && (
         <MassageSelector
@@ -104,7 +101,6 @@ export default function CarteCadeauFlow() {
           massage={massage}
           checkoutData={formData}
           formRef={checkoutFormRef}
-          persistRef={checkoutPersistRef}
           email={checkoutEmail}
           addressDefaultValues={checkoutAddress}
           onEmailChange={setCheckoutEmail}
