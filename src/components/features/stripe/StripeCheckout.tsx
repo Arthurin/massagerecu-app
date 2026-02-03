@@ -18,6 +18,11 @@ export default function StripeCheckout({
   checkoutData,
   onSuccess,
   formRef,
+  persistRef,
+  email,
+  addressDefaultValues,
+  onEmailChange,
+  onAddressChange,
 }: StripeCheckoutProps) {
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -114,7 +119,15 @@ export default function StripeCheckout({
         options={elementsOptions}
         key={clientSecret}
       >
-        <CheckoutForm onSuccess={onSuccess} formRef={formRef} />
+        <CheckoutForm
+          onSuccess={onSuccess}
+          formRef={formRef}
+          persistRef={persistRef}
+          defaultEmail={email}
+          addressDefaultValues={addressDefaultValues}
+          onEmailChange={onEmailChange}
+          onAddressChange={onAddressChange}
+        />
       </Elements>
     </div>
   );

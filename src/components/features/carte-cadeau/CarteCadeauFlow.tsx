@@ -1,5 +1,6 @@
 "use client";
 
+import type { StripeAddressElementOptions } from "@stripe/stripe-js";
 import { useEffect, useRef, useState } from "react";
 import MassageSelector from "./MassageSelector";
 import CarteCadeauForm from "./CarteCadeauForm";
@@ -7,6 +8,7 @@ import StripeCheckout from "../stripe/StripeCheckout";
 import PaymentSuccess from "./PaymentSuccess";
 import StepIndicator from "./StepIndicator";
 import { MassageOption, CarteCadeauFormData } from "./types";
+import type { CheckoutFormPersistHandle } from "../stripe/CheckoutForm";
 
 type Step = 1 | 2 | 3 | 4 | 5;
 
@@ -20,6 +22,11 @@ export default function CarteCadeauFlow() {
   const [paymentIntentId, setPaymentIntentId] = useState<string>("");
   const formRef = useRef<HTMLFormElement | null>(null);
   const checkoutFormRef = useRef<HTMLFormElement | null>(null);
+  const checkoutPersistRef = useRef<CheckoutFormPersistHandle | null>(null);
+  const [checkoutEmail, setCheckoutEmail] = useState<string>("");
+  const [checkoutAddress, setCheckoutAddress] = useState<
+    StripeAddressElementOptions["defaultValues"] | null
+  >(null);
 
   useEffect(() => {
     fetch("/api/catalog")
@@ -39,7 +46,7 @@ export default function CarteCadeauFlow() {
       <StepIndicator
         currentStep={step}
         maxStepReached={maxStepReached}
-        onStepClick={(s) => {
+        onStepClick={async (s) => {
           const targetStep = s as Step;
 
           if (targetStep === step) {
@@ -47,6 +54,9 @@ export default function CarteCadeauFlow() {
           }
 
           if (targetStep < step) {
+            if (step === 3) {
+              await checkoutPersistRef.current?.persistContactDetails();
+            }
             setStep(targetStep);
             return;
           }
@@ -94,6 +104,11 @@ export default function CarteCadeauFlow() {
           massage={massage}
           checkoutData={formData}
           formRef={checkoutFormRef}
+          persistRef={checkoutPersistRef}
+          email={checkoutEmail}
+          addressDefaultValues={checkoutAddress}
+          onEmailChange={setCheckoutEmail}
+          onAddressChange={setCheckoutAddress}
           onSuccess={(id) => {
             setPaymentIntentId(id);
             goToStep(4);

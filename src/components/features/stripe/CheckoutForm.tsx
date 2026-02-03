@@ -1,7 +1,12 @@
 "use client";
 
 import type { Ref } from "react";
-import React, { useState, FormEvent } from "react";
+import React, {
+  useState,
+  useImperativeHandle,
+  useCallback,
+  FormEvent,
+} from "react";
 import {
   PaymentElement,
   useStripe,
@@ -9,18 +14,37 @@ import {
   LinkAuthenticationElement,
   useElements,
 } from "@stripe/react-stripe-js";
-import type { StripePaymentElementOptions } from "@stripe/stripe-js";
+import type {
+  StripeAddressElementOptions,
+  StripePaymentElementOptions,
+} from "@stripe/stripe-js";
+
+export interface CheckoutFormPersistHandle {
+  persistContactDetails: () => Promise<void>;
+}
 
 interface CheckoutFormProps {
   onSuccess: (paymentIntentId: string) => void;
   onError?: (message: string) => void;
   formRef?: Ref<HTMLFormElement>;
+  persistRef?: Ref<CheckoutFormPersistHandle>;
+  defaultEmail?: string;
+  addressDefaultValues?: StripeAddressElementOptions["defaultValues"] | null;
+  onEmailChange?: (email: string) => void;
+  onAddressChange?: (
+    address: StripeAddressElementOptions["defaultValues"],
+  ) => void;
 }
 
 export default function CheckoutForm({
   onSuccess,
   onError,
   formRef,
+  persistRef,
+  defaultEmail,
+  addressDefaultValues,
+  onEmailChange,
+  onAddressChange,
 }: CheckoutFormProps) {
   const stripe = useStripe();
   const elements = useElements();
@@ -28,6 +52,30 @@ export default function CheckoutForm({
   const [message, setMessage] = useState<string | null>(null);
   const [errorDetails, setErrorDetails] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const persistContactDetails = useCallback(async () => {
+    if (!elements) {
+      return;
+    }
+
+    const addressElement = elements.getElement(AddressElement);
+    if (!addressElement) {
+      return;
+    }
+
+    const result = await addressElement.getValue();
+    if (result?.value) {
+      onAddressChange?.(result.value);
+    }
+  }, [elements, onAddressChange]);
+
+  useImperativeHandle(
+    persistRef,
+    () => ({
+      persistContactDetails,
+    }),
+    [persistContactDetails],
+  );
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -104,12 +152,20 @@ export default function CheckoutForm({
       <h3>Coordonnées</h3>
 
       {/* Email + Link */}
-      <LinkAuthenticationElement />
+      <LinkAuthenticationElement
+        options={{
+          defaultValues: {
+            email: defaultEmail ?? "",
+          },
+        }}
+        onChange={(event) => onEmailChange?.(event.value.email ?? "")}
+      />
 
       {/* Adresse de facturation */}
       <AddressElement
         options={{
           mode: "billing",
+          defaultValues: addressDefaultValues ?? undefined,
           fields: {
             phone: "never",
           },
