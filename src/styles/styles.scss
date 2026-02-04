@@ -1,14 +1,16 @@
 // Bootstrap mixins for SCSS usage in local styles (legacy @import for compatibility)
 @import "bootstrap/scss/functions";
+
+// Import variables (override Bootstrap defaults)
+@import "./variables.scss";
+
+// Bootstrap defaults + mixins (uses overrides above)
 @import "bootstrap/scss/variables";
 @import "bootstrap/scss/mixins";
 
 //
 // Styles
 //
-
-// Import variables
-@import "./variables.scss";
 
 // Import Bootstrap
 @layer bootstrap {

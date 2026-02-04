@@ -108,3 +108,11 @@ section a:hover {
     margin-left: 25px;
   }
 }
+
+.dot-app {
+  background-color: $color-stripe;
+}
+
+.dot-app:hover {
+  background-color: darken($color-stripe, 20%);
+}

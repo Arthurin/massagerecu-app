@@ -6,20 +6,20 @@
 
 $old_yellow: #ffc800;
 
-$yellow: #FFA700;
+$yellow: #ffa700;
 
+$complementary: #1144aa; //proche de la couleur imposée par traffft pour la résa en ligne : #191EB9
+$color-stripe: rgb(47, 99, 202);
 
-$complementary: #1144AA; //proche de la couleur imposée par traffft pour la résa en ligne : #191EB9
+$old_blue: #2a17b1;
 
-$old_blue: #2A17B1;
+$blue_dark: #150b6c;
 
-$blue_dark: #150B6C;
-
-$blue_light: #6A5DC5;
+$blue_light: #6a5dc5;
 // Override Bootstrap state colors variables
 
 $primary: #50aaa7;
-// C'est plus clair que la couleur du logo : #347070 (ce serait trop foncé pour le menu principal et le bouton Réserver 
+// C'est plus clair que la couleur du logo : #347070 (ce serait trop foncé pour le menu principal et le bouton Réserver
 // dfefef : un gris clair légèrement bleu, pourquoi pas pour accentuer la couleur de fond d'une section
 $text_with_primary_background: #ffffff;
 // une sorte de marron : b67f68
