@@ -25,7 +25,6 @@ export default function CarteCadeauFlow() {
   const [checkoutAddress, setCheckoutAddress] = useState<
     StripeAddressElementOptions["defaultValues"] | null
   >(null);
-  const containerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     fetch("/api/catalog")
@@ -35,23 +34,13 @@ export default function CarteCadeauFlow() {
       });
   }, []);
 
-  useEffect(() => {
-    containerRef.current?.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    });
-  }, [step]);
-
   const goToStep = (next: Step) => {
     setStep(next);
     setMaxStepReached((prev) => (next > prev ? next : prev));
   };
 
   return (
-    <div
-      ref={containerRef}
-      className="tw:max-w-xl tw:mx-auto tw:px-4 sm:tw:px-6 tw:py-6 tw:transition-all tw:duration-300"
-    >
+    <div className="tw:max-w-xl tw:mx-auto tw:px-4 sm:tw:px-6 tw:py-6">
       {step !== 4 && step !== 1 && (
         <StepIndicator
           currentStep={step}
@@ -85,45 +74,47 @@ export default function CarteCadeauFlow() {
         />
       )}
 
-      {step === 1 && (
-        <MassageSelector
-          options={massageCatalog}
-          onSelect={(m) => {
-            setMassage(m);
-            goToStep(2);
-          }}
-        />
-      )}
+      <div key={step} className="step-fade">
+        {step === 1 && (
+          <MassageSelector
+            options={massageCatalog}
+            onSelect={(m) => {
+              setMassage(m);
+              goToStep(2);
+            }}
+          />
+        )}
 
-      {step === 2 && massage && (
-        <CarteCadeauForm
-          massage={massage}
-          initialData={formData}
-          formRef={formRef}
-          onSubmit={(data) => {
-            setFormData(data);
-            goToStep(3);
-          }}
-        />
-      )}
+        {step === 2 && massage && (
+          <CarteCadeauForm
+            massage={massage}
+            initialData={formData}
+            formRef={formRef}
+            onSubmit={(data) => {
+              setFormData(data);
+              goToStep(3);
+            }}
+          />
+        )}
 
-      {step === 3 && massage && formData && (
-        <StripeCheckout
-          massage={massage}
-          checkoutData={formData}
-          formRef={checkoutFormRef}
-          email={checkoutEmail}
-          addressDefaultValues={checkoutAddress}
-          onEmailChange={setCheckoutEmail}
-          onAddressChange={setCheckoutAddress}
-          onSuccess={(id) => {
-            setPaymentIntentId(id);
-            goToStep(4);
-          }}
-        />
-      )}
+        {step === 3 && massage && formData && (
+          <StripeCheckout
+            massage={massage}
+            checkoutData={formData}
+            formRef={checkoutFormRef}
+            email={checkoutEmail}
+            addressDefaultValues={checkoutAddress}
+            onEmailChange={setCheckoutEmail}
+            onAddressChange={setCheckoutAddress}
+            onSuccess={(id) => {
+              setPaymentIntentId(id);
+              goToStep(4);
+            }}
+          />
+        )}
 
-      {step === 4 && <PaymentSuccess paymentIntentId={paymentIntentId} />}
+        {step === 4 && <PaymentSuccess paymentIntentId={paymentIntentId} />}
+      </div>
     </div>
   );
 }
