@@ -110,9 +110,17 @@ section a:hover {
 }
 
 .dot-app {
-  background-color: $color-stripe;
+  background-color: $color-app;
 }
 
 .dot-app:hover {
-  background-color: darken($color-stripe, 20%);
+  background-color: darken($color-app, 20%);
+}
+
+.dot-next-steps {
+  background-color: $color-app-light;
+}
+
+.dot-next-steps:hover {
+  background-color: darken($color-app-light, 20%);
 }

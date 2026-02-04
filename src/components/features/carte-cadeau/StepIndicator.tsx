@@ -20,12 +20,10 @@ export default function StepIndicator({
           step === currentStep + 1 && (currentStep === 2 || currentStep === 3);
         const disabled = step > maxStepReached && !canClickNextStep;
         const isCurrent = step === currentStep;
-        const isReached = step <= maxStepReached;
+        const isFurtherStep = step > currentStep;
         const baseClass =
           "tw:rounded-full tw:p-0 tw:w-3 tw:h-3 dot-app border-0";
         const currentClass = "tw:ring-4 tw:ring-blue-200";
-        const reachedClass = "tw:bg-blue-500";
-        const upcomingClass = "tw:bg-blue-100";
         return (
           <button
             key={step}
@@ -33,15 +31,7 @@ export default function StepIndicator({
             onClick={() => onStepClick(step)}
             aria-label={`Étape ${step}`}
             className={`${baseClass} ${
-              isCurrent
-                ? currentClass
-                : isReached
-                  ? reachedClass
-                  : upcomingClass
-            } ${
-              disabled
-                ? "tw:opacity-60 tw:cursor-not-allowed"
-                : "hover:tw:bg-violet-600"
+              isCurrent ? currentClass : isFurtherStep ? "dot-next-steps" : ""
             }`}
           >
             <span className="tw:sr-only">{step}</span>

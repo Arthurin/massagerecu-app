@@ -52,7 +52,7 @@ export default function CarteCadeauFlow() {
       ref={containerRef}
       className="tw:max-w-xl tw:mx-auto tw:px-4 sm:tw:px-6 tw:py-6 tw:transition-all tw:duration-300"
     >
-      {step !== 4 && (
+      {step !== 4 && step !== 1 && (
         <StepIndicator
           currentStep={step}
           maxStepReached={maxStepReached}
