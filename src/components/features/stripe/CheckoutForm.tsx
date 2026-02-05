@@ -113,10 +113,11 @@ export default function CheckoutForm({
   };
 
   return (
-    <form ref={formRef} onSubmit={handleSubmit} className="tw:space-y-4">
-      <h4>Livraison par mail</h4>
+    <form ref={formRef} onSubmit={handleSubmit}>
+      <h4 className="mb-3">Livraison par mail</h4>
       {/* Email + Link */}
       <LinkAuthenticationElement
+        className="mb-3"
         options={{
           defaultValues: {
             email: defaultEmail ?? "",
@@ -125,9 +126,10 @@ export default function CheckoutForm({
         onChange={(event) => onEmailChange?.(event.value.email ?? "")}
       />
 
-      <h4>Facturation</h4>
+      <h4 className="mb-3">Facturation</h4>
       {/* Adresse de facturation */}
       <AddressElement
+        className="mb-3"
         options={{
           mode: "billing",
           defaultValues: addressDefaultValues ?? undefined,
@@ -155,10 +157,22 @@ export default function CheckoutForm({
         }}
       />
 
-      <h4>Paiement</h4>
+      <h4 className="mb-3">Paiement</h4>
       <PaymentElement id="payment-element" options={paymentElementOptions} />
 
-      <div className="d-grid gap-2 mt-3">
+      <div className="d-grid mt-1">
+        <div className="small text-muted lh-sm opacity-75 mb-3">
+          En procédant au paiement, vous reconnaissez avoir pris connaissance et
+          accepté les{" "}
+          <a
+            href="/conditions-generales-de-vente"
+            target="_blank"
+            className="text-muted text-decoration-underline"
+          >
+            Conditions Générales de Vente
+          </a>
+          .
+        </div>
         <button
           disabled={isLoading || !stripe || !elements}
           className="btn btn-primary btn-lg py-2"
