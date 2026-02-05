@@ -69,27 +69,17 @@ export default function StripeCheckout({
     fetchClientSecret();
   }, [massage, checkoutData]);
 
-  if (loading) {
-    return <p>Chargement du paiement…</p>;
-  }
-
   if (errorMessage) {
     return <div className="alert alert-danger">{errorMessage}</div>;
-  }
-
-  if (!clientSecret) {
-    return <div className="alert alert-danger">clientSecret manquant</div>;
   }
 
   const appearance: Appearance = {
     theme: "stripe",
   };
 
-  const elementsOptions: StripeElementsOptions = {
-    clientSecret,
-    appearance,
-    loader: "auto",
-  };
+  const elementsOptions: StripeElementsOptions | null = clientSecret
+    ? { clientSecret, appearance, loader: "auto" }
+    : null;
 
   return (
     <div className="tw:space-y-6">
@@ -116,20 +106,29 @@ export default function StripeCheckout({
       </div>
 
       {/* 💳 STRIPE */}
-      <Elements
-        stripe={stripePromise}
-        options={elementsOptions}
-        key={clientSecret}
-      >
-        <CheckoutForm
-          onSuccess={onSuccess}
-          formRef={formRef}
-          defaultEmail={email}
-          addressDefaultValues={addressDefaultValues}
-          onEmailChange={onEmailChange}
-          onAddressChange={onAddressChange}
-        />
-      </Elements>
+      {loading ? (
+        <p>Chargement du paiement…</p>
+      ) : clientSecret && elementsOptions ? (
+        <Elements
+          stripe={stripePromise}
+          options={elementsOptions}
+          key={clientSecret}
+        >
+          <CheckoutForm
+            onSuccess={onSuccess}
+            formRef={formRef}
+            defaultEmail={email}
+            addressDefaultValues={addressDefaultValues}
+            onEmailChange={onEmailChange}
+            onAddressChange={onAddressChange}
+          />
+        </Elements>
+      ) : (
+        <div className="alert alert-danger">
+          Impossible de charger le formulaire de paiement. Veuillez réessayer
+          plus tard.
+        </div>
+      )}
     </div>
   );
 }
