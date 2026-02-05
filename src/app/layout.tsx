@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { bellefair, roboto } from "@/styles/fonts";
+import { bellefair, lora, roboto } from "@/styles/fonts";
 import "@/styles/styles.scss";
 import "@/styles/tailwind.css";
 import BootstrapClient from "@/components/features/BootstrapClient";
@@ -28,7 +28,7 @@ export default function RootLayout({
     <html lang="fr">
       <body
         id="page-top"
-        className={`antialiased ${bellefair.variable} ${roboto.variable}`}
+        className={`antialiased ${bellefair.variable} ${roboto.variable} ${lora.variable}`}
       >
         {/* Header */}
         <Header />

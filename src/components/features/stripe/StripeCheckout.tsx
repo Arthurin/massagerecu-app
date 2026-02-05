@@ -94,22 +94,25 @@ export default function StripeCheckout({
   return (
     <div className="tw:space-y-6">
       {/* 🧾 RÉCAP COMMANDE */}
-      <div className="tw:p-4 tw:rounded-lg tw:border tw:bg-gray-50">
-        <h3 className="tw:text-lg tw:font-semibold tw:mb-2">
-          Récapitulatif de votre commande
-        </h3>
+      <div className="tw:mb-6">
+        <h3 className="tw:pb-4 text-center">Votre commande</h3>
+        <div className="order-summary mb-4">
+          <div className="tw:flex tw:py-3">
+            <div className="fw-light-bold tw:grow">
+              {checkoutData.quantity > 1 && (
+                <>
+                  <span>{checkoutData.quantity}</span> x&nbsp;
+                </>
+              )}
 
-        <ul className="tw:text-sm tw:space-y-1">
-          <li>
-            <strong>Produit :</strong> {massage.title}
-          </li>
-          <li>
-            <strong>Quantité :</strong> {checkoutData.quantity}
-          </li>
-          <li>
-            <strong>Total :</strong> {totalAmount.toFixed(0)} €
-          </li>
-        </ul>
+              <span>{massage.title}</span>
+            </div>
+            <div className="item-price fw-light-bold ps-3">
+              {" "}
+              {totalAmount.toFixed(0)}&nbsp;€
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* 💳 STRIPE */}

@@ -8,8 +8,20 @@
 // via Google fonts in the head of src/pug/index.pug.
 // The fonts listed afterwards are fallbacks.
 
-$headings-font-family: var(--font-bellefair), var(--font-roboto), system-ui,
-  -apple-system, "Segoe UI", Arial, sans-serif, "Noto Color Emoji";
+$headings-font-family:
+  var(--font-bellefair),
+  var(--font-roboto),
+  system-ui,
+  -apple-system,
+  "Segoe UI",
+  Arial,
+  sans-serif,
+  "Noto Color Emoji";
+
+// jolie font que je peux utiliser au moins pour mes titres, peut-être pour mon texte plus tard
+.font-lora {
+  font-family: var(--font-lora), serif;
+}
 
 // Override Bootstrap default headings variables
 $headings-font-weight: 400;

@@ -5,7 +5,7 @@ const PRICE_2H = "price_1SsW3IENgi07PwIeXvu7BHJ7";
 
 export const MASSAGE_CATALOG: Record<string, MassageCatalogItem> = {
   [PRICE_1H]: {
-    title: "Massage de 1h",
+    title: "Massage de 1h00",
     unitPrice: 60,
     massagePriceId: PRICE_1H,
   },
@@ -15,7 +15,7 @@ export const MASSAGE_CATALOG: Record<string, MassageCatalogItem> = {
     massagePriceId: PRICE_1H30,
   },
   [PRICE_2H]: {
-    title: "Massage de 2h",
+    title: "Massage de 2h00",
     unitPrice: 100,
     massagePriceId: PRICE_2H,
   },

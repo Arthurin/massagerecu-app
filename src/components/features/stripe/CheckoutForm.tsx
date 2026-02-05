@@ -98,7 +98,7 @@ export default function CheckoutForm({
     } else {
       console.error(
         "résultat du paiement dans un état inconnu, paymentIntent.status est est attendu avec la valeur succeeded",
-        result.paymentIntent
+        result.paymentIntent,
       );
     }
 
@@ -114,8 +114,7 @@ export default function CheckoutForm({
 
   return (
     <form ref={formRef} onSubmit={handleSubmit} className="tw:space-y-4">
-      <h3>Coordonnées</h3>
-
+      <h4>Livraison par mail</h4>
       {/* Email + Link */}
       <LinkAuthenticationElement
         options={{
@@ -126,6 +125,7 @@ export default function CheckoutForm({
         onChange={(event) => onEmailChange?.(event.value.email ?? "")}
       />
 
+      <h4>Facturation</h4>
       {/* Adresse de facturation */}
       <AddressElement
         options={{
@@ -155,7 +155,7 @@ export default function CheckoutForm({
         }}
       />
 
-      <h3>Paiement</h3>
+      <h4>Paiement</h4>
       <PaymentElement id="payment-element" options={paymentElementOptions} />
 
       <div className="d-grid gap-2 mt-3">
