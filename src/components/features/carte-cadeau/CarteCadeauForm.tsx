@@ -53,7 +53,7 @@ export default function CarteCadeauForm({
       {/* 🧾 Titre produit */}
       <div className="tw:p-4 tw:rounded-lg tw:bg-gray-50 tw:border">
         <h2 className="tw:text-lg tw:font-semibold">
-          Carte cadeau – {massage.title}
+          Carte cadeau - {massage.title}
         </h2>
         <p className="tw:text-sm tw:text-gray-600">
           {quantity} × {massage.unitPrice.toFixed(0)} € ={" "}

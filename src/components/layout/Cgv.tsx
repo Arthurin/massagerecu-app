@@ -2,13 +2,6 @@ export default function Cgv() {
   return (
     <>
       Date de dernière mise à jour : 05/02/26
-      <p className="mt-4">
-        Les présentes CGV ont été générées gratuitement par la société de
-        communication{" "}
-        <a href="http://kinic.fr" target="_blank">
-          Kinic
-        </a>
-      </p>
       <h2>Article 1 - Objet</h2>
       <p>
         Les présentes conditions régissent les ventes par la société FRIN
@@ -18,7 +11,7 @@ export default function Cgv() {
       <h2>Article 2 - Prix</h2>
       <p>
         Les prix de nos produits sont indiqués en euros. Conformément à
-        l’article 293 B du Code général des impôts, la TVA n’est pas applicable.
+        l'article 293 B du Code général des impôts, la TVA n'est pas applicable.
         La société FRIN Arthur (Massage Reçu) se réserve le droit de modifier
         ses prix à tout moment, mais le produit sera facturé sur la base du
         tarif en vigueur au moment de la validation de la commande.
@@ -47,8 +40,8 @@ export default function Cgv() {
         confirmation de commande vaudra signature et acceptation des opérations
         effectuées. La commande est considérée comme définitivement formée et le
         contrat conclu lorsque le paiement est confirmé par le prestataire de
-        services Stripe. Tant que Stripe n’a pas confirmé le paiement, la
-        commande n’est pas considérée comme définitivement validée. Un
+        services Stripe. Tant que Stripe n'a pas confirmé le paiement, la
+        commande n'est pas considérée comme définitivement validée. Un
         récapitulatif des informations de votre commande vous sera communiqué
         via l'adresse e-mail de confirmation de votre commande.
       </p>
@@ -56,7 +49,7 @@ export default function Cgv() {
       <p>
         Le fait de valider votre commande implique pour vous l'obligation de
         payer le prix indiqué. Les paiements en ligne sont effectués par
-        l’intermédiaire du prestataire de services de paiement Stripe Payments
+        l'intermédiaire du prestataire de services de paiement Stripe Payments
         Europe Ltd, société de droit irlandais, dont le siège social est situé à
         Dublin (Irlande).
       </p>
@@ -69,12 +62,12 @@ export default function Cgv() {
       <p>
         En cas de remboursement (ex. exercice du droit de rétractation), le
         remboursement sera effectué via le même moyen de paiement utilisé lors
-        de la commande par l’intermédiaire du prestataire Stripe, dans un délai
+        de la commande par l'intermédiaire du prestataire Stripe, dans un délai
         dépendant des délais bancaires habituels.
       </p>
       <p>
-        Les paiements sont effectués en euros. Aucune TVA n’est appliquée
-        conformément à l’article 293 B du Code général des impôts.
+        Les paiements sont effectués en euros. Aucune TVA n'est appliquée
+        conformément à l'article 293 B du Code général des impôts.
       </p>
       <h2>Article 6 - Rétractation</h2>
       <p>
@@ -103,19 +96,19 @@ export default function Cgv() {
         préalable exprès du consommateur et renoncement exprès à son droit de
         rétractation.
       </p>
-      <h2>Article 7 – Réservation, annulation et report de prestations</h2>
+      <h2>Article 7 - Réservation, annulation et report de prestations</h2>
       <h6>7.1 Prise de rendez-vous</h6>
       <p>
-        Toute prestation de massage, y compris réglée au moyen d’une carte
-        cadeau, fait l’objet d’une réservation préalable selon les modalités
+        Toute prestation de massage, y compris réglée au moyen d'une carte
+        cadeau, fait l'objet d'une réservation préalable selon les modalités
         indiquées par Massage Reçu (en ligne, par téléphone ou par tout autre
         moyen mis à disposition).
       </p>
       <h6>7.2 Annulation ou report</h6>
       <p>
-        Le client ou le bénéficiaire d’une carte cadeau peut annuler ou reporter
-        un rendez-vous sans frais jusqu’à vingt-quatre (24) heures avant la date
-        et l’heure prévues de la prestation.
+        Le client ou le bénéficiaire d'une carte cadeau peut annuler ou reporter
+        un rendez-vous sans frais jusqu'à vingt-quatre (24) heures avant la date
+        et l'heure prévues de la prestation.
       </p>
       <h6>7.3 Annulation tardive ou non-présentation</h6>
       <p>
@@ -129,11 +122,11 @@ export default function Cgv() {
       <h2>Article 8 - Mise à disposition</h2>
       <p>
         Les cartes cadeaux achetées en ligne sont délivrées sous format
-        numérique (PDF) à l’adresse e-mail indiquée lors de la commande,
+        numérique (PDF) à l'adresse e-mail indiquée lors de la commande,
         immédiatement après confirmation du paiement ou dans un délai maximum de
         24 heures.
       </p>
-      <h2>Article 9 – Absence de finalité médicale</h2>
+      <h2>Article 9 - Absence de finalité médicale</h2>
       <p>
         Les prestations proposées par Massage Reçu sont des massages de
         bien-être et de relaxation, sans finalité thérapeutique ou médicale.
@@ -149,8 +142,8 @@ export default function Cgv() {
         produits ou services que vous envisagez de commander. La société FRIN
         Arthur (Massage Reçu) ne pourra être tenue responsable des
         dysfonctionnements, indisponibilités ou incidents liés au service de
-        paiement fourni par le prestataire Stripe, y compris en cas d’erreur, de
-        blocage ou de rejet de paiement résultant d’un tel prestataire. Par
+        paiement fourni par le prestataire Stripe, y compris en cas d'erreur, de
+        blocage ou de rejet de paiement résultant d'un tel prestataire. Par
         ailleurs, la société FRIN Arthur (Massage Reçu) ne saurait être tenue
         pour responsable des dommages résultant d'une mauvaise utilisation du
         produit acheté. Enfin la responsabilité de la société FRIN Arthur
@@ -159,7 +152,7 @@ export default function Cgv() {
         rupture de service, une intrusion extérieure ou la présence de virus
         informatiques.
       </p>
-      <h2>Article 11 - Litige – Médiation de la consommation</h2>
+      <h2>Article 11 - Litige - Médiation de la consommation</h2>
       <p>
         En cas de litige entre le Client et l'entreprise, ceux-ci s'efforceront
         de le résoudre à l'amiable (le Client adressera une réclamation écrite
@@ -213,7 +206,7 @@ export default function Cgv() {
         réglementaires. Conformément à la loi du 6 janvier 1978, vous disposez
         d'un droit d'accès, de rectification et d'opposition aux informations
         nominatives et aux données personnelles vous concernant, directement sur
-        le site Internet. Pour plus d’informations sur le traitement des données
+        le site Internet. Pour plus d'informations sur le traitement des données
         personnelles, le Client est invité à consulter la politique de
         confidentialité accessible sur le site internet.
       </p>
@@ -232,46 +225,46 @@ export default function Cgv() {
       <p>
         Les cartes cadeaux sont des bons prépayés permettant de bénéficier
         exclusivement des prestations de massage proposées par la société FRIN
-        Arthur (Massage Reçu), telles qu’affichées sur le site internet ou sur
-        le tableau des prestations en vigueur au jour de l’utilisation.
+        Arthur (Massage Reçu), telles qu'affichées sur le site internet ou sur
+        le tableau des prestations en vigueur au jour de l'utilisation.
       </p>
       <h6>15.2 Validité et nominativité</h6>
       <p>
-        Les cartes cadeaux sont nominatives et réservées à l’usage exclusif de
-        la personne désignée lors de l’achat ou de la remise de la carte. Elles
+        Les cartes cadeaux sont nominatives et réservées à l'usage exclusif de
+        la personne désignée lors de l'achat ou de la remise de la carte. Elles
         sont valables pour une durée de six (6) mois à compter de la date
-        d’achat. Toute carte cadeau non utilisée à l’issue de sa période de
+        d'achat. Toute carte cadeau non utilisée à l'issue de sa période de
         validité sera définitivement périmée et ne pourra donner lieu à aucun
         remboursement, échange ou prolongation.
       </p>
-      <h6>15.3 Modalités d’utilisation</h6>
+      <h6>15.3 Modalités d'utilisation</h6>
       <p>
         Les cartes cadeaux sont utilisables uniquement pour les prestations de
         massage proposées par Massage Reçu. Elles ne peuvent en aucun cas être
-        échangées contre de l’argent, ni faire l’objet d’un rendu de monnaie,
+        échangées contre de l'argent, ni faire l'objet d'un rendu de monnaie,
         même partiel. Si le montant de la prestation choisie est supérieur à la
         valeur de la carte cadeau, le bénéficiaire devra régler la différence
         selon les moyens de paiement acceptés.
       </p>
-      <h6>15.4 Absence de remboursement – perte ou vol</h6>
+      <h6>15.4 Absence de remboursement - perte ou vol</h6>
       <p>
         Sous réserve des dispositions relatives au droit de rétractation prévues
-        à l’article 15.5, les cartes cadeaux ne sont ni remboursables, ni
+        à l'article 15.5, les cartes cadeaux ne sont ni remboursables, ni
         échangeables, y compris en cas de perte, de vol, de détérioration ou de
         non-utilisation avant la date de validité. Il appartient au client ou au
-        bénéficiaire d’en assurer la conservation.
+        bénéficiaire d'en assurer la conservation.
       </p>
       <h6>15.5 Droit de rétractation</h6>
       <p>
         Conformément aux dispositions du Code de la consommation : En cas
-        d’achat d’une carte cadeau à distance (en ligne), le client dispose d’un
-        délai de quatorze (14) jours à compter de la date d’achat pour exercer
-        son droit de rétractation, à condition que la carte cadeau n’ait pas été
+        d'achat d'une carte cadeau à distance (en ligne), le client dispose d'un
+        délai de quatorze (14) jours à compter de la date d'achat pour exercer
+        son droit de rétractation, à condition que la carte cadeau n'ait pas été
         utilisée, même partiellement, durant ce délai. Toute utilisation, même
-        partielle, de la carte cadeau avant l’expiration du délai de
+        partielle, de la carte cadeau avant l'expiration du délai de
         rétractation vaut renonciation expresse à ce droit, sans possibilité de
         remboursement. En cas de remise physique de la carte cadeau (achat sur
-        place), aucun droit de rétractation ne s’applique, conformément à la
+        place), aucun droit de rétractation ne s'applique, conformément à la
         réglementation en vigueur relative aux ventes conclues hors contrat à
         distance.
       </p>

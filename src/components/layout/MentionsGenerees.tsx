@@ -17,7 +17,7 @@ export default function MentionsGenerees() {
       </p>
       <p>
         <b>Contenu :</b> Ensemble des éléments constituants l'information
-        présente sur le Site, notamment textes – images – vidéos.
+        présente sur le Site, notamment textes - images - vidéos.
       </p>
       <p>
         <b>Informations clients :</b> Ci après dénommé « Information (s) » qui
@@ -56,17 +56,17 @@ export default function MentionsGenerees() {
         FRIN (Massage Reçu). <br />
         <strong>Adresse</strong> : 1 Le grand long pré 35150 BRIE
         <br />
-        <strong>Responsable publication</strong> : Arthur FRIN –
+        <strong>Responsable publication</strong> : Arthur FRIN -
         massagerecu@gmail.com
         <br />
         Le responsable publication est une personne physique ou une personne
         morale.
         <br />
-        <strong>Webmaster</strong> : Arthur FRIN – massagerecu@gmail.com
+        <strong>Webmaster</strong> : Arthur FRIN - massagerecu@gmail.com
         <br />
-        <strong>Hébergeur</strong> : ovh – 2 rue Kellermann 59100 Roubaix 1007
+        <strong>Hébergeur</strong> : ovh - 2 rue Kellermann 59100 Roubaix 1007
         <br />
-        <strong>Délégué à la protection des données</strong> : Arthur FRIN –
+        <strong>Délégué à la protection des données</strong> : Arthur FRIN -
         massagerecu@gmail.com
         <br />
       </p>
@@ -355,7 +355,7 @@ export default function MentionsGenerees() {
         <a href="https://www.massagerecu.fr">https://www.massagerecu.fr</a> par
         écrit à l'adresse suivante :{" "}
       </p>
-      Massage Reçu EI – DPO, FRIN Arthur <br />1 Le grand long pré 35150 BRIE.
+      Massage Reçu EI - DPO, FRIN Arthur <br />1 Le grand long pré 35150 BRIE.
       <p>
         Dans ce cas, l'Utilisateur doit indiquer les Données Personnelles qu'il
         souhaiterait que{" "}
