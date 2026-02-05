@@ -1,7 +1,7 @@
 export default function Cgv() {
   return (
     <>
-      Date de dernière mise à jour : 21/11/24
+      Date de dernière mise à jour : 05/02/26
       <p className="mt-4">
         Les présentes CGV ont été générées gratuitement par la société de
         communication{" "}
@@ -17,26 +17,11 @@ export default function Cgv() {
       </p>
       <h2>Article 2 - Prix</h2>
       <p>
-        Les prix de nos produits sont indiqués en euros toutes taxes comprises
-        (TVA et autres taxes applicables au jour de la commande), sauf
-        indication contraire et hors frais de traitement et d'expédition. En cas
-        de commande vers un pays autre que la France métropolitaine vous êtes
-        l'importateur du ou des produits concernés. Des droits de douane ou
-        autres taxes locales ou droits d'importation ou taxes d'état sont
-        susceptibles d'être exigibles. Ces droits et sommes ne relèvent pas du
-        ressort de la société FRIN Arthur (Massage Reçu). Ils seront à votre
-        charge et relèvent de votre entière responsabilité, tant en termes de
-        déclarations que de paiements aux autorités et organismes compétents de
-        votre pays. Nous vous conseillons de vous renseigner sur ces aspects
-        auprès de vos autorités locales. Toutes les commandes quelle que soit
-        leur origine sont payables en euros. La société FRIN Arthur (Massage
-        Reçu) se réserve le droit de modifier ses prix à tout moment, mais le
-        produit sera facturé sur la base du tarif en vigueur au moment de la
-        validation de la commande et sous réserve de disponibilité. Les produits
-        demeurent la propriété de la société FRIN Arthur (Massage Reçu) jusqu'au
-        paiement complet du prix. Attention : dès que vous prenez possession
-        physiquement des produits commandés, les risques de perte ou
-        d'endommagement des produits vous sont transférés.
+        Les prix de nos produits sont indiqués en euros. Conformément à
+        l’article 293 B du Code général des impôts, la TVA n’est pas applicable.
+        La société FRIN Arthur (Massage Reçu) se réserve le droit de modifier
+        ses prix à tout moment, mais le produit sera facturé sur la base du
+        tarif en vigueur au moment de la validation de la commande.
       </p>
       <h2>Article 3 - Commandes</h2>
       <p>
@@ -60,20 +45,40 @@ export default function Cgv() {
         fournies et la confirmation enregistrée vaudront preuve de la
         transaction. Vous déclarez en avoir parfaite connaissance. La
         confirmation de commande vaudra signature et acceptation des opérations
-        effectuées. Un récapitulatif des informations de votre commande vous
-        sera communiqué via l'adresse e-mail de confirmation de votre commande.
+        effectuées. La commande est considérée comme définitivement formée et le
+        contrat conclu lorsque le paiement est confirmé par le prestataire de
+        services Stripe. Tant que Stripe n’a pas confirmé le paiement, la
+        commande n’est pas considérée comme définitivement validée. Un
+        récapitulatif des informations de votre commande vous sera communiqué
+        via l'adresse e-mail de confirmation de votre commande.
       </p>
       <h2>Article 5 - Paiement</h2>
       <p>
         Le fait de valider votre commande implique pour vous l'obligation de
-        payer le prix indiqué. Le règlement de vos achats s'effectue par carte
-        bancaire grâce au système sécurisé de paiement en ligne par carte
-        bancaire. Le débit de la carte n'est effectué qu'au moment de
-        l'expédition de la commande.
+        payer le prix indiqué. Les paiements en ligne sont effectués par
+        l’intermédiaire du prestataire de services de paiement Stripe Payments
+        Europe Ltd, société de droit irlandais, dont le siège social est situé à
+        Dublin (Irlande).
+      </p>
+      <p>
+        La société FRIN Arthur (Massage Reçu) ne conserve aucune donnée bancaire
+        du client. Les informations de paiement sont transmises de manière
+        sécurisée et directement traitées par Stripe, conformément à la norme
+        PCI-DSS.
+      </p>
+      <p>
+        En cas de remboursement (ex. exercice du droit de rétractation), le
+        remboursement sera effectué via le même moyen de paiement utilisé lors
+        de la commande par l’intermédiaire du prestataire Stripe, dans un délai
+        dépendant des délais bancaires habituels.
+      </p>
+      <p>
+        Les paiements sont effectués en euros. Aucune TVA n’est appliquée
+        conformément à l’article 293 B du Code général des impôts.
       </p>
       <h2>Article 6 - Rétractation</h2>
       <p>
-        Conformément aux dispositions de l'article L.121-21 du Code de la
+        Conformément aux dispositions de l'article L221-18 du Code de la
         Consommation, vous disposez d'un délai de rétractation de 14 jours à
         compter de la réception de vos produits pour exercer votre droit de
         rétraction sans avoir à justifier de motifs ni à payer de pénalité. Les
@@ -86,55 +91,53 @@ export default function Cgv() {
       </p>
       <p>
         EXCEPTIONS AU DROIT DE RETRACTATION : Conformément aux dispositions de
-        l'article L.121-21-8 du Code de la Consommation, le droit de
-        rétractation ne s'applique pas à : La fourniture de services pleinement
-        exécutés avant la fin du délai de rétractation et dont l'exécution a
-        commencé après accord préalable exprès du consommateur et renoncement
-        exprès à son droit de rétractation. La fourniture de biens ou de
-        services dont le prix dépend de fluctuations sur le marché financier
-        échappant au contrôle du professionnel et susceptibles de se produire
-        pendant le délai de rétractation. La fourniture d'un contenu numérique
-        non fourni sur un support matériel dont l'exécution a commencé après
-        accord préalable exprès du consommateur et renoncement exprès à son
-        droit de rétractation.
+        l'article L221-28 du Code de la Consommation, le droit de rétractation
+        ne s'applique pas à : La fourniture de services pleinement exécutés
+        avant la fin du délai de rétractation et dont l'exécution a commencé
+        après accord préalable exprès du consommateur et renoncement exprès à
+        son droit de rétractation. La fourniture de biens ou de services dont le
+        prix dépend de fluctuations sur le marché financier échappant au
+        contrôle du professionnel et susceptibles de se produire pendant le
+        délai de rétractation. La fourniture d'un contenu numérique non fourni
+        sur un support matériel dont l'exécution a commencé après accord
+        préalable exprès du consommateur et renoncement exprès à son droit de
+        rétractation.
       </p>
-      <h2>Article 7- Disponibilité</h2>
+      <h2>Article 7 – Réservation, annulation et report de prestations</h2>
+      <h6>7.1 Prise de rendez-vous</h6>
       <p>
-        Nos produits sont proposés tant qu'ils sont visibles sur le site{" "}
-        <a href="www.massagerecu.fr">www.massagerecu.fr</a> et dans la limite
-        des stocks disponibles. Pour les produits non stockés, nos offres sont
-        valables sous réserve de disponibilité chez nos fournisseurs. En cas
-        d'indisponibilité de produit après passation de votre commande, nous
-        vous en informerons par mail. Votre commande sera automatiquement
-        annulée et aucun débit bancaire ne sera effectué.
+        Toute prestation de massage, y compris réglée au moyen d’une carte
+        cadeau, fait l’objet d’une réservation préalable selon les modalités
+        indiquées par Massage Reçu (en ligne, par téléphone ou par tout autre
+        moyen mis à disposition).
       </p>
-      <h2>Article 8 - Livraison</h2>
+      <h6>7.2 Annulation ou report</h6>
       <p>
-        Les produits sont livrés à l'adresse indiquée au cours du processus de
-        commande, dans le délai indiqué sur la page de validation de la
-        commande. En cas de retard d'expédition, un mail vous sera adressé pour
-        vous informer d'une éventuelle conséquence sur le délai de livraison qui
-        vous a été indiqué. Conformément aux dispositions légales, en cas de
-        retard de livraison, vous bénéficiez de la possibilité d'annuler la
-        commande dans les conditions et modalités définies à l'article L 138-2
-        du Code de la Consommation. Si entre temps vous recevez le produit nous
-        procéderons à son remboursement et aux frais d'acheminement dans les
-        conditions de l'article L 138-3 du Code de la Consommation.
+        Le client ou le bénéficiaire d’une carte cadeau peut annuler ou reporter
+        un rendez-vous sans frais jusqu’à vingt-quatre (24) heures avant la date
+        et l’heure prévues de la prestation.
       </p>
-      <h2>Article 9 - Garantie</h2>
+      <h6>7.3 Annulation tardive ou non-présentation</h6>
       <p>
-        Tous nos produits bénéficient de la garantie légale de conformité et de
-        la garantie des vices cachés, prévues par les articles 1641 et suivants
-        du Code civil. En cas de non-conformité d'un produit vendu, il pourra
-        être retourné, échangé ou remboursé. Toutes les réclamations, demandes
-        d'échange ou de remboursement doivent s'effectuer par Mail dans le délai
-        de 30 jours de la livraison. Les produits doivent nous être retournés
-        dans l'état dans lequel vous les avez reçus avec l'ensemble des éléments
-        (accessoires, emballage, notice...). Les frais d'envoi vous seront
-        remboursés sur la base du tarif facturé et les frais de retour vous
-        seront remboursés sur présentation des justificatifs. Les dispositions
-        de cet Article ne vous empêchent pas de bénéficier du droit de
-        rétractation prévu à l'article 6.
+        Toute annulation ou demande de report effectuée moins de 24 heures avant
+        le rendez-vous, ainsi que toute non-présentation au rendez-vous,
+        entraînera la considération de la prestation comme due. Dans ce cas : la
+        prestation sera réputée consommée, la carte cadeau sera débitée ou
+        considérée comme utilisée, aucun remboursement, report ou avoir ne
+        pourra être accordé.
+      </p>
+      <h2>Article 8 - Mise à disposition</h2>
+      <p>
+        Les cartes cadeaux achetées en ligne sont délivrées sous format
+        numérique (PDF) à l’adresse e-mail indiquée lors de la commande,
+        immédiatement après confirmation du paiement ou dans un délai maximum de
+        24 heures.
+      </p>
+      <h2>Article 9 – Absence de finalité médicale</h2>
+      <p>
+        Les prestations proposées par Massage Reçu sont des massages de
+        bien-être et de relaxation, sans finalité thérapeutique ou médicale.
+        Elles ne se substituent en aucun cas à un suivi médical ou paramédical.
       </p>
       <h2>Article 10 - Responsabilité</h2>
       <p>
@@ -143,13 +146,18 @@ export default function Cgv() {
         saurait être engagée en cas de non-respect de la législation du pays où
         le produit est livré. Il vous appartient de vérifier auprès des
         autorités locales les possibilités d'importation ou d'utilisation des
-        produits ou services que vous envisagez de commander. Par ailleurs, la
-        société FRIN Arthur (Massage Reçu) ne saurait être tenue pour
-        responsable des dommages résultant d'une mauvaise utilisation du produit
-        acheté. Enfin la responsabilité de la société FRIN Arthur (Massage Reçu)
-        ne saurait être engagée pour tous les inconvénients ou dommages
-        inhérents à l'utilisation du réseau Internet, notamment une rupture de
-        service, une intrusion extérieure ou la présence de virus informatiques.
+        produits ou services que vous envisagez de commander. La société FRIN
+        Arthur (Massage Reçu) ne pourra être tenue responsable des
+        dysfonctionnements, indisponibilités ou incidents liés au service de
+        paiement fourni par le prestataire Stripe, y compris en cas d’erreur, de
+        blocage ou de rejet de paiement résultant d’un tel prestataire. Par
+        ailleurs, la société FRIN Arthur (Massage Reçu) ne saurait être tenue
+        pour responsable des dommages résultant d'une mauvaise utilisation du
+        produit acheté. Enfin la responsabilité de la société FRIN Arthur
+        (Massage Reçu) ne saurait être engagée pour tous les inconvénients ou
+        dommages inhérents à l'utilisation du réseau Internet, notamment une
+        rupture de service, une intrusion extérieure ou la présence de virus
+        informatiques.
       </p>
       <h2>Article 11 - Litige – Médiation de la consommation</h2>
       <p>
@@ -205,7 +213,9 @@ export default function Cgv() {
         réglementaires. Conformément à la loi du 6 janvier 1978, vous disposez
         d'un droit d'accès, de rectification et d'opposition aux informations
         nominatives et aux données personnelles vous concernant, directement sur
-        le site Internet.
+        le site Internet. Pour plus d’informations sur le traitement des données
+        personnelles, le Client est invité à consulter la politique de
+        confidentialité accessible sur le site internet.
       </p>
       <h2>Article 14 - Archivage Preuve</h2>
       <p>
@@ -216,6 +226,54 @@ export default function Cgv() {
         seront considérés par toutes les parties concernées comme preuve des
         communications, commandes, paiements et transactions intervenus entre
         les parties.
+      </p>
+      <h2>Article 15 - Cartes Cadeaux</h2>
+      <h6>15.1 Définition</h6>
+      <p>
+        Les cartes cadeaux sont des bons prépayés permettant de bénéficier
+        exclusivement des prestations de massage proposées par la société FRIN
+        Arthur (Massage Reçu), telles qu’affichées sur le site internet ou sur
+        le tableau des prestations en vigueur au jour de l’utilisation.
+      </p>
+      <h6>15.2 Validité et nominativité</h6>
+      <p>
+        Les cartes cadeaux sont nominatives et réservées à l’usage exclusif de
+        la personne désignée lors de l’achat ou de la remise de la carte. Elles
+        sont valables pour une durée de six (6) mois à compter de la date
+        d’achat. Toute carte cadeau non utilisée à l’issue de sa période de
+        validité sera définitivement périmée et ne pourra donner lieu à aucun
+        remboursement, échange ou prolongation.
+      </p>
+      <h6>15.3 Modalités d’utilisation</h6>
+      <p>
+        Les cartes cadeaux sont utilisables uniquement pour les prestations de
+        massage proposées par Massage Reçu. Elles ne peuvent en aucun cas être
+        échangées contre de l’argent, ni faire l’objet d’un rendu de monnaie,
+        même partiel. Si le montant de la prestation choisie est supérieur à la
+        valeur de la carte cadeau, le bénéficiaire devra régler la différence
+        selon les moyens de paiement acceptés.
+      </p>
+      <h6>15.4 Absence de remboursement – perte ou vol</h6>
+      <p>
+        Sous réserve des dispositions relatives au droit de rétractation prévues
+        à l’article 15.5, les cartes cadeaux ne sont ni remboursables, ni
+        échangeables, y compris en cas de perte, de vol, de détérioration ou de
+        non-utilisation avant la date de validité. Il appartient au client ou au
+        bénéficiaire d’en assurer la conservation.
+      </p>
+      <h6>15.5 Droit de rétractation</h6>
+      <p>
+        Conformément aux dispositions du Code de la consommation : En cas
+        d’achat d’une carte cadeau à distance (en ligne), le client dispose d’un
+        délai de quatorze (14) jours à compter de la date d’achat pour exercer
+        son droit de rétractation, à condition que la carte cadeau n’ait pas été
+        utilisée, même partiellement, durant ce délai. Toute utilisation, même
+        partielle, de la carte cadeau avant l’expiration du délai de
+        rétractation vaut renonciation expresse à ce droit, sans possibilité de
+        remboursement. En cas de remise physique de la carte cadeau (achat sur
+        place), aucun droit de rétractation ne s’applique, conformément à la
+        réglementation en vigueur relative aux ventes conclues hors contrat à
+        distance.
       </p>
     </>
   );
