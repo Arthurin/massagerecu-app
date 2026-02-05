@@ -75,6 +75,10 @@ export default function StripeCheckout({
 
   const appearance: Appearance = {
     theme: "stripe",
+    variables: {
+      colorText: "#212529",
+      fontFamily: "system-ui, -apple-system, Roboto, Arial, sans-serif",
+    },
   };
 
   const elementsOptions: StripeElementsOptions | null = clientSecret

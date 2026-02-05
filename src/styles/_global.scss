@@ -28,6 +28,13 @@ body {
   overflow-x: hidden;
 }
 
+:root {
+  --focusOutline: 0px;
+  --colorPrimary: #0570de;
+  --focusBoxShadow:
+    0 0 0 3px hsla(210, 96%, 45%, 25%), 0 1px 1px 0 rgba(0, 0, 0, 0.08);
+}
+
 // Force Lora for lower headings (overrides Bootstrap headings)
 h3,
 h4,

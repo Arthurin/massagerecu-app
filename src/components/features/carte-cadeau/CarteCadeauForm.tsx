@@ -18,7 +18,7 @@ export default function CarteCadeauForm({
   formRef,
 }: Props) {
   const [recipientName, setRecipientName] = useState(
-    initialData?.recipientName ?? ""
+    initialData?.recipientName ?? "",
   );
   const [message, setMessage] = useState(initialData?.message ?? "");
   const [quantity, setQuantity] = useState(initialData?.quantity ?? 1);
@@ -51,14 +51,24 @@ export default function CarteCadeauForm({
   return (
     <form ref={formRef} onSubmit={handleSubmit} className="tw:space-y-6">
       {/* 🧾 Titre produit */}
-      <div className="tw:p-4 tw:rounded-lg tw:bg-gray-50 tw:border">
-        <h2 className="tw:text-lg tw:font-semibold">
-          Carte cadeau - {massage.title}
-        </h2>
-        <p className="tw:text-sm tw:text-gray-600">
-          {quantity} × {massage.unitPrice.toFixed(0)} € ={" "}
-          <strong>{totalPrice.toFixed(0)} €</strong>
-        </p>
+      <h3 className="tw:pb-4 text-center">
+        {quantity > 1 ? `${quantity} x ` : ""}
+        {massage.title}
+      </h3>
+      {/* 🔢 Quantité */}
+      <div className="tw:space-y-2">
+        <label className="tw:block tw:text-sm tw:font-medium">Quantité</label>
+        <select
+          value={quantity}
+          onChange={(e) => setQuantity(Number(e.target.value))}
+          className="tw:w-full form-select"
+        >
+          {[1, 2, 3, 4, 5].map((q) => (
+            <option key={q} value={q}>
+              {q}
+            </option>
+          ))}
+        </select>
       </div>
 
       {/* 🎁 Bénéficiaire */}
@@ -88,22 +98,6 @@ export default function CarteCadeauForm({
           rows={3}
           placeholder="Un petit mot pour accompagner la carte cadeau"
         />
-      </div>
-
-      {/* 🔢 Quantité */}
-      <div className="tw:space-y-2">
-        <label className="tw:block tw:text-sm tw:font-medium">Quantité</label>
-        <select
-          value={quantity}
-          onChange={(e) => setQuantity(Number(e.target.value))}
-          className="tw:w-full tw:rounded-md tw:border tw:px-3 tw:py-2"
-        >
-          {[1, 2, 3, 4, 5].map((q) => (
-            <option key={q} value={q}>
-              {q}
-            </option>
-          ))}
-        </select>
       </div>
 
       {/* ➡️ CTA */}
