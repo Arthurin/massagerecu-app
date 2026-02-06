@@ -77,7 +77,17 @@ export default function StripeCheckout({
     theme: "stripe",
     variables: {
       colorText: "#212529",
-      fontFamily: "system-ui, -apple-system, Roboto, Arial, sans-serif",
+      fontFamily:
+        'system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif',
+      fontSizeBase: "16px",
+      fontLineHeight: "24px",
+      spacingUnit: "4px",
+    },
+    rules: {
+      ".Input": {
+        padding: "10px 12px",
+        lineHeight: "24px",
+      },
     },
   };
 

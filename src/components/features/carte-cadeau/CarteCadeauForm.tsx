@@ -56,8 +56,8 @@ export default function CarteCadeauForm({
         {massage.title}
       </h3>
       {/* 🔢 Quantité */}
-      <div className="tw:space-y-2">
-        <label className="tw:block tw:text-sm tw:font-medium">Quantité</label>
+      <div className="margin-input">
+        <label>Quantité</label>
         <select
           value={quantity}
           onChange={(e) => setQuantity(Number(e.target.value))}
@@ -72,10 +72,8 @@ export default function CarteCadeauForm({
       </div>
 
       {/* 🎁 Bénéficiaire */}
-      <div className="tw:space-y-2">
-        <label className="tw:block tw:text-sm tw:font-medium">
-          Nom du bénéficiaire
-        </label>
+      <div className="margin-input ">
+        <label>Nom du bénéficiaire</label>
         <input
           type="text"
           required
@@ -87,10 +85,8 @@ export default function CarteCadeauForm({
       </div>
 
       {/* ✍️ Message */}
-      <div className="tw:space-y-2">
-        <label className="tw:block tw:text-sm tw:font-medium">
-          Message personnalisé (optionnel)
-        </label>
+      <div className="margin-input">
+        <label>Message personnalisé (optionnel)</label>
         <textarea
           value={message}
           onChange={(e) => setMessage(e.target.value)}
