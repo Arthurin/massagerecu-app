@@ -174,7 +174,7 @@ export default function CheckoutForm({
         </div>
         <button
           disabled={isLoading || !stripe || !elements}
-          className="btn btn-primary btn-lg py-2"
+          className="btn btn-secondary btn-lg py-2"
         >
           {isLoading ? "Paiement en cours…" : "Payer maintenant"}
         </button>

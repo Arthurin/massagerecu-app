@@ -40,7 +40,7 @@ export default function CarteCadeauFlow() {
   };
 
   return (
-    <div className="tw:max-w-lg tw:mx-auto tw:px-4 sm:tw:px-6 tw:py-6">
+    <div className="carte-cadeau-component tw:max-w-lg tw:mx-auto tw:px-4 sm:tw:px-6 tw:py-6">
       {step !== 4 && step !== 1 && (
         <StepIndicator
           currentStep={step}

@@ -130,7 +130,7 @@ export default function CarteCadeauForm({
 
       {/* ➡️ CTA */}
       <div className="tw:pt-4">
-        <button type="submit" className="tw:w-full btn btn-primary btn-lg">
+        <button type="submit" className="tw:w-full btn btn-secondary btn-lg">
           Continuer
         </button>
       </div>

@@ -1,4 +1,5 @@
 export interface MassageOption {
+  [x: string]: ReactNode;
   title: string;
   unitPrice: number;
   massagePriceId: string;

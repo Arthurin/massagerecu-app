@@ -100,7 +100,7 @@ export default function StripeCheckout({
       {/* 🧾 RÉCAP COMMANDE */}
       <div className="tw:mb-6">
         <h3 className="tw:pb-4 text-center">Votre commande</h3>
-        <div className="order-summary mb-4">
+        <div className="order-summary mb-4 tw:divide-y tw:divide-gray-200">
           <div className="tw:flex tw:py-3">
             <div className="fw-light-bold tw:grow">
               {checkoutData.quantity > 1 && (
@@ -112,6 +112,16 @@ export default function StripeCheckout({
               <span>{massage.title}</span>
             </div>
             <div className="item-price fw-light-bold ps-3">
+              {" "}
+              {totalAmount.toFixed(0)}&nbsp;€
+            </div>
+          </div>
+
+          <div className="tw:flex tw:py-3">
+            <div className="tw:grow text-left">
+              <span>Montant total :</span>
+            </div>
+            <div className="total-price text-right">
               {" "}
               {totalAmount.toFixed(0)}&nbsp;€
             </div>
