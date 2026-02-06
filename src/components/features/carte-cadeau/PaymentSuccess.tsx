@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 
@@ -17,6 +17,20 @@ export default function PaymentSuccess({
 }: PaymentSuccessProps) {
   const [status, setStatus] = useState<PaymentStatus>("init");
   const [email, setEmail] = useState<string | null>(null);
+  const isProcessing = status === "init" || status === "processing";
+  const isSuccess = status === "completed";
+  const isError = status === "failed" || status === "error";
+  const statusTone = isSuccess
+    ? "success"
+    : isProcessing
+      ? "processing"
+      : "error";
+
+  const statusTitle = isSuccess
+    ? "Paiement confirmé"
+    : isProcessing
+      ? "Traitement en cours"
+      : "Problème lors du traitement";
 
   useEffect(() => {
     if (!paymentIntentId) {
@@ -35,7 +49,7 @@ export default function PaymentSuccess({
         });
 
         if (!res.ok) {
-          // 404 = webhook pas encore passé → retry
+          // 404 = webhook pas encore passé -> retry
           if (res.status === 404 && retries < MAX_RETRIES) {
             retries++;
             setTimeout(fetchResult, RETRY_DELAY_MS);
@@ -43,7 +57,7 @@ export default function PaymentSuccess({
           }
 
           throw new Error(
-            "Le résultat du traitement de la commande est indisponible"
+            "Le résultat du traitement de la commande est indisponible",
           );
         }
 
@@ -65,7 +79,7 @@ export default function PaymentSuccess({
           setStatus("processing");
         }
 
-        // processing → retry
+        // processing -> retry
         if (retries < MAX_RETRIES) {
           retries++;
           setTimeout(fetchResult, RETRY_DELAY_MS);
@@ -90,77 +104,90 @@ export default function PaymentSuccess({
   }, [paymentIntentId]);
 
   return (
-    <div className="tw:max-w-xl tw:mx-auto tw:p-6 tw:rounded-lg tw:border tw:space-y-4">
-      {/* TITRE */}
-      <h2 className="tw:text-xl tw:font-semibold">
-        {status === "completed"
-          ? "✅ Paiement confirmé"
-          : status === "processing" || status === "init"
-          ? "⏳ Traitement en cours"
-          : "❌ Problème lors du traitement"}
-      </h2>
+    <section className={`payment-success--${statusTone}`} aria-live="polite">
+      {/* EN-TÊTE */}
+      <div className="payment-success__header">
+        <div className="payment-success__icon" aria-hidden="true">
+          {isSuccess ? (
+            <span className="payment-success__icon-glyph" aria-hidden="true">
+              ✅
+            </span>
+          ) : isProcessing ? (
+            <span
+              className="payment-success__icon-spinner"
+              aria-hidden="true"
+            />
+          ) : (
+            "!"
+          )}
+        </div>
+        <h3 className="payment-success__title">{statusTitle}</h3>
+      </div>
 
       {/* PROCESSING */}
-      {(status === "init" || status === "processing") && (
-        <>
-          <div className="tw:flex tw:items-center tw:gap-3">
-            <div className="tw:animate-spin tw:h-5 tw:w-5 tw:border-2 tw:border-gray-300 tw:border-t-transparent tw:rounded-full" />
+      {isProcessing && (
+        <div className="payment-success__stack">
+          <div className="payment-success__row">
+            <div className="payment-success__spinner" aria-hidden="true" />
+            <p>Votre paiement a bien été pris en compte.</p>
+          </div>
+          <div className="payment-success__panel">
             <p>
-              Votre paiement a bien été pris en compte.
-              <br />
               {status === "init"
-                ? "Enregistrement de votre commande…"
-                : "Préparation de votre carte cadeau…"}
+                ? "Enregistrement de votre commande..."
+                : "Préparation de votre carte cadeau..."}
+            </p>
+            <p className="payment-success__hint">
+              Cette étape peut prendre quelques instants.
             </p>
           </div>
-          <p className="tw:text-sm tw:text-gray-600">
-            Cette étape peut prendre quelques instants.
-          </p>
-        </>
+        </div>
       )}
 
       {/* SUCCESS */}
-      {status === "completed" && (
-        <>
-          <p>🎉 Votre carte cadeau a été générée avec succès.</p>
+      {isSuccess && (
+        <div className="payment-success__stack">
+          <p>Votre carte cadeau a été générée avec succès.</p>
 
-          {email ? (
+          <div className="payment-success__panel payment-success__panel--success">
             <p>
-              📧 Elle vient d'être envoyée à :
-              <br />
-              <strong>{email}</strong>
+              {email
+                ? "Elle vient d'être envoyée à :"
+                : "Elle va vous être envoyée par email."}
             </p>
-          ) : (
-            <p>📧 Elle va vous être envoyée par email.</p>
-          )}
+            {email && <p className="payment-success__email">{email}</p>}
+          </div>
 
-          <p className="tw:text-sm tw:text-gray-600">
+          <p className="payment-success__hint">
             Pensez à vérifier votre dossier spam si nécessaire.
           </p>
-        </>
+        </div>
       )}
 
       {/* FAILED / ERROR */}
-      {(status === "failed" || status === "error") && (
-        <>
+      {isError && (
+        <div className="payment-success__stack">
           <p>
-            Votre paiement a bien été effectué, mais une erreur est survenue
-            lors de la finalisation de votre commande.
+            Votre paiement a bien été enregistré, mais une erreur est survenue
+            lors de l'envoit de votre commande. Je suis désolé pour la gêne
+            occasionnée.
           </p>
 
-          <p>
-            👉{" "}
+          <div className="payment-success__panel payment-success__panel--error">
+            <p>
+              Contactez-moi par email pour que vous puissiez recevoir votre
+              carte cadeau au plus vite :
+            </p>
             <a
               href="mailto:massagerecu@gmail.com"
               aria-label="Contacter moi par email"
+              className="payment-success__link"
             >
-              Contactez-moi par email
-            </a>{" "}
-            afin que je règle la situation rapidement. Je suis désolé pour la
-            gêne occasionnée.
-          </p>
-        </>
+              massagerecu@gmail.com
+            </a>
+          </div>
+        </div>
       )}
-    </div>
+    </section>
   );
 }

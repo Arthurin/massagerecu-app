@@ -6,3 +6,133 @@
     0px 8px 24px rgba(0, 0, 0, 0.08),
     0px 2px 6px rgba(0, 0, 0, 0.04);
 }
+
+.payment-success__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.payment-success__icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+}
+
+.payment-success__icon-glyph {
+  font-size: 1.25rem;
+  line-height: 1;
+  display: block;
+  transform: translateY(-1px);
+}
+
+.payment-success__icon-spinner {
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  border-top-color: transparent;
+  animation: payment-success-spin 1s linear infinite;
+}
+
+.payment-success__title {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 600;
+}
+
+.payment-success__stack {
+  display: grid;
+  gap: 14px;
+}
+
+.payment-success__row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.payment-success__row p {
+  margin: 0;
+}
+
+.payment-success__spinner {
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  border: 2px solid #d6d6d6;
+  border-top-color: transparent;
+  animation: payment-success-spin 1s linear infinite;
+  align-self: center;
+}
+
+.payment-success__panel {
+  border-radius: 12px;
+  border: 1px solid #e6e6e6;
+  background: #f7f7f7;
+  padding: 14px 16px;
+  display: grid;
+  gap: 0;
+}
+
+.payment-success__panel--success {
+  border-color: #cfe9dc;
+  background: #effaf4;
+}
+
+.payment-success__panel--error {
+  border-color: #f3c7c7;
+  background: #fdf1f1;
+  gap: 0;
+}
+
+.payment-success__email {
+  font-weight: 600;
+}
+
+.payment-success__link {
+  display: inline-block;
+  font-weight: 600;
+  text-decoration: underline;
+  color: #b4232a;
+}
+
+.payment-success__hint {
+  color: #5f5f5f;
+}
+
+.payment-success--success .payment-success__icon {
+  background: #dff3e7;
+  color: #1a6f45;
+}
+
+.payment-success--processing .payment-success__icon {
+  background: #e2ecfb;
+  color: #1f4c8a;
+}
+
+.payment-success--error .payment-success__icon {
+  background: #f6d7d7;
+  color: #8b1f22;
+}
+
+@keyframes payment-success-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 640px) {
+  .payment-success {
+    padding: 20px;
+  }
+}
