@@ -74,8 +74,7 @@ export default function CheckoutForm({
         case "validation_error":
           errorMessage =
             "Les champs sont incomplets ou erronés. Veuillez vérifier les informations saisies.";
-          errorMessageDetails = ` Vous pouvez refuser de donner votre adresse pour la facturation.
-            Dans ce cas une adresse factice fera l'affaire : "refus - 35000 Rennes".`;
+          errorMessageDetails = `L'adresse est utilisée uniquement pour la facturation, vous pouvez refuser de la donner en saisissant : "refus - 35000 Rennes".`;
           break;
         case "invalid_request_error":
           errorMessage = result.error.message ?? "Le paiement a échoué.";
@@ -181,7 +180,10 @@ export default function CheckoutForm({
         </button>
         {/* Show any error or success messages */}
         {message && (
-          <div id="payment-message" className="alert alert-danger text-center">
+          <div
+            id="payment-message"
+            className="mt-1 alert alert-danger text-center"
+          >
             {message}
             {errorDetails && (
               <>

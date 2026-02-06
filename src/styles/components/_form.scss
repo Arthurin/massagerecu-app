@@ -24,8 +24,52 @@ textarea:focus {
   margin-bottom: 12px;
 }
 
-.margin-input label {
+.form-label {
   margin-bottom: 4px;
   font-size: 0.93rem;
   line-height: 1.15;
+}
+
+.form-label-row {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-helper {
+  font-size: 0.75rem;
+  line-height: 1.2;
+  color: #64748b;
+  margin-bottom: 4px;
+}
+
+.form-input--error {
+  border-color: #d81e46;
+  box-shadow:
+    0px 1px 1px rgba(0, 0, 0, 0.03),
+    0px 3px 6px rgba(0, 0, 0, 0.02),
+    0 0 0 1px #d81e46;
+}
+
+.form-input--error:focus {
+  border-color: #d81e46;
+  box-shadow:
+    0px 1px 1px rgba(0, 0, 0, 0.03),
+    0px 3px 6px rgba(0, 0, 0, 0.02),
+    var(--focusErrorBoxShadow);
+}
+
+.form-error-text {
+  margin-top: 4px;
+  font-size: 0.93rem;
+  line-height: 1.2;
+  color: #d81e46;
+  margin: 4px 0 12px 0;
+}
+
+@media (min-width: 640px) {
+  .form-label-row {
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-between;
+  }
 }

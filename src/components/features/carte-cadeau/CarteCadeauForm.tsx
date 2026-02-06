@@ -1,7 +1,7 @@
 "use client";
 
 import type { Ref } from "react";
-import { useEffect, useState, FormEvent } from "react";
+import { useEffect, useState, FormEvent, useRef } from "react";
 import { MassageOption, CarteCadeauFormData } from "./types";
 
 interface Props {
@@ -22,6 +22,8 @@ export default function CarteCadeauForm({
   );
   const [message, setMessage] = useState(initialData?.message ?? "");
   const [quantity, setQuantity] = useState(initialData?.quantity ?? 1);
+  const [isIncorrect, setIsIncorrect] = useState<boolean>(false);
+  const recipientInputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
     if (!initialData) {
@@ -36,11 +38,16 @@ export default function CarteCadeauForm({
     setQuantity(initialData.quantity ?? 1);
   }, [initialData]);
 
-  const totalPrice = quantity * massage.unitPrice;
-
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
+    if (!recipientName.trim()) {
+      setIsIncorrect(true);
+      recipientInputRef.current?.focus();
+      return;
+    }
+
+    setIsIncorrect(false);
     onSubmit({
       recipientName,
       message: message.trim() || "",
@@ -49,7 +56,7 @@ export default function CarteCadeauForm({
   };
 
   return (
-    <form ref={formRef} onSubmit={handleSubmit} className="tw:space-y-6">
+    <form ref={formRef} onSubmit={handleSubmit}>
       {/* 🧾 Titre produit */}
       <h3 className="tw:pb-4 text-center">
         {quantity > 1 ? `${quantity} x ` : ""}
@@ -57,7 +64,7 @@ export default function CarteCadeauForm({
       </h3>
       {/* 🔢 Quantité */}
       <div className="margin-input">
-        <label>Quantité</label>
+        <label className="form-label">Quantité</label>
         <select
           value={quantity}
           onChange={(e) => setQuantity(Number(e.target.value))}
@@ -73,36 +80,57 @@ export default function CarteCadeauForm({
 
       {/* 🎁 Bénéficiaire */}
       <div className="margin-input ">
-        <label>Nom du bénéficiaire</label>
+        <label className="form-label">Nom du bénéficiaire</label>
         <input
           type="text"
-          required
+          ref={recipientInputRef}
           value={recipientName}
-          onChange={(e) => setRecipientName(e.target.value)}
-          className="tw:w-full tw:rounded-md tw:border tw:px-3 tw:py-2"
+          onChange={(e) => {
+            const nextValue = e.target.value;
+            setRecipientName(nextValue);
+            if (isIncorrect && nextValue.trim()) {
+              setIsIncorrect(false);
+            }
+          }}
+          className={`tw:w-full tw:rounded-md tw:border tw:px-3 tw:py-2 ${
+            isIncorrect ? "form-input--error" : ""
+          }`}
           placeholder="Personne à qui offrir"
+          aria-invalid={isIncorrect}
+          aria-describedby={isIncorrect ? "recipient-name-error" : undefined}
         />
+        {isIncorrect && (
+          <p id="recipient-name-error" className="form-error-text">
+            Ce champ est incomplet.
+          </p>
+        )}
       </div>
 
       {/* ✍️ Message */}
-      <div className="margin-input">
-        <label>Message personnalisé (optionnel)</label>
+      <div>
+        <div className="form-label-row">
+          <label className="form-label" htmlFor="carte-cadeau-message">
+            Message personnalisé
+          </label>
+          <span id="carte-cadeau-message-help" className="form-helper">
+            Facultatif - 250 caractères max.
+          </span>
+        </div>
         <textarea
+          id="carte-cadeau-message"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           className="tw:w-full tw:rounded-md tw:border tw:px-3 tw:py-2"
           rows={3}
-          placeholder="Un petit mot pour accompagner la carte cadeau"
+          maxLength={250}
+          aria-describedby="carte-cadeau-message-help"
+          placeholder="Ce petit mot sera inscrit sur la carte cadeau"
         />
       </div>
 
       {/* ➡️ CTA */}
       <div className="tw:pt-4">
-        <button
-          type="submit"
-          className="tw:w-full btn btn-primary btn-lg"
-          disabled={!recipientName || quantity < 1}
-        >
+        <button type="submit" className="tw:w-full btn btn-primary btn-lg">
           Continuer
         </button>
       </div>
