@@ -10,18 +10,21 @@ import Stripe from "stripe";
  * vers le format attendu par Stripe
  */
 export function exportToStripeMetadata(
-  data: StripeCarteCadeauMetadata
+  data: StripeCarteCadeauMetadata,
 ): Stripe.MetadataParam {
+  const truncateMessage = (message: string) =>
+    message.length > 250 ? message.slice(0, 250) : message;
+
   return {
     recipientName: data.recipientName,
-    message: data.message ?? "",
+    message: truncateMessage(data.message ?? ""),
     massagePriceId: data.massagePriceId,
     quantity: data.quantity,
   };
 }
 
 export function extractFromStripeMetadata(
-  metadata: Stripe.Metadata | null
+  metadata: Stripe.Metadata | null,
 ): StripeCarteCadeauMetadata {
   if (!metadata) {
     throw new Error("Stripe metadata absente");
@@ -33,7 +36,7 @@ export function extractFromStripeMetadata(
     const value = metadata[key];
 
     const isOptional = (OPTIONAL_METADATA_KEYS as readonly string[]).includes(
-      key
+      key,
     );
 
     if (value === undefined || value === null) {
