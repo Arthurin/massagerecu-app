@@ -10,12 +10,12 @@ export default function Reserver() {
     <section id="premiere-section" className="page-section bg-light">
       <div className="container">
         <div className="text-center">
-          <h2 className="section-heading text-uppercase">
+          <h1 className="section-heading text-uppercase">
             Prise de rendez-vous en ligne
-          </h2>
-          <h3 className="section-subheading text-muted">
+          </h1>
+          <p className="section-subheading text-muted">
             Service disponible 24/7, n&apos;attendez plus pour réserver !
-          </h3>
+          </p>
         </div>
 
         <div className="row justify-content-center">
@@ -58,3 +58,4 @@ export default function Reserver() {
     </section>
   );
 }
+

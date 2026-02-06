@@ -10,12 +10,13 @@ export default function CGV() {
     <section id="premiere-section" className="page-section bg-light">
       <div className="container">
         <div className="text-center">
-          <h2 className="section-heading text-uppercase">
+          <h1 className="section-heading text-uppercase">
             Conditions générales de vente (CGV)
-          </h2>
+          </h1>
         </div>
         <div className="row justify-content-center">{Cgv()}</div>
       </div>
     </section>
   );
 }
+

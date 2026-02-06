@@ -41,14 +41,29 @@ body {
 h3,
 h4,
 h5,
-h6,
-.h3,
-.h4,
-.h5,
-.h6 {
+h6 {
   font-family: var(--font-lora), serif;
-  font-weight: 600;
   letter-spacing: 0.02em;
+}
+
+h3 {
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+
+h4 {
+  font-weight: 500;
+  font-size: 1.2rem;
+}
+
+h5 {
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+
+h6 {
+  font-weight: 400;
+  font-size: 1.1rem;
 }
 
 // Adjust the line height of paragraphs
@@ -77,21 +92,23 @@ p {
 .page-section {
   padding: 4rem 0;
 
-  h2.section-heading {
+  h1.section-heading {
     font-size: 2.5rem;
     margin-top: 0;
     margin-bottom: 1rem;
   }
 
-  h2.nosubheading {
+  h1.nosubheading {
     margin-bottom: 4rem;
   }
 
-  h3.section-subheading {
+  .section-subheading {
+    font-family: $headings-font-family;
     font-size: 1.4rem;
     font-weight: 400;
     font-style: italic;
     margin-bottom: 3rem;
+    line-height: 1.2;
   }
 
   .espacement {
@@ -154,7 +171,7 @@ section a:hover {
 }
 
 .fw-light-bold {
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .order-summary {

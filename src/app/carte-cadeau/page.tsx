@@ -10,10 +10,10 @@ export default function CarteCadeauPage() {
     <section id="premiere-section" className="page-section bg-light">
       <div className="container">
         <div className="text-center">
-          <h2 className="section-heading text-uppercase">Carte cadeau</h2>
-          <h3 className="section-subheading text-muted">
+          <h1 className="section-heading text-uppercase">Carte cadeau</h1>
+          <p className="section-subheading text-muted">
             Envie de faire plaisir ? Offrez du bien être !
-          </h3>
+          </p>
         </div>
         <div className="row justify-content-center">
           <p>
@@ -27,9 +27,9 @@ export default function CarteCadeauPage() {
         </div>
 
         <div className="text-center">
-          <h2 className="section-heading">
+          <h1 className="section-heading">
             Acheter en toute simplicité chez Massage Reçu
-          </h2>
+          </h1>
         </div>
 
         <div className="row justify-content-center liste_funky">
@@ -77,3 +77,4 @@ export default function CarteCadeauPage() {
     </section>
   );
 }
+

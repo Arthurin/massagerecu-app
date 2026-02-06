@@ -9,10 +9,10 @@ export default function FAQPage() {
     <section id="premiere-section" className="page-section bg-light">
       <div className="container">
         <div className="text-center">
-          <h2 className="section-heading text-uppercase">FAQ</h2>
-          <h3 className="section-subheading text-muted">
+          <h1 className="section-heading text-uppercase">FAQ</h1>
+          <p className="section-subheading text-muted">
             Je répond à vos questions !
-          </h3>
+          </p>
         </div>
 
         <div className="row justify-content-center">
@@ -180,3 +180,4 @@ export default function FAQPage() {
     </section>
   );
 }
+

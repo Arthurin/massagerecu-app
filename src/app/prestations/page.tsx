@@ -12,10 +12,10 @@ export default function Prestations() {
       <section id="premiere-section" className="page-section bg-light">
         <div className="container-lg">
           <div className="text-center">
-            <h2 className="section-heading text-uppercase">Tarifs</h2>
-            <h3 className="section-subheading text-muted">
+            <h1 className="section-heading text-uppercase">Tarifs</h1>
+            <p className="section-subheading text-muted">
               Toutes les informations en un coup d'oeil
-            </h3>
+            </p>
           </div>
 
           <TableauMassages />
@@ -24,14 +24,14 @@ export default function Prestations() {
       <section id="portfolio" className="page-section">
         <div className="container-lg">
           <div className="text-center">
-            <h2 className="section-heading text-uppercase">
+            <h1 className="section-heading text-uppercase">
               Carte des massages
-            </h2>
-            <h3 className="section-subheading text-muted">
+            </h1>
+            <p className="section-subheading text-muted">
               Je propose différents types de massages pour satisfaire toutes les
               envies ; massage cocooning ou massage dynamique, massage huilé ou
               bien massage des pieds !
-            </h3>
+            </p>
           </div>
 
           <div className="row">
@@ -185,3 +185,4 @@ export default function Prestations() {
     </>
   );
 }
+

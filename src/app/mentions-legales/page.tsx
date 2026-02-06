@@ -10,12 +10,13 @@ export default function MentionsLegales() {
     <section id="premiere-section" className="page-section bg-light">
       <div className="container">
         <div className="text-center">
-          <h2 className="section-heading text-uppercase">
+          <h1 className="section-heading text-uppercase">
           Mentions légales et Conditions Générales d'Utilisation
-          </h2>
+          </h1>
         </div>
         <div className="row justify-content-center">{MentionsGenerees()}</div>
       </div>
     </section>
   );
 }
+

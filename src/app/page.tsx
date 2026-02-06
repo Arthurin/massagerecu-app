@@ -31,7 +31,7 @@ export default function Home() {
       {/* Services */}
       <section id="services" className="page-section bg-light">
         <div className="container text-center">
-          <h2 className="section-heading text-uppercase">Bienvenue</h2>
+          <h1 className="section-heading text-uppercase">Bienvenue</h1>
           <div className="row text-center">
             <p>
               À votre écoute pour vous apporter un massage en profondeur adapté
@@ -51,8 +51,8 @@ export default function Home() {
       {/* Newsletter */}
       <section id="news" className="page-section">
         <div className="container text-center">
-          <h2 className="section-heading text-uppercase">Actualités</h2>
-          <h3 className="section-subheading text-muted">
+          <h1 className="section-heading text-uppercase">Actualités</h1>
+          <p className="section-subheading text-muted">
             Restez informé·e grâce à la newsletter ou aux réseaux sociaux{" "}
             <span className="no-wrap">
               {"("}
@@ -77,7 +77,7 @@ export default function Home() {
               </a>
               ).
             </span>
-          </h3>
+          </p>
 
           <NewsItem title="Ré-ouverture à partir du 11/02/26">
             <Image
@@ -139,9 +139,9 @@ export default function Home() {
       {/* Video Section */}
       <section id="services" className="page-section bg-light">
         <div className="container text-center">
-          <h2 className="section-heading text-uppercase">
+          <h1 className="section-heading text-uppercase">
             Le cabinet en vidéo
-          </h2>
+          </h1>
           <div className="row justify-content-center">
             <div className="col col-lg-8">
               <div className="video-container">
@@ -165,10 +165,10 @@ export default function Home() {
       {/* About */}
       <section id="about" className="page-section">
         <div className="container text-center">
-          <h2 className="section-heading text-uppercase">À propos</h2>
-          <h3 className="section-subheading text-muted">
+          <h1 className="section-heading text-uppercase">À propos</h1>
+          <p className="section-subheading text-muted">
             Mon parcours en quelques lignes
-          </h3>
+          </p>
           <div className="row">
             <div className="col-lg-4">
               <div className="team-member">
@@ -211,3 +211,4 @@ export default function Home() {
     </>
   );
 }
+

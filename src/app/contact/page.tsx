@@ -16,12 +16,12 @@ export default function ContactPage() {
     <section id="premiere-section" className="page-section bg-light">
       <div className="container">
         <div className="text-center">
-          <h2 className="section-heading text-uppercase">Me contacter</h2>
-          <h3 className="section-subheading text-muted">
+          <h1 className="section-heading text-uppercase">Me contacter</h1>
+          <p className="section-subheading text-muted">
             Vous pouvez me contacter pour toute question ou pour prendre
             rendez-vous dans mon cabinet de massage bien-être situé à Brie, près
             de Janzé. Je réponds rapidement par email ou téléphone.
-          </h3>
+          </p>
         </div>
 
         <div className="row container-contact">
@@ -118,3 +118,4 @@ export default function ContactPage() {
     </section>
   );
 }
+
