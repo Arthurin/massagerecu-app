@@ -19,8 +19,6 @@ export default function CarteCadeauPage() {
           <p>
             Vous cherchez un <strong>cadeau</strong> pour l'un·e de vos proches
             dans la région de Janzé ? <br />
-            Pourquoi ne pas lui offrir une pause bien-être dans un charmant
-            petit cabinet situé à la campagne ?
             <br />
             Massage Reçu vous propose des cartes cadeaux pour{" "}
             <strong>offrir des massages</strong>.
@@ -52,7 +50,10 @@ export default function CarteCadeauPage() {
             </li>
           </ul>
 
-          <p>Choisissez celle que vous allez offrir ci-dessous :</p>
+          <p>
+            Les cartes cadeaux sont valables 6 mois. Choisissez ci-dessous celle
+            que vous allez offrir :
+          </p>
         </div>
 
         <div className="container">
