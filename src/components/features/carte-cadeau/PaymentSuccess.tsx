@@ -8,6 +8,8 @@ interface PaymentSuccessProps {
 
 type PaymentStatus = "init" | "processing" | "completed" | "failed" | "error";
 
+type StepState = "pending" | "active" | "done" | "error";
+
 const MAX_RETRIES = 15;
 const RETRY_DELAY_MS = 1000;
 const INITIAL_DELAY_MS = 1500;
@@ -17,6 +19,8 @@ export default function PaymentSuccess({
 }: PaymentSuccessProps) {
   const [status, setStatus] = useState<PaymentStatus>("init");
   const [email, setEmail] = useState<string | null>(null);
+  const [hasResult, setHasResult] = useState(false);
+  const [fetchFailed, setFetchFailed] = useState(false);
   const isProcessing = status === "init" || status === "processing";
   const isSuccess = status === "completed";
   const isError = status === "failed" || status === "error";
@@ -27,15 +31,59 @@ export default function PaymentSuccess({
       : "error";
 
   const statusTitle = isSuccess
-    ? "Paiement confirmé"
+    ? "Commande envoyée"
     : isProcessing
       ? "Traitement en cours"
       : "Problème lors du traitement";
+
+  const errorStep = fetchFailed
+    ? 1
+    : status === "failed"
+      ? 3
+      : status === "error"
+        ? hasResult
+          ? 2
+          : 1
+        : null;
+
+  const getStepState = (step: 1 | 2 | 3): StepState => {
+    if (errorStep) {
+      if (step < errorStep) return "done";
+      if (step === errorStep) return "error";
+      return "error";
+    }
+
+    if (!hasResult) {
+      return step === 1 ? "active" : "pending";
+    }
+
+    if (status === "init") {
+      if (step === 1) return "done";
+      if (step === 2) return "active";
+      return "pending";
+    }
+
+    if (status === "processing") {
+      if (step === 3) return "active";
+      return "done";
+    }
+
+    if (status === "completed") {
+      return "done";
+    }
+
+    return "pending";
+  };
+
+  const step1State = getStepState(1);
+  const step2State = getStepState(2);
+  const step3State = getStepState(3);
 
   useEffect(() => {
     if (!paymentIntentId) {
       console.error("paymentIntentId is empty");
       setStatus("error");
+      setFetchFailed(true);
       return;
     }
 
@@ -44,7 +92,7 @@ export default function PaymentSuccess({
 
     const fetchResult = async () => {
       try {
-        const res = await fetch(`/api/payment-result/${paymentIntentId}`, {
+        const res = await fetch(`/api/payment-resut/${paymentIntentId}`, {
           cache: "no-store",
         });
 
@@ -56,6 +104,7 @@ export default function PaymentSuccess({
             return;
           }
 
+          setFetchFailed(true);
           throw new Error(
             "Le résultat du traitement de la commande est indisponible",
           );
@@ -63,6 +112,7 @@ export default function PaymentSuccess({
 
         const data = await res.json();
         if (cancelled) return;
+        setHasResult(true);
 
         if (data.status === "completed") {
           setEmail(data.email ?? null);
@@ -103,8 +153,30 @@ export default function PaymentSuccess({
     };
   }, [paymentIntentId]);
 
+  const renderStepIcon = (state: StepState) => {
+    if (state === "done") {
+      return <span className="payment-success__step-check">✅</span>;
+    }
+
+    if (state === "error") {
+      return <span className="payment-success__step-cross">❌</span>;
+    }
+
+    return <span className="payment-success__step-spinner" />;
+  };
+
+  const getStepClass = (state: StepState) => {
+    if (state === "done") return "payment-success__step--done";
+    if (state === "error") return "payment-success__step--error";
+    if (state === "active") return "payment-success__step--active";
+    return "payment-success__step--pending";
+  };
+
   return (
-    <section className={`payment-success--${statusTone}`} aria-live="polite">
+    <section
+      className={`payment-success payment-success--${statusTone}`}
+      aria-live="polite"
+    >
       {/* EN-TÊTE */}
       <div className="payment-success__header">
         <div className="payment-success__icon" aria-hidden="true">
@@ -124,42 +196,52 @@ export default function PaymentSuccess({
         <h3 className="payment-success__title">{statusTitle}</h3>
       </div>
 
-      {/* PROCESSING */}
-      {isProcessing && (
-        <div className="payment-success__stack">
-          <div className="payment-success__row">
-            <div className="payment-success__spinner" aria-hidden="true" />
-            <p>Votre paiement a bien été pris en compte.</p>
+      {/* ETAPES */}
+      <div className="payment-success__steps" aria-label="Suivi du traitement">
+        <div className={`payment-success__step ${getStepClass(step1State)}`}>
+          <div className="payment-success__step-icon" aria-hidden="true">
+            {renderStepIcon(step1State)}
           </div>
-          <div className="payment-success__panel">
-            <p>
-              {status === "init"
-                ? "Enregistrement de votre commande..."
-                : "Préparation de votre carte cadeau..."}
-            </p>
-            <p className="payment-success__hint">
-              Cette étape peut prendre quelques instants.
-            </p>
+          <div className="payment-success__step-text">
+            Enregistrement de votre commande.
           </div>
         </div>
-      )}
+
+        <div className={`payment-success__step ${getStepClass(step2State)}`}>
+          <div className="payment-success__step-icon" aria-hidden="true">
+            {renderStepIcon(step2State)}
+          </div>
+          <div className="payment-success__step-text">
+            Préparation de votre carte cadeau.
+          </div>
+        </div>
+
+        <div className={`payment-success__step ${getStepClass(step3State)}`}>
+          <div className="payment-success__step-icon" aria-hidden="true">
+            {renderStepIcon(step3State)}
+          </div>
+          <div className="payment-success__step-text">
+            Envoi de votre carte cadeau par email.
+          </div>
+        </div>
+      </div>
 
       {/* SUCCESS */}
       {isSuccess && (
         <div className="payment-success__stack">
-          <p>Votre carte cadeau a été générée avec succès.</p>
+          <p>Votre carte cadeau est prête.</p>
 
           <div className="payment-success__panel payment-success__panel--success">
             <p>
               {email
                 ? "Elle vient d'être envoyée à :"
-                : "Elle va vous être envoyée par email."}
+                : "Elle vous sera envoyée par email dans quelques instants."}
             </p>
             {email && <p className="payment-success__email">{email}</p>}
           </div>
 
           <p className="payment-success__hint">
-            Pensez à vérifier votre dossier spam si nécessaire.
+            Pensez à vérifier vos spam si besoin.
           </p>
         </div>
       )}
@@ -168,15 +250,15 @@ export default function PaymentSuccess({
       {isError && (
         <div className="payment-success__stack">
           <p>
-            Votre paiement a bien été enregistré, mais une erreur est survenue
-            lors de l'envoit de votre commande. Je suis désolé pour la gêne
+            Votre paiement a bien été confirmé, mais une erreur est survenue
+            lors du traitement de votre commande. Je suis désolé pour la gêne
             occasionnée.
           </p>
 
           <div className="payment-success__panel payment-success__panel--error">
             <p>
-              Contactez-moi par email pour que vous puissiez recevoir votre
-              carte cadeau au plus vite :
+              Contactez-moi par email pour recevoir votre carte cadeau au plus
+              vite :
             </p>
             <a
               href="mailto:massagerecu@gmail.com"

@@ -16,6 +16,75 @@
   margin-bottom: 20px;
 }
 
+.payment-success__steps {
+  display: grid;
+  gap: 12px;
+  padding: 16px;
+  border-radius: 14px;
+  border: 1px solid #ededed;
+  background: #fafafa;
+  margin-bottom: 18px;
+}
+
+.payment-success__step {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  color: #5f5f5f;
+}
+
+.payment-success__step--active {
+  color: #1b1b1b;
+}
+
+.payment-success__step--done {
+  color: #1b1b1b;
+}
+
+.payment-success__step--error {
+  color: #8b1f22;
+}
+
+.payment-success__step--pending {
+  color: #8a8a8a;
+}
+
+.payment-success__step-icon {
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.payment-success__step-spinner {
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  border: 2px solid rgba(0, 0, 0, 0.18);
+  border-top-color: transparent;
+  animation: payment-success-spin 1s linear infinite;
+}
+
+.payment-success__step-check {
+  font-size: 1.05rem;
+  line-height: 1;
+  display: block;
+  transform: translateY(-1px);
+}
+
+.payment-success__step-cross {
+  font-size: 1.05rem;
+  line-height: 1;
+  display: block;
+  transform: translateY(-1px);
+}
+
+.payment-success__step-text {
+  line-height: 1.4;
+}
+
 .payment-success__icon {
   width: 44px;
   height: 44px;
