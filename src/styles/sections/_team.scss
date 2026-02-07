@@ -3,52 +3,52 @@
 //
 
 .team-member {
-    margin-bottom: 3rem;
-    text-align: center;
+  margin-bottom: 3rem;
+  text-align: center;
 
+  img {
+    width: 100%;
+    height: 100%;
+    border: 0.5rem solid fade-out($black, 0.9);
+  }
+
+  h4 {
+    margin-top: 1.5rem;
+    margin-bottom: 0;
+  }
+}
+
+@media (min-width: 284px) {
+  .team-member {
     img {
-        width: 100%;
-        height: 100%;
-        border: 0.5rem solid fade-out($black, 0.9);
+      width: 17rem;
+      height: 17rem;
     }
-    
-    h4 {
-        margin-top: 1.5rem;
-        margin-bottom: 0;
-    }
+  }
 }
 
-@media (min-width: 284px) { 
-    .team-member {    
-        img {
-            width: 17rem;
-            height: 17rem;
-        }
-    }
-}
-    
-// Services 
+// Services
 .services {
-    margin-bottom: 3rem;
-    text-align: center;
+  margin-bottom: 3rem;
+  text-align: center;
 
-    img {
-        width: 14rem;
-        height: 14rem;
-        border: 0.5rem solid fade-out($black, 0.9);
-    }
+  img {
+    width: 14rem;
+    height: 14rem;
+    border: 0.5rem solid fade-out($black, 0.9);
+  }
 
-    h4 {
-        margin-top: 1.5rem;
-        margin-bottom: 0;
-    }
+  h4 {
+    margin-top: 1.5rem;
+    margin-bottom: 0;
+  }
 }
 
 // Brand images for client section
 .img-brand {
-    height: 2.75rem;
+  height: 2.75rem;
 }
 
 .text-justify {
-    text-align: justify;
+  text-align: justify;
 }

@@ -5,7 +5,7 @@ import { generatePDF } from "@/lib/pdfUtils";
 export async function POST(req: Request) {
   try {
     console.log(
-      "Un pdf a été demandé par le front-end, traitement en cours..."
+      "Un pdf a été demandé par le front-end, traitement en cours...",
     );
     const body = await req.json();
     // Valide/normalize body selon ton besoin
@@ -45,7 +45,7 @@ export async function POST(req: Request) {
     console.error("generate-pdf error:", err);
     return NextResponse.json(
       { error: "Erreur lors de la génération du PDF" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

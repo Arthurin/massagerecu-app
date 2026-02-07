@@ -27,7 +27,7 @@ export default function BootstrapNavbarBehavior() {
     const navbarToggler =
       document.body.querySelector<HTMLElement>(".navbar-toggler");
     const responsiveNavItems = Array.from(
-      document.querySelectorAll("#navbarResponsive a")
+      document.querySelectorAll("#navbarResponsive a"),
     );
 
     const handleNavItemClick = () => {
@@ -40,14 +40,14 @@ export default function BootstrapNavbarBehavior() {
     };
 
     responsiveNavItems.forEach((item) =>
-      item.addEventListener("click", handleNavItemClick)
+      item.addEventListener("click", handleNavItemClick),
     );
 
     // Cleanup (important en App Router)
     return () => {
       document.removeEventListener("scroll", navbarShrink);
       responsiveNavItems.forEach((item) =>
-        item.removeEventListener("click", handleNavItemClick)
+        item.removeEventListener("click", handleNavItemClick),
       );
     };
   }, []);

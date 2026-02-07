@@ -1,15 +1,15 @@
 # 📁 massagerecu-app - Project Structure
 
-*Generated on: 1/22/2026, 11:34:43 AM*
+_Generated on: 1/22/2026, 11:34:43 AM_
 
 ## 📋 Quick Overview
 
-| Metric | Value |
-|--------|-------|
-| 📄 Total Files | 114 |
-| 📁 Total Folders | 40 |
-| 🌳 Max Depth | 4 levels |
-| 🛠️ Tech Stack | React, Next.js, TypeScript, CSS, Sass/SCSS, Node.js |
+| Metric           | Value                                               |
+| ---------------- | --------------------------------------------------- |
+| 📄 Total Files   | 114                                                 |
+| 📁 Total Folders | 40                                                  |
+| 🌳 Max Depth     | 4 levels                                            |
+| 🛠️ Tech Stack    | React, Next.js, TypeScript, CSS, Sass/SCSS, Node.js |
 
 ## ⭐ Important Files
 
@@ -228,6 +228,7 @@ massagerecu-app/
 ## 📖 Legend
 
 ### File Types
+
 - 📄 Other: Other files
 - 📖 Docs: Markdown files
 - ⚙️ Config: YAML files
@@ -248,6 +249,7 @@ massagerecu-app/
 - 🎨 Styles: Sass stylesheets
 
 ### Importance Levels
+
 - 🔴 Critical: Essential project files
 - 🟡 High: Important configuration files
 - 🔵 Medium: Helpful but not essential files

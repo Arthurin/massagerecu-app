@@ -9,5 +9,6 @@
   "eslint.debug": true,
   "files.associations": {
     "tailwind.css": "postcss"
-  }
+  },
+  "prettier.prettierPath": ""
 }

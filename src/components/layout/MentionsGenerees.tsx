@@ -191,7 +191,8 @@ export default function MentionsGenerees() {
         <a href="https://www.massagerecu.fr">https://www.massagerecu.fr</a> agit
         en tant qu'éditeur du site.{" "}
         <a href="https://www.massagerecu.fr">https://www.massagerecu.fr</a> est
-        responsable de la qualité et de la véracité du Contenu qu'il publie.{" "}
+        responsable de la qualité et de la véracité du Contenu qu'il
+        publie.{" "}
       </p>
       <p>
         <a href="https://www.massagerecu.fr">https://www.massagerecu.fr</a> ne
@@ -226,7 +227,8 @@ export default function MentionsGenerees() {
         Le Client est informé des réglementations concernant la communication
         marketing, la loi du 21 Juin 2014 pour la confiance dans l'Economie
         Numérique, la Loi Informatique et Liberté du 06 Août 2004 ainsi que du
-        Règlement Général sur la Protection des Données (RGPD : n° 2016-679).{" "}
+        Règlement Général sur la Protection des Données (RGPD : n°
+        2016-679).{" "}
       </p>
       <h3>7.1 Responsables de la collecte des données personnelles</h3>
       <p>
@@ -310,7 +312,8 @@ export default function MentionsGenerees() {
         </li>
 
         <li>
-          droit de retirer à tout moment un consentement (article 13-2c RGPD){" "}
+          droit de retirer à tout moment un consentement (article 13-2c
+          RGPD){" "}
         </li>
 
         <li>

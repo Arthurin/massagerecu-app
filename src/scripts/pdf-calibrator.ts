@@ -13,14 +13,14 @@ async function main() {
     "src",
     "lib",
     "templates",
-    "templateCarteCadeau.pdf"
+    "templateCarteCadeau.pdf",
   );
   const outputPath = path.join(
     process.cwd(),
     "src",
     "lib",
     "templates",
-    "templateCalibré.pdf"
+    "templateCalibré.pdf",
   );
 
   if (!fs.existsSync(templatePath)) {

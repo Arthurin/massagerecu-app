@@ -11,7 +11,7 @@ export default function MentionsLegales() {
       <div className="container">
         <div className="text-center">
           <h1 className="section-heading text-uppercase">
-          Mentions légales et Conditions Générales d'Utilisation
+            Mentions légales et Conditions Générales d'Utilisation
           </h1>
         </div>
         <div className="row justify-content-center">{MentionsGenerees()}</div>
@@ -19,4 +19,3 @@ export default function MentionsLegales() {
     </section>
   );
 }
-

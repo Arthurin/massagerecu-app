@@ -3,14 +3,14 @@ import { getGiftcardByPaymentIntent } from "@/lib/db/cartecadeau";
 
 export async function GET(
   _req: NextRequest,
-  { params }: { params: Promise<{ paymentIntentId: string }> }
+  { params }: { params: Promise<{ paymentIntentId: string }> },
 ) {
   const { paymentIntentId } = await params;
 
   if (!paymentIntentId) {
     return NextResponse.json(
       { error: "paymentIntentId manquant" },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
@@ -19,7 +19,7 @@ export async function GET(
   console.log(
     "[API payment-result] requested id, result:",
     paymentIntentId,
-    result
+    result,
   );
 
   if (!result) {

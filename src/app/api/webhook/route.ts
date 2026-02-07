@@ -38,13 +38,13 @@ export async function POST(req: NextRequest) {
     event = stripe.webhooks.constructEvent(
       body,
       signature,
-      process.env.STRIPE_WEBHOOK_SECRET || ""
+      process.env.STRIPE_WEBHOOK_SECRET || "",
     );
   } catch (err: any) {
     console.error(`Webhook signature verification failed : ${err.message}`);
     return NextResponse.json(
       { error: `Webhook Error: ${err.message}` },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
@@ -73,7 +73,7 @@ export async function POST(req: NextRequest) {
             console.log("An invalid request occurred.");
             if (error.param) {
               console.log(
-                `The parameter ${error.param} is invalid or missing.`
+                `The parameter ${error.param} is invalid or missing.`,
               );
             }
             break;
@@ -93,13 +93,13 @@ export async function POST(req: NextRequest) {
     console.error(`Webhook error during event handler: ${err.message}`);
     return NextResponse.json(
       { error: `Webhook Event Handler Error: ${err.message}` },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
 
 async function handlePaymentIntentSucceeded(
-  paymentIntent: Stripe.PaymentIntent
+  paymentIntent: Stripe.PaymentIntent,
 ) {
   const paymentIntentId = paymentIntent.id;
 
@@ -117,7 +117,7 @@ async function handlePaymentIntentSucceeded(
   }
 
   const charge = await stripe.charges.retrieve(
-    paymentIntent.latest_charge as string
+    paymentIntent.latest_charge as string,
   );
   // on récupère les metadata et on vérifie qu'elles sont valides
   const metadata = extractFromStripeMetadata(paymentIntent.metadata);
@@ -126,7 +126,7 @@ async function handlePaymentIntentSucceeded(
 
   if (!catalogItem) {
     throw new Error(
-      "Massage inconnu dans le catalogue, id :" + metadata.massagePriceId
+      "Massage inconnu dans le catalogue, id :" + metadata.massagePriceId,
     );
   }
 
@@ -140,7 +140,7 @@ async function handlePaymentIntentSucceeded(
     console.log("amount ", paymentIntent.amount);
     // log + alerte
     throw new Error(
-      "Incohérence montant / metadata (possible fraude ou bien le catalogue des prix n'est pas à jour avec les prix du dashboard Stripe)"
+      "Incohérence montant / metadata (possible fraude ou bien le catalogue des prix n'est pas à jour avec les prix du dashboard Stripe)",
     );
   }
 
@@ -152,7 +152,7 @@ async function handlePaymentIntentSucceeded(
     catalogItem,
     metadata,
     charge,
-    paymentIntentId
+    paymentIntentId,
   );
 
   const giftcard: GiftCardInsert = {
@@ -204,12 +204,12 @@ async function handlePaymentIntentSucceeded(
     //traitement terminé, on met à jour en base
     await updateGiftCardStatusByPaymentIntent(paymentIntentId, "completed");
     console.log(
-      `✅ Traitement terminé de la carte cadeau (paymentintentid :${paymentIntentId})`
+      `✅ Traitement terminé de la carte cadeau (paymentintentid :${paymentIntentId})`,
     );
   } catch (err) {
     console.error(
       `Erreur lors de l'envoi de l'email (paymentintentid :${paymentIntentId})`,
-      err
+      err,
     );
 
     await updateGiftCardStatusByPaymentIntent(paymentIntentId, "failed");
@@ -223,7 +223,7 @@ async function sendCustomEmail(
     giftId: string;
     pdfBytes: any;
     recipientName: string;
-  }
+  },
 ) {
   console.log(`Let's send an email to ${customerEmail}...`);
   const filename = `Carte cadeau n°${paymentInfos.giftId}_${paymentInfos.recipientName}.pdf`;
@@ -248,7 +248,7 @@ async function sendCustomEmail(
     });
   } catch (err: any) {
     throw new Error(
-      `Erreur lors de l'envoi par mail : ${err?.message ?? "erreur inconnue"}`
+      `Erreur lors de l'envoi par mail : ${err?.message ?? "erreur inconnue"}`,
     );
   }
 }
@@ -259,7 +259,7 @@ function getGiftCardFullData(
   catalogItem: MassageCatalogItem,
   metadata: StripeCarteCadeauMetadata,
   charge: Stripe.Charge,
-  paymentId: string
+  paymentId: string,
 ) {
   const price = (safePrice / 100).toFixed();
   const dateCreation = new Date();
@@ -273,14 +273,14 @@ function getGiftCardFullData(
   const email = charge.billing_details.email;
   if (email === null) {
     throw new Error(
-      "Le mail de l'acheteur n'a pas pu être récupéré pour ce paiement (charge.billing_details.email est null)"
+      "Le mail de l'acheteur n'a pas pu être récupéré pour ce paiement (charge.billing_details.email est null)",
     );
   }
   console.log("charge data : ", charge);
   const buyerName = charge.billing_details.name;
   if (buyerName === null) {
     throw new Error(
-      "Le nom de l'acheteur pour ce paiement n'a pas pu être récupéré (charge.billing_details.name est null)"
+      "Le nom de l'acheteur pour ce paiement n'a pas pu être récupéré (charge.billing_details.name est null)",
     );
   }
 

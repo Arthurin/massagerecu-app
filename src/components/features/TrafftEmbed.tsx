@@ -25,7 +25,7 @@ export default function TrafftEmbed({
   useEffect(() => {
     // If script already exists, re-init embed by re-attaching container attributes
     const existing = document.getElementById(
-      scriptId
+      scriptId,
     ) as HTMLScriptElement | null;
 
     // Ensure the container has the data attributes the embed expects
@@ -35,7 +35,7 @@ export default function TrafftEmbed({
       containerRef.current.setAttribute("data-autoresize", String(autoResize));
       containerRef.current.setAttribute(
         "data-showsidebar",
-        String(showSidebar)
+        String(showSidebar),
       );
     }
 

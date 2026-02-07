@@ -39,7 +39,7 @@ export async function GET(req: NextRequest) {
   } catch (err: unknown) {
     return NextResponse.json(
       { error: err instanceof Error ? err.message : "Erreur inconnue" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

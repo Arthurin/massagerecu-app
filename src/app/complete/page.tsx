@@ -45,7 +45,8 @@ export default function Complete() {
       })
       .catch((err) => {
         setError(
-          err.message || "Impossible de récupérer les informations de paiement."
+          err.message ||
+            "Impossible de récupérer les informations de paiement.",
         );
         setIsLoading(false);
       });

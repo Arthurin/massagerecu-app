@@ -36,7 +36,7 @@ export async function POST(req: Request) {
     if (!checkoutData.massagePriceId || !checkoutData.quantity) {
       return NextResponse.json(
         { error: "commande invalide, prix/quantité manquante" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -44,13 +44,13 @@ export async function POST(req: Request) {
 
     // 🔐 récupération du prix depuis Stripe (anti-fraude)
     const priceProductId = await stripe.prices.retrieve(
-      checkoutData.massagePriceId
+      checkoutData.massagePriceId,
     );
     console.log("PRIX", priceProductId);
     if (!priceProductId.unit_amount) {
       return NextResponse.json(
         { error: "Prix Stripe invalide" },
-        { status: 400 }
+        { status: 400 },
       );
     }
     if (priceProductId.currency !== "eur") {
@@ -89,7 +89,7 @@ export async function POST(req: Request) {
       },
       {
         idempotencyKey,
-      }
+      },
     );
 
     /* ----------------------------------
@@ -107,7 +107,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json(
       { error: "Erreur serveur Stripe" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

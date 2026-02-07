@@ -22,16 +22,15 @@ export interface GiftCardInsert {
   isExpired: boolean;
 }
 
-
 /**
  * Vérifie si un paymentIntentId existe déjà (idempotence Stripe)
  */
 export async function giftcardExistsByPaymentIntent(
-  paymentIntentId: string
+  paymentIntentId: string,
 ): Promise<boolean> {
   const res = await pool.query(
     `SELECT 1 FROM giftcards WHERE payment_intent_id = $1 LIMIT 1`,
-    [paymentIntentId]
+    [paymentIntentId],
   );
 
   return (res.rowCount ?? 0) > 0;
@@ -49,7 +48,7 @@ export async function generateGiftcardId(dateCreation: Date): Promise<string> {
 
   const res = await pool.query(
     `SELECT COUNT(*) FROM giftcards WHERE id LIKE $1`,
-    [`${prefix}.%`]
+    [`${prefix}.%`],
   );
 
   const count = Number(res.rows[0].count);
@@ -103,7 +102,7 @@ export async function createGiftcard(data: GiftCardInsert) {
       data.status,
       data.isTaxCollected,
       data.isExpired,
-    ]
+    ],
   );
 
   return res.rows[0].id;
@@ -122,7 +121,7 @@ export async function getGiftcardByPaymentIntent(paymentIntentId: string) {
     FROM giftcards
     WHERE payment_intent_id = $1
     `,
-    [paymentIntentId]
+    [paymentIntentId],
   );
 
   return res.rows[0] ?? null;
@@ -130,7 +129,7 @@ export async function getGiftcardByPaymentIntent(paymentIntentId: string) {
 
 export async function updateGiftCardStatusByPaymentIntent(
   paymentIntentId: string,
-  status: "processing" | "completed" | "failed"
+  status: "processing" | "completed" | "failed",
 ) {
   const res = await pool.query(
     `
@@ -138,7 +137,7 @@ export async function updateGiftCardStatusByPaymentIntent(
     SET status = $1
     WHERE payment_intent_id = $2
     `,
-    [status, paymentIntentId]
+    [status, paymentIntentId],
   );
 
   return res.rowCount ?? 0;

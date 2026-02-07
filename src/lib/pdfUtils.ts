@@ -16,7 +16,7 @@ const TEMPLATE_PATH = path.join(
   "src",
   "lib",
   "templates",
-  "templateCarteCadeau.pdf"
+  "templateCarteCadeau.pdf",
 );
 
 // Mapping de positions (x,y, size, fontName) par champ sur la page 1.
@@ -49,14 +49,14 @@ export async function downloadPDF(fields: ReceiptFields) {
   const date = new Date();
   const dateJourHeureMinute = `j${String(date.getDate()).padStart(
     2,
-    "0"
+    "0",
   )} ${String(date.getHours()).padStart(2, "0")}h${String(
-    date.getMinutes()
+    date.getMinutes(),
   ).padStart(2, "0")}`;
   const outputPath = path.join(
     process.cwd(),
     "temp_test_pdf",
-    `test_généré_${dateJourHeureMinute}.pdf`
+    `test_généré_${dateJourHeureMinute}.pdf`,
   );
 
   const pdf: Uint8Array = await generatePDF(fields);
@@ -86,7 +86,7 @@ export async function generatePDF(fields: ReceiptFields): Promise<Uint8Array> {
     x: number,
     y: number,
     size = 12,
-    color = rgb(0, 0, 0)
+    color = rgb(0, 0, 0),
   ) => {
     // clamp y to page bounds if necessary
     firstPage.drawText(text, {
@@ -172,7 +172,7 @@ function wrapTextByWidth(
   text: string,
   font: PDFFont,
   fontSize: number,
-  maxWidth: number
+  maxWidth: number,
 ): string[] {
   const words = text.split(" ");
   const lines: string[] = [];

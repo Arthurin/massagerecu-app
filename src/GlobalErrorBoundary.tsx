@@ -25,7 +25,7 @@ export class GlobalErrorBoundary extends React.Component<
     console.error(
       "Erreur capturée par GlobalErrorBoundary :",
       error,
-      errorInfo
+      errorInfo,
     );
   }
 

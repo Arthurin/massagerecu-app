@@ -10,7 +10,7 @@ export async function GET() {
     console.error("Erreur API catalog :", error);
     return NextResponse.json(
       { error: "Impossible de charger le catalogue" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
