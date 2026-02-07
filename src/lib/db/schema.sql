@@ -10,9 +10,13 @@ CREATE TABLE IF NOT EXISTS giftcards (
   quantity INTEGER NOT NULL DEFAULT 1 CHECK (quantity >= 1),
   email TEXT,
   message TEXT,
-  status TEXT NOT NULL DEFAULT 'processing',
   is_tax_collected BOOLEAN NOT NULL DEFAULT FALSE,
-  is_expired BOOLEAN NOT NULL DEFAULT FALSE
+  is_expired BOOLEAN NOT NULL DEFAULT FALSE,
+  status TEXT NOT NULL DEFAULT 'processing',
+  last_error_code TEXT,
+  last_error_message TEXT,
+  last_error_at TIMESTAMPTZ,
+  failure_count INTEGER NOT NULL DEFAULT 0 CHECK (failure_count >= 0)
 );
 
 -- Index pour vérifications d’expiration

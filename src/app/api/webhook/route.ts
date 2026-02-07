@@ -202,18 +202,43 @@ async function handlePaymentIntentSucceeded(
     });
 
     //traitement terminé, on met à jour en base
-    await updateGiftCardStatusByPaymentIntent(paymentIntentId, "completed");
+    await updateGiftCardStatusByPaymentIntent(paymentIntentId, "completed", {
+      clearError: true,
+    });
     console.log(
       `✅ Traitement terminé de la carte cadeau (paymentintentid :${paymentIntentId})`,
     );
   } catch (err) {
+    const errorMessage = normalizeErrorMessage(err);
     console.error(
-      `Erreur lors de l'envoi de l'email (paymentintentid :${paymentIntentId})`,
+      `Erreur lors de la génération du pdf et de l'envoi de l'email (paymentintentid :${paymentIntentId})`,
       err,
     );
 
-    await updateGiftCardStatusByPaymentIntent(paymentIntentId, "failed");
+    await updateGiftCardStatusByPaymentIntent(paymentIntentId, "failed", {
+      errorCode: "EMAIL_PDF_PROCESSING",
+      errorMessage,
+      errorAt: new Date(),
+      incrementFailureCount: true,
+    });
   }
+}
+
+function normalizeErrorMessage(err: unknown, maxLength = 500) {
+  let message =
+    err instanceof Error ? err.message : typeof err === "string" ? err : "";
+
+  if (!message) {
+    message = "Unknown error";
+  }
+
+  // Normalize whitespace and truncate to avoid storing stack traces or PII
+  message = message.replace(/\s+/g, " ").trim();
+  if (message.length > maxLength) {
+    message = message.slice(0, Math.max(0, maxLength - 3)) + "...";
+  }
+
+  return message;
 }
 
 async function sendCustomEmail(

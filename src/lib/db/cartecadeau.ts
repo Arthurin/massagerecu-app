@@ -130,14 +130,53 @@ export async function getGiftcardByPaymentIntent(paymentIntentId: string) {
 export async function updateGiftCardStatusByPaymentIntent(
   paymentIntentId: string,
   status: "processing" | "completed" | "failed",
+  options?: {
+    errorCode?: string | null;
+    errorMessage?: string | null;
+    errorAt?: Date | null;
+    incrementFailureCount?: boolean;
+    clearError?: boolean;
+  },
 ) {
+  const setClauses: string[] = ["status = $1"];
+  const params: any[] = [status];
+  let paramIndex = 2;
+
+  if (options?.clearError) {
+    setClauses.push("last_error_code = NULL");
+    setClauses.push("last_error_message = NULL");
+    setClauses.push("last_error_at = NULL");
+  }
+
+  if (options?.errorCode !== undefined) {
+    setClauses.push(`last_error_code = $${paramIndex}`);
+    params.push(options.errorCode);
+    paramIndex++;
+  }
+
+  if (options?.errorMessage !== undefined) {
+    setClauses.push(`last_error_message = $${paramIndex}`);
+    params.push(options.errorMessage);
+    paramIndex++;
+  }
+
+  if (options?.errorAt !== undefined) {
+    setClauses.push(`last_error_at = $${paramIndex}`);
+    params.push(options.errorAt);
+    paramIndex++;
+  }
+
+  if (options?.incrementFailureCount) {
+    setClauses.push("failure_count = failure_count + 1");
+  }
+
   const res = await pool.query(
     `
     UPDATE giftcards
-    SET status = $1
-    WHERE payment_intent_id = $2
+    SET ${setClauses.join(", ")}
+    WHERE payment_intent_id = $${paramIndex}
     `,
-    [status, paymentIntentId],
+    [...params, paymentIntentId],
   );
 
   return res.rowCount ?? 0;
