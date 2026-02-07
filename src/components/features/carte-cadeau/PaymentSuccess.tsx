@@ -92,7 +92,7 @@ export default function PaymentSuccess({
 
     const fetchResult = async () => {
       try {
-        const res = await fetch(`/api/payment-resut/${paymentIntentId}`, {
+        const res = await fetch(`/api/payment-result/${paymentIntentId}`, {
           cache: "no-store",
         });
 
