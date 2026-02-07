@@ -6,7 +6,14 @@ interface PaymentSuccessProps {
   paymentIntentId: string;
 }
 
-type PaymentStatus = "init" | "processing" | "completed" | "failed" | "error";
+type PaymentStatus =
+  | "init"
+  | "processing"
+  | "completed"
+  | "failed"
+  | "error"
+  | "timeout"
+  | "fetch_failed";
 
 type StepState = "pending" | "active" | "done" | "error";
 
@@ -21,30 +28,29 @@ export default function PaymentSuccess({
   const [email, setEmail] = useState<string | null>(null);
   const [hasResult, setHasResult] = useState(false);
   const [fetchFailed, setFetchFailed] = useState(false);
+  const [lastKnownStatus, setLastKnownStatus] = useState<"init" | "processing">(
+    "init",
+  );
   const isProcessing = status === "init" || status === "processing";
   const isSuccess = status === "completed";
   const isError = status === "failed" || status === "error";
-  const statusTone = isSuccess
-    ? "success"
-    : isProcessing
-      ? "processing"
-      : "error";
+  const isTimeout = status === "timeout";
+  const isFetchFailed = status === "fetch_failed";
+  const isPending = isProcessing || isTimeout || isFetchFailed;
+  const statusTone = isSuccess ? "success" : isPending ? "processing" : "error";
 
   const statusTitle = isSuccess
     ? "Commande envoyée"
-    : isProcessing
-      ? "Traitement en cours"
-      : "Problème lors du traitement";
+    : isTimeout
+      ? "Traitement en cours — confirmation en attente"
+      : isFetchFailed
+        ? "Vérification en attente"
+        : isProcessing
+          ? "Traitement en cours"
+          : "Problème lors du traitement";
 
-  const errorStep = fetchFailed
-    ? 1
-    : status === "failed"
-      ? 3
-      : status === "error"
-        ? hasResult
-          ? 2
-          : 1
-        : null;
+  const errorStep =
+    status === "failed" ? 3 : status === "error" ? (hasResult ? 2 : 1) : null;
 
   const getStepState = (step: 1 | 2 | 3): StepState => {
     if (errorStep) {
@@ -53,8 +59,22 @@ export default function PaymentSuccess({
       return "error";
     }
 
+    if (isFetchFailed) {
+      return "pending";
+    }
+
     if (!hasResult) {
       return step === 1 ? "active" : "pending";
+    }
+
+    if (status === "timeout") {
+      if (lastKnownStatus === "processing") {
+        if (step === 3) return "pending";
+        return "done";
+      }
+
+      if (step === 1) return "done";
+      return "pending";
     }
 
     if (status === "init") {
@@ -82,8 +102,8 @@ export default function PaymentSuccess({
   useEffect(() => {
     if (!paymentIntentId) {
       console.error("paymentIntentId is empty");
-      setStatus("error");
       setFetchFailed(true);
+      setStatus("fetch_failed");
       return;
     }
 
@@ -105,9 +125,8 @@ export default function PaymentSuccess({
           }
 
           setFetchFailed(true);
-          throw new Error(
-            "Le résultat du traitement de la commande est indisponible",
-          );
+          setStatus("fetch_failed");
+          return;
         }
 
         const data = await res.json();
@@ -126,7 +145,11 @@ export default function PaymentSuccess({
         }
 
         if (data.status === "processing") {
+          setLastKnownStatus("processing");
           setStatus("processing");
+        } else if (data.status === "init") {
+          setLastKnownStatus("init");
+          setStatus("init");
         }
 
         // processing -> retry
@@ -135,12 +158,13 @@ export default function PaymentSuccess({
           setTimeout(fetchResult, RETRY_DELAY_MS);
         } else {
           // trop de retries
-          setStatus("error");
+          setStatus("timeout");
         }
       } catch (err) {
         if (!cancelled) {
           console.error(err);
-          setStatus("error");
+          setFetchFailed(true);
+          setStatus("fetch_failed");
         }
       }
     };
@@ -160,6 +184,10 @@ export default function PaymentSuccess({
 
     if (state === "error") {
       return <span className="payment-success__step-cross">❌</span>;
+    }
+
+    if (isTimeout || isFetchFailed) {
+      return <span className="payment-success__step-hourglass">⏳</span>;
     }
 
     return <span className="payment-success__step-spinner" />;
@@ -184,7 +212,11 @@ export default function PaymentSuccess({
             <span className="payment-success__icon-glyph" aria-hidden="true">
               ✅
             </span>
-          ) : isProcessing ? (
+          ) : isTimeout || isFetchFailed ? (
+            <span className="payment-success__icon-glyph" aria-hidden="true">
+              ⏳
+            </span>
+          ) : isPending ? (
             <span
               className="payment-success__icon-spinner"
               aria-hidden="true"
@@ -247,6 +279,48 @@ export default function PaymentSuccess({
       )}
 
       {/* FAILED / ERROR */}
+      {isTimeout && (
+        <div className="payment-success__stack">
+          <p>
+            Votre paiement a bien été confirmé et le traitement continue en
+            arrière-plan. Vous pouvez quitter la page et poursuivre votre
+            navigation. Vous recevrez votre carte cadeau par email dès qu’elle
+            sera prête.
+          </p>
+          <div className="payment-success__panel">
+            <p>Si vous n’avez rien reçu d’ici 30 minutes, contactez‑moi.</p>
+            <a
+              href="mailto:massagerecu@gmail.com"
+              aria-label="Contacter moi par email"
+              className="payment-success__link"
+            >
+              massagerecu@gmail.com
+            </a>
+          </div>
+        </div>
+      )}
+
+      {isFetchFailed && (
+        <div className="payment-success__stack">
+          <p>
+            Nous n'avons pas pu confirmer le résultat de la commande pour
+            l’instant. Votre paiement a bien été pris en compte et le traitement
+            peut continuer en arrière-plan. Vous recevrez votre carte cadeau par
+            email dès qu’elle sera prête.
+          </p>
+          <div className="payment-success__panel">
+            <p>Si vous n’avez rien reçu d’ici 30 minutes, contactez‑moi.</p>
+            <a
+              href="mailto:massagerecu@gmail.com"
+              aria-label="Contacter moi par email"
+              className="payment-success__link"
+            >
+              massagerecu@gmail.com
+            </a>
+          </div>
+        </div>
+      )}
+
       {isError && (
         <div className="payment-success__stack">
           <p>
