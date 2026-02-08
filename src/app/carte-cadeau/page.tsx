@@ -1,4 +1,5 @@
-import { Metadata } from "next";
+﻿import { Metadata } from "next";
+import Image from "next/image";
 import CarteCadeauFlow from "@/components/features/carte-cadeau/CarteCadeauFlow";
 
 export const metadata: Metadata = {
@@ -7,59 +8,115 @@ export const metadata: Metadata = {
 
 export default function CarteCadeauPage() {
   return (
-    <section id="premiere-section" className="page-section bg-light">
-      <div className="container">
-        <div className="text-center">
-          <h1 className="section-heading text-uppercase">Carte cadeau</h1>
-          <p className="section-subheading text-muted">
-            Offrez un moment de détente
-          </p>
+    <div className="gift-page">
+      <section
+        id="premiere-section"
+        className="gift-hero"
+        aria-labelledby="carte-cadeau-title"
+      >
+        <div className="container gift-hero__grid">
+          <div className="gift-hero__content">
+            <p className="gift-hero__eyebrow">Cabinet de massage · Janzé</p>
+            <h1 id="carte-cadeau-title" className="gift-hero__title">
+              Offrez un instant de douceur à celles et ceux que vous aimez.
+            </h1>
+            <p className="gift-hero__lead">
+              Une carte cadeau élégante, simple à personnaliser et envoyée par
+              mail en quelques minutes.
+            </p>
+            <div className="gift-hero__actions">
+              <div className="gift-hero__cta-group">
+                <a className="gift-hero__cta" href="#choisir-carte">
+                  Choisir une carte cadeau
+                </a>
+                <span className="gift-hero__note">
+                  Paiement sécurisé via Stripe
+                </span>
+              </div>
+            </div>
+          </div>
+          <div className="gift-hero__visual">
+            <Image
+              src="/assets/img/carte cadeau/photo_carte_cadeau.jpg"
+              alt="Aperçu de la carte cadeau"
+              width={520}
+              height={420}
+              quality={90}
+              priority
+              placeholder="blur"
+              blurDataURL="/assets/img/carte cadeau/photo_carte_cadeau.jpg?w=16&blur=20"
+              className="gift-hero__image"
+            />
+            <div className="gift-hero__badge">
+              <strong>Prêt en quelques minutes</strong>
+              <span>Envoi instantané par email</span>
+            </div>
+          </div>
         </div>
-        <div className="row text-center">
-          <p>
-            Vous cherchez un <strong>cadeau</strong> pour l'un·e de vos proches
-            dans la région de Janzé ? <br />
-            <br />
-            Massage Reçu vous propose des cartes cadeaux pour{" "}
-            <strong>offrir des massages</strong>.
-          </p>
+      </section>
 
-          <h4>Présentation du service :</h4>
-          <ul>
-            <li>
-              1- Choisissez la durée du soin. Le choix du massage revient au
-              bénéficiaire, à la prise du rendez-vous.
-            </li>
-            <li>
-              2- Vous pouvez personnaliser votre cadeau en ajoutant un petit
-              mot.
-            </li>
-            <li>
-              3- La carte cadeau est prête dès réception du paiement. Elle vous
-              sera envoyée par mail.
-            </li>
-            <li>
-              4- Pour une présentation soignée : l'imprimer en couleur sur du
-              papier de qualité, faire 2 plis en accordéon, puis la glisser dans
-              une belle enveloppe.
-            </li>
-            <li>
-              4- Pour un impact écologique minimal : l'envoyer par mail au
-              bénéficiaire. Il suffira de présenter le n° de la carte cadeau
-              lors du rendez-vous.
-            </li>
-          </ul>
-
-          <p>
-            Les cartes cadeaux sont valables 6 mois. Choisissez ci-dessous celle
-            que vous allez offrir :
-          </p>
+      <section className="gift-info" aria-labelledby="carte-cadeau-intro">
+        <div className="container gift-info__grid">
+          <div className="gift-info__text">
+            <h2 id="carte-cadeau-intro">
+              Une attention qui fait vraiment du bien
+            </h2>
+            <p>
+              Vous cherchez un cadeau attentionné pour l&apos;un·e de vos
+              proches dans la région de Janzé ? Optez pour une pause bien-être
+              avec un masseur professionnel.
+            </p>
+            <div className="gift-info__highlights">
+              <div className="gift-highlight">
+                <h3>Choisissez la durée</h3>
+                <p>Le massage sera librement défini selon la durée choisie.</p>
+              </div>
+              <div className="gift-highlight">
+                <h3>Personnalisez votre carte</h3>
+                <p>Il est possible d'ajouter un petit mot doux.</p>
+              </div>
+              <div className="gift-highlight">
+                <h3>Recevez-la tout de suite</h3>
+                <p>
+                  La carte arrive dans votre boîte mail dès réception du
+                  paiement.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="gift-info__card">
+            <h3>Pour une présentation parfaite :</h3>
+            <ol className="gift-info__steps">
+              <li>Imprimez la carte en couleur sur un papier de qualité.</li>
+              <li>Pliez-la deux fois pour former un accordéon.</li>
+              <li>Glissez-la dans une belle enveloppe pour offrir.</li>
+            </ol>
+            <div className="gift-info__eco">
+              <span>Option douce pour la planète</span>
+              <p>
+                Envoyez la carte par email au bénéficiaire. Il suffira de
+                présenter le numéro de carte cadeau lors du rendez-vous.
+              </p>
+            </div>
+          </div>
         </div>
+      </section>
 
+      <section
+        id="choisir-carte"
+        className="gift-flow"
+        aria-labelledby="carte-cadeau-choix"
+      >
         <div className="container">
-          <CarteCadeauFlow />
+          <div className="gift-flow__header">
+            <h2 id="carte-cadeau-choix">Choisissez la carte idéale</h2>
+            <p>Les cartes cadeaux sont valables 6 mois.</p>
+          </div>
+          <div className="gift-flow__panel">
+            <CarteCadeauFlow />
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
   );
 }
