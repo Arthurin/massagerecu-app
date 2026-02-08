@@ -69,7 +69,7 @@ export default function CarteCadeauPage() {
             <div className="gift-info__highlights">
               <div className="gift-highlight">
                 <h3>Choisissez la durée</h3>
-                <p>Le massage sera librement défini selon la durée choisie.</p>
+                <p>1h00, 1h30 ou 2h00 de détente.</p>
               </div>
               <div className="gift-highlight">
                 <h3>Personnalisez votre carte</h3>
@@ -109,8 +109,14 @@ export default function CarteCadeauPage() {
       >
         <div className="container">
           <div className="gift-flow__header">
-            <h2 id="carte-cadeau-choix">Choisissez la carte idéale</h2>
-            <p>Les cartes cadeaux sont valables 6 mois.</p>
+            <h2 id="carte-cadeau-choix">
+              Le plaisir d’offrir, la liberté de choisir
+            </h2>
+            <p>
+              Sélectionnez la durée, la personne bénéficiaire choisira le
+              massage ou demandera conseil au praticien. <br /> Votre carte est
+              valable 6 mois à compter de sa date d'achat.
+            </p>
           </div>
           <div className="gift-flow__panel">
             <CarteCadeauFlow />
