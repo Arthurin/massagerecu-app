@@ -1,0 +1,251 @@
+//
+// Premium styling for inner pages (FAQ, Contact, Prestations)
+//
+
+.faq-page,
+.contact-page,
+.prestations-page,
+.prestations-showcase {
+  --page-ink: #231a17;
+  --page-soft-ink: rgba(35, 26, 23, 0.75);
+  --page-primary: #b56958;
+  --page-primary-deep: #9b5445;
+  --page-accent: #a9834f;
+  --page-encre: #20293c;
+  --page-ivory: var(--surface-3);
+  --page-sand: var(--surface-4);
+}
+
+.faq-page,
+.contact-page,
+.prestations-page {
+  background:
+    radial-gradient(
+      circle at 86% 8%,
+      rgba(169, 131, 79, 0.16) 0%,
+      rgba(169, 131, 79, 0.06) 28%,
+      rgba(169, 131, 79, 0) 58%
+    ),
+    linear-gradient(155deg, var(--page-ivory) 0%, #ffffff 58%);
+
+  .section-heading {
+    color: var(--page-encre);
+    letter-spacing: 0.04em;
+  }
+
+  .section-subheading {
+    color: var(--page-soft-ink) !important;
+  }
+}
+
+.faq-page {
+  .accordion {
+    display: grid;
+    gap: 0.85rem;
+    max-width: 980px;
+    margin: 0 auto;
+  }
+
+  .accordion-item {
+    border: 1px solid rgba(169, 131, 79, 0.28);
+    border-radius: 16px;
+    overflow: hidden;
+    background: var(--surface-4);
+    box-shadow: 0 12px 26px rgba(28, 20, 16, 0.08);
+  }
+
+  .accordion-button {
+    font-family: var(--font-lora), serif;
+    font-size: 1.2rem;
+    line-height: 1.35;
+    color: var(--page-encre);
+    background: linear-gradient(140deg, #fffdf9 0%, #f6efe3 100%);
+    box-shadow: none;
+    padding: 1.05rem 1.25rem;
+  }
+
+  .accordion-button:not(.collapsed) {
+    color: #fff;
+    background: linear-gradient(145deg, #2c3650 0%, #20293c 100%);
+  }
+
+  .accordion-button:focus {
+    box-shadow: 0 0 0 0.2rem rgba(169, 131, 79, 0.24);
+  }
+
+  .accordion-button::after {
+    filter: saturate(0.8) hue-rotate(-8deg);
+  }
+
+  .accordion-body {
+    padding: 1.2rem 1.25rem 1.3rem;
+    color: var(--page-soft-ink);
+    background: #fff;
+  }
+}
+
+.contact-page {
+  .container-contact {
+    gap: 1.2rem;
+  }
+
+  .container-contact > .col-custom {
+    background: var(--surface-4);
+    border: 1px solid rgba(169, 131, 79, 0.28);
+    border-radius: 18px;
+    padding: 1.25rem 1.2rem;
+    box-shadow: 0 12px 26px rgba(28, 20, 16, 0.08);
+  }
+
+  .container-contact h4 {
+    color: var(--page-encre);
+    margin-bottom: 0.85rem;
+  }
+
+  ul#contact-list li {
+    margin-bottom: 0.35rem;
+  }
+
+  ul#contact-list a {
+    color: var(--page-primary-deep);
+  }
+
+  ul#contact-list a:hover {
+    color: var(--page-accent);
+    text-decoration-color: rgba(169, 131, 79, 0.55);
+  }
+
+  .align-icon {
+    color: var(--page-accent);
+  }
+
+  iframe {
+    width: 100%;
+    min-height: 380px;
+    border-radius: 18px;
+    border: 1px solid rgba(169, 131, 79, 0.3) !important;
+    box-shadow: 0 20px 40px rgba(20, 28, 48, 0.12);
+  }
+}
+
+.prestations-page {
+  .prestationsSection {
+    background: var(--surface-4);
+    border: 1px solid rgba(169, 131, 79, 0.32);
+    border-radius: 20px;
+    padding: 1rem;
+    box-shadow: 0 16px 34px rgba(20, 28, 48, 0.1);
+  }
+
+  .tableauMassages {
+    margin-bottom: 0;
+  }
+
+  .tableauMassages caption {
+    color: var(--page-encre);
+  }
+
+  .tableauMassages td,
+  .tableauMassages th {
+    border-color: rgba(32, 41, 60, 0.58);
+  }
+
+  .tableauMassages .massage_cat {
+    background: linear-gradient(135deg, #efe1cf 0%, #f7ebdb 100%);
+    color: var(--page-encre);
+  }
+
+  .tableauMassages th.colonnePrix {
+    background: var(--page-primary);
+    color: #fff;
+  }
+
+  .tableauMassages th.colonnePression,
+  .tableauMassages th.colonneTenue {
+    background: var(--page-encre);
+    color: #fff;
+  }
+
+  .tableauMassages .caseReserver:hover {
+    background-color: rgba(169, 131, 79, 0.2);
+  }
+}
+
+.prestations-showcase {
+  background:
+    radial-gradient(
+      circle at 12% 20%,
+      rgba(44, 54, 80, 0.1) 0%,
+      rgba(44, 54, 80, 0) 45%
+    ),
+    linear-gradient(160deg, var(--surface-3) 0%, var(--surface-1) 56%);
+
+  .section-heading {
+    color: var(--page-encre);
+    letter-spacing: 0.04em;
+  }
+
+  .section-subheading {
+    color: var(--page-soft-ink) !important;
+  }
+
+  .portfolio-item {
+    background: var(--surface-4);
+    border: 1px solid rgba(169, 131, 79, 0.26);
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 14px 34px rgba(20, 28, 48, 0.1);
+    transition:
+      transform 0.25s ease,
+      box-shadow 0.25s ease;
+  }
+
+  .portfolio-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 22px 44px rgba(20, 28, 48, 0.16);
+  }
+
+  .portfolio-item img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .portfolio-caption {
+    background: transparent;
+  }
+
+  .portfolio-caption-heading {
+    color: var(--page-encre);
+    margin-bottom: 0.55rem !important;
+  }
+
+  .portfolio-caption-subheading {
+    color: var(--page-soft-ink) !important;
+    font-style: normal !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .faq-page .accordion-button {
+    font-size: 1.06rem;
+    padding: 0.95rem 1rem;
+  }
+
+  .faq-page .accordion-body {
+    padding: 1rem;
+  }
+
+  .contact-page .container-contact > .col-custom {
+    padding: 1rem;
+  }
+
+  .contact-page iframe {
+    min-height: 320px;
+  }
+
+  .prestations-page .prestationsSection {
+    padding: 0.7rem;
+    border-radius: 14px;
+  }
+}

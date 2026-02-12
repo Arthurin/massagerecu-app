@@ -35,6 +35,12 @@ body {
     0 0 0 3px hsla(210, 96%, 45%, 25%), 0 1px 1px 0 rgba(0, 0, 0, 0.08);
   --focusErrorBoxShadow:
     0 0 0 3px hsla(0, 96%, 45%, 0.25), 0 1px 1px 0 rgba(0, 0, 0, 0.08);
+
+  // Premium surface tokens (content backgrounds)
+  --surface-1: #ffffff;
+  --surface-2: #fdfaf5;
+  --surface-3: #f8f2e8;
+  --surface-4: #fcf8f2;
 }
 
 // Force Lora for lower headings (overrides Bootstrap headings)

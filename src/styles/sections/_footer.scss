@@ -3,19 +3,20 @@
 //
 
 .newsContainer {
-  background: #fffdf9;
+  background: rgba(255, 255, 255, 0.06);
   margin: 0 0 24px 0;
   padding: 28px 0;
   border-radius: 20px;
   align-content: center;
   justify-content: center;
   gap: 20px 0;
-  border: 1px solid rgba(169, 131, 79, 0.24);
-  box-shadow: 0 14px 28px rgba(63, 42, 30, 0.08);
+  border: 1px solid rgba(198, 165, 107, 0.26);
+  box-shadow: 0 18px 34px rgba(5, 9, 20, 0.34);
+  backdrop-filter: blur(2px);
 }
 
 .newsletterBlocImage {
-  background: #9a4f3f;
+  background: linear-gradient(140deg, #c6a56b 0%, #a9834f 100%);
   border-radius: 14px;
   padding: 10px;
   margin-right: 11px;
@@ -57,7 +58,7 @@
 }
 
 input#validerNewsletter {
-  background-color: #9a4f3f !important;
+  background-color: #c6a56b !important;
   text-transform: none !important;
   font-weight: 400;
   border-radius: 0px 10px 10px 0px;
@@ -73,7 +74,7 @@ input#validerNewsletter {
 
 input#validerNewsletter:hover,
 input#validerNewsletter:focus {
-  background-color: #6f362d !important;
+  background-color: #a9834f !important;
 }
 
 .infoServeur {
@@ -108,8 +109,14 @@ input#validerNewsletter:focus {
 
 .dessusFooter {
   padding: 28px 0;
-  background: #f8f2eb;
-  border-top: 1px solid rgba(169, 131, 79, 0.18);
+  background:
+    radial-gradient(
+      circle at 15% 0%,
+      rgba(198, 165, 107, 0.18) 0%,
+      rgba(198, 165, 107, 0) 50%
+    ),
+    linear-gradient(160deg, #20293c 0%, #1a2234 100%);
+  border-top: 1px solid rgba(198, 165, 107, 0.22);
 }
 
 .dessousfooter {
@@ -117,12 +124,12 @@ input#validerNewsletter:focus {
   font-size: 0.9rem;
   color: $text_with_primary_background;
   padding: 18px 0;
-  background-color: #4f3d33;
+  background-color: #131a28;
 }
 
 .footer,
 .conteneur-horaires {
-  color: #3d2a25;
+  color: #f1eadf;
 
   strong {
     font-weight: 500;
@@ -130,7 +137,7 @@ input#validerNewsletter:focus {
 
   a {
     text-decoration: none;
-    color: #6f362d;
+    color: #f5ecd9;
   }
 
   a:hover {
@@ -140,14 +147,14 @@ input#validerNewsletter:focus {
 
   h4 {
     text-align: center;
-    color: #6f362d;
+    color: #a9834f;
   }
 }
 
 .footer .newsletterTitle {
-  color: #a9834f;
+  color: #f4e8d0;
 }
 
 .footer .newsletterHeaderDescription {
-  color: rgba(61, 42, 37, 0.85);
+  color: rgba(241, 234, 223, 0.82);
 }

@@ -6,7 +6,7 @@ export const metadata: Metadata = {
 
 export default function FAQPage() {
   return (
-    <section id="premiere-section" className="page-section bg-light">
+    <section id="premiere-section" className="page-section faq-page">
       <div className="container">
         <div className="text-center">
           <h1 className="section-heading text-uppercase">FAQ</h1>

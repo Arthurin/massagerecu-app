@@ -6,7 +6,7 @@ import NewsItem from "@/components/layout/NewsItem";
 
 export default function Home() {
   return (
-    <>
+    <div className="home-page">
       <header className="masthead">
         <div className="container-lg">
           <Image
@@ -208,6 +208,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }

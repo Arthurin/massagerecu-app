@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 export default function Prestations() {
   return (
     <>
-      <section id="premiere-section" className="page-section bg-light">
+      <section id="premiere-section" className="page-section prestations-page">
         <div className="container-lg">
           <div className="text-center">
             <h1 className="section-heading text-uppercase">Tarifs</h1>
@@ -21,7 +21,7 @@ export default function Prestations() {
           <TableauMassages />
         </div>
       </section>
-      <section id="portfolio" className="page-section">
+      <section id="portfolio" className="page-section prestations-showcase">
         <div className="container-lg">
           <div className="text-center">
             <h1 className="section-heading text-uppercase">
