@@ -40,7 +40,7 @@ export default function CarteCadeauPage() {
               src="/assets/img/carte cadeau/photo_carte_cadeau.jpg"
               alt="Aperçu de la carte cadeau"
               width={520}
-              height={420}
+              height={390}
               quality={90}
               priority
               placeholder="blur"
