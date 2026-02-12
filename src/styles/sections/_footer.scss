@@ -3,17 +3,19 @@
 //
 
 .newsContainer {
-  background-color: rgb(255 225 142);
+  background: #fffdf9;
   margin: 0 0 24px 0;
-  padding: 30px 0;
+  padding: 28px 0;
   border-radius: 20px;
   align-content: center;
   justify-content: center;
   gap: 20px 0;
+  border: 1px solid rgba(169, 131, 79, 0.24);
+  box-shadow: 0 14px 28px rgba(63, 42, 30, 0.08);
 }
 
 .newsletterBlocImage {
-  background-color: #ff652a;
+  background: #9a4f3f;
   border-radius: 14px;
   padding: 10px;
   margin-right: 11px;
@@ -55,7 +57,7 @@
 }
 
 input#validerNewsletter {
-  background-color: #ff9426 !important;
+  background-color: #9a4f3f !important;
   text-transform: none !important;
   font-weight: 400;
   border-radius: 0px 10px 10px 0px;
@@ -67,6 +69,11 @@ input#validerNewsletter {
   padding: 0 10px !important;
   max-width: 368px;
   float: left;
+}
+
+input#validerNewsletter:hover,
+input#validerNewsletter:focus {
+  background-color: #6f362d !important;
 }
 
 .infoServeur {
@@ -101,7 +108,8 @@ input#validerNewsletter {
 
 .dessusFooter {
   padding: 28px 0;
-  background-color: $primaireTresClair;
+  background: #f8f2eb;
+  border-top: 1px solid rgba(169, 131, 79, 0.18);
 }
 
 .dessousfooter {
@@ -109,24 +117,37 @@ input#validerNewsletter {
   font-size: 0.9rem;
   color: $text_with_primary_background;
   padding: 18px 0;
-  background-color: $primaireFonce;
+  background-color: #4f3d33;
 }
 
-footer,
+.footer,
 .conteneur-horaires {
+  color: #3d2a25;
+
   strong {
     font-weight: 500;
   }
 
   a {
     text-decoration: none;
+    color: #6f362d;
   }
 
   a:hover {
     text-decoration: underline;
+    color: #a9834f;
   }
 
   h4 {
     text-align: center;
+    color: #6f362d;
   }
+}
+
+.footer .newsletterTitle {
+  color: #a9834f;
+}
+
+.footer .newsletterHeaderDescription {
+  color: rgba(61, 42, 37, 0.85);
 }

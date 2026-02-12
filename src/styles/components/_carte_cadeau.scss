@@ -209,7 +209,7 @@
 .gift-page {
   --gift-primary: #9a4f3f;
   --gift-primary-deep: #6f362d;
-  --gift-accent: #2f3a5f;
+  --gift-accent: #a9834f;
   --gift-ink: #2b1f1b;
   --gift-cream: #f6f1ec;
   --gift-sand: #fbf7f3;
@@ -415,7 +415,7 @@
   border: 1px solid rgba(154, 79, 63, 0.12);
   box-shadow:
     0 24px 55px rgba(0, 0, 0, 0.08),
-    inset 0 0 0 1px rgba(47, 58, 95, 0.08);
+    inset 0 0 0 1px rgba(169, 131, 79, 0.14);
 }
 
 .gift-info__card h3 {
@@ -449,7 +449,7 @@
   display: grid;
   place-items: center;
   background: rgba(154, 79, 63, 0.12);
-  color: var(--gift-primary);
+  color: var(--gift-accent);
   font-weight: 600;
 }
 
@@ -464,6 +464,7 @@
   font-weight: 600;
   display: block;
   margin-bottom: 0.3rem;
+  color: var(--gift-accent);
 }
 
 .gift-info__eco p {
@@ -579,5 +580,5 @@
   width: 64px;
   height: 2px;
   border-radius: 999px;
-  background: rgba(47, 58, 95, 0.35);
+  background: rgba(169, 131, 79, 0.5);
 }

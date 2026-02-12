@@ -8,23 +8,34 @@
 }
 
 #mainNav {
+  --nav-bg: #f8f2eb;
+  --nav-border: rgba(169, 131, 79, 0.26);
+  --nav-text: #3d2a25;
+  --nav-primary: #9a4f3f;
+  --nav-primary-deep: #6f362d;
+  --nav-accent: #a9834f;
+
   padding-top: $menu-padding-small;
   padding-bottom: $menu-padding-small;
-  background-color: #fff;
+  background-color: var(--nav-bg);
+  border-bottom: 1px solid var(--nav-border);
 
   .navbar-toggler {
     padding: 0.75rem;
     font-size: 0.75rem;
     text-transform: uppercase;
     font-weight: bold;
+    color: var(--nav-accent);
+    border-color: rgba(169, 131, 79, 0.45);
+    background: rgba(255, 255, 255, 0.75);
   }
 
   .navbar-toggler:focus {
-    box-shadow: 0 0 0 0.1rem;
+    box-shadow: 0 0 0 0.1rem rgba(169, 131, 79, 0.28);
   }
 
   .navbar-brand {
-    color: $primary;
+    color: var(--nav-primary);
     font-family: $headings-font-family;
     font-weight: $headings-font-weight;
     letter-spacing: $headings-letter-spacing;
@@ -49,16 +60,42 @@
       .nav-link {
         font-family: $headings-font-family;
         font-size: 1.3rem;
-        color: $black_light;
+        color: var(--nav-text);
         letter-spacing: $headings-letter-spacing;
 
         &.active {
-          color: $primary;
+          color: var(--nav-primary);
         }
 
         &:hover {
-          color: $primary_light;
+          color: var(--nav-accent);
         }
+      }
+
+      .btnMenuCustom.btn-primary {
+        background-color: var(--nav-primary);
+        border-color: var(--nav-primary);
+        color: #fff;
+      }
+
+      .btnMenuCustom.btn-primary:hover,
+      .btnMenuCustom.btn-primary:focus {
+        background-color: var(--nav-primary-deep);
+        border-color: var(--nav-primary-deep);
+        color: #fff;
+      }
+
+      .btnMenuCustom.btn-outline-primary {
+        color: var(--nav-primary-deep);
+        border-color: rgba(111, 54, 45, 0.45);
+        background-color: transparent;
+      }
+
+      .btnMenuCustom.btn-outline-primary:hover,
+      .btnMenuCustom.btn-outline-primary:focus {
+        background-color: rgba(169, 131, 79, 0.14);
+        border-color: var(--nav-accent);
+        color: var(--nav-accent);
       }
     }
   }
@@ -70,10 +107,12 @@
     padding-top: $menu-padding-bigscreen;
     padding-bottom: $menu-padding-bigscreen;
     border: none;
-    background-color: #fff;
+    background-color: var(--nav-bg);
     transition:
       padding-top 0.3s ease-in-out,
-      padding-bottom 0.3s ease-in-out;
+      padding-bottom 0.3s ease-in-out,
+      box-shadow 0.25s ease;
+    box-shadow: 0 8px 24px rgba(63, 42, 30, 0.1);
 
     .navbar-brand {
       font-size: 1.5em;
@@ -89,7 +128,8 @@
     &.navbar-shrink {
       padding-top: $menu-padding-bigscreen-sticky;
       padding-bottom: $menu-padding-bigscreen-sticky;
-      background-color: #fff;
+      background-color: rgba(248, 242, 235, 0.98);
+      box-shadow: 0 10px 28px rgba(63, 42, 30, 0.16);
 
       .navbar-brand {
         font-size: 1.25em;
