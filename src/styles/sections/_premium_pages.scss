@@ -102,6 +102,14 @@
     margin-bottom: 0.85rem;
   }
 
+  .conteneur-horaires {
+    color: var(--page-soft-ink);
+  }
+
+  .conteneur-horaires strong {
+    color: var(--page-encre);
+  }
+
   ul#contact-list li {
     margin-bottom: 0.35rem;
   }
@@ -117,6 +125,18 @@
 
   .align-icon {
     color: var(--page-accent);
+  }
+
+  .row.espacement {
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .row.espacement > * {
+    padding-left: 0;
+    padding-right: 0;
   }
 
   iframe {
@@ -172,13 +192,7 @@
 }
 
 .prestations-showcase {
-  background:
-    radial-gradient(
-      circle at 12% 20%,
-      rgba(44, 54, 80, 0.1) 0%,
-      rgba(44, 54, 80, 0) 45%
-    ),
-    linear-gradient(160deg, var(--surface-3) 0%, var(--surface-1) 56%);
+  background: linear-gradient(155deg, var(--page-ivory) 0%, #ffffff 58%);
 
   .section-heading {
     color: var(--page-encre);
