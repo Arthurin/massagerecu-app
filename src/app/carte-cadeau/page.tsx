@@ -18,7 +18,7 @@ export default function CarteCadeauPage() {
           <div className="gift-hero__content">
             <p className="gift-hero__eyebrow">Cabinet de massage · Janzé</p>
             <h1 id="carte-cadeau-title" className="gift-hero__title">
-              Le plaisir d’offrir, l’art de prendre soin
+              Le plaisir d’offrir, l’art de prendre soin.
             </h1>
             <p className="gift-hero__lead">
               Offrez une parenthèse de bien-être à celles et ceux que vous
