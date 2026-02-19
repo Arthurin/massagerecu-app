@@ -53,7 +53,6 @@
   padding: 0 10px !important;
   //max-width: 380px;
   width: 80%;
-  float: left;
   border-radius: 10px 0 0 10px;
 }
 
@@ -70,7 +69,6 @@ input#validerNewsletter {
   line-height: 39px;
   padding: 0 10px !important;
   max-width: 368px;
-  float: left;
 }
 
 input#validerNewsletter:hover,
@@ -167,4 +165,3 @@ input#validerNewsletter:focus-visible {
 .footer .newsletterHeaderDescription {
   color: rgba(241, 234, 223, 0.82);
 }
-
