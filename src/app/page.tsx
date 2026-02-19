@@ -53,9 +53,8 @@ export default function Home() {
         <div className="container text-center">
           <h1 className="section-heading text-uppercase">Actualités</h1>
           <p className="section-subheading text-muted">
-            Restez informé·e grâce à la newsletter ou aux réseaux sociaux{" "}
+            Restez informé·e grâce à la newsletter ou aux réseaux sociaux :{" "}
             <span className="no-wrap">
-              {"("}
               <a
                 className="link-secondary"
                 href="https://fb.me/MassageRecu"
@@ -64,8 +63,7 @@ export default function Home() {
                 rel="noopener noreferrer"
               >
                 <FontAwesomeIcon icon={faFacebookF} />
-              </a>
-              et{" "}
+              </a>{" "}
               <a
                 className="link-secondary"
                 href="https://www.instagram.com/massage_recu/"
@@ -75,7 +73,6 @@ export default function Home() {
               >
                 <FontAwesomeIcon icon={faInstagram} />
               </a>
-              ).
             </span>
           </p>
 
