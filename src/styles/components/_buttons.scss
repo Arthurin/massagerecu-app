@@ -21,3 +21,49 @@
   padding: 0;
   border-radius: 100%;
 }
+
+// Shared premium button style across the app
+.btn-primary,
+.btn-secondary {
+  background-color: var(--brand-primary);
+  border-color: var(--brand-primary);
+  color: #fff;
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    color 180ms ease,
+    transform 180ms ease;
+}
+
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary.active,
+.show > .btn-primary.dropdown-toggle,
+.btn-secondary:hover,
+.btn-secondary:active,
+.btn-secondary.active,
+.show > .btn-secondary.dropdown-toggle {
+  background-color: var(--brand-primary-hover);
+  border-color: var(--brand-primary-hover);
+  color: #fff;
+}
+
+.btn-primary:focus,
+.btn-primary:focus-visible,
+.btn-secondary:focus,
+.btn-secondary:focus-visible {
+  background-color: var(--brand-primary-hover);
+  border-color: var(--brand-primary-hover);
+  color: #fff;
+  box-shadow: 0 0 0 0.2rem rgba(155, 84, 69, 0.28);
+}
+
+.btn-primary:disabled,
+.btn-primary.disabled,
+.btn-secondary:disabled,
+.btn-secondary.disabled {
+  background-color: var(--brand-primary);
+  border-color: var(--brand-primary);
+  color: #fff;
+  opacity: 0.55;
+}

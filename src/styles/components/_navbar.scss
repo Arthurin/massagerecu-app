@@ -1,8 +1,8 @@
-//
+﻿//
 // Navbar
 //
 
-// Ajuste le positionnement du bouton Réserver dans le menu principal
+// Ajuste le positionnement du bouton RÃ©server dans le menu principal
 #reserver-item {
   padding: 0.1rem 0 0 0;
 }
@@ -11,8 +11,8 @@
   --nav-bg: #20293c;
   --nav-border: rgba(198, 165, 107, 0.24);
   --nav-text: #f6f1e8;
-  --nav-primary: #b56958;
-  --nav-primary-deep: #9b5445;
+  --nav-primary: var(--brand-primary);
+  --nav-primary-deep: var(--brand-primary-hover);
   --nav-accent: #a9834f;
 
   padding-top: $menu-padding-small;
@@ -51,7 +51,7 @@
     padding-left: 1rem;
 
     .nav-item {
-      /*Affichage du bouton dans le menu aligné aux autres éléments .nav-link*/
+      /*Affichage du bouton dans le menu alignÃ© aux autres Ã©lÃ©ments .nav-link*/
       .btnMenuCustom {
         font-family: $headings-font-family;
         font-size: 1.3rem;
@@ -80,23 +80,41 @@
       }
 
       .btnMenuCustom.btn-primary:hover,
-      .btnMenuCustom.btn-primary:focus {
+      .btnMenuCustom.btn-primary:active,
+      .btnMenuCustom.btn-primary.active,
+      .show > .btnMenuCustom.btn-primary.dropdown-toggle {
         background-color: var(--nav-primary-deep);
         border-color: var(--nav-primary-deep);
         color: #fff;
       }
 
+      .btnMenuCustom.btn-primary:focus,
+      .btnMenuCustom.btn-primary:focus-visible {
+        background-color: var(--nav-primary-deep);
+        border-color: var(--nav-primary-deep);
+        color: #fff;
+        box-shadow: 0 0 0 0.2rem rgba(155, 84, 69, 0.28);
+      }
+
       .btnMenuCustom.btn-outline-primary {
-        color: var(--nav-accent);
-        border-color: rgba(198, 165, 107, 0.45);
+        color: #fff;
+        border-color: rgba(155, 84, 69, 0.75);
         background-color: transparent;
       }
 
       .btnMenuCustom.btn-outline-primary:hover,
-      .btnMenuCustom.btn-outline-primary:focus {
-        background-color: rgba(169, 131, 79, 0.14);
-        border-color: var(--nav-accent);
-        color: var(--nav-accent);
+      .btnMenuCustom.btn-outline-primary:active {
+        background-color: var(--nav-primary-deep);
+        border-color: var(--nav-primary-deep);
+        color: #fff;
+      }
+
+      .btnMenuCustom.btn-outline-primary:focus,
+      .btnMenuCustom.btn-outline-primary:focus-visible {
+        background-color: var(--nav-primary-deep);
+        border-color: var(--nav-primary-deep);
+        color: #fff;
+        box-shadow: 0 0 0 0.2rem rgba(155, 84, 69, 0.2);
       }
     }
   }
@@ -154,3 +172,4 @@
     }
   }
 }
+

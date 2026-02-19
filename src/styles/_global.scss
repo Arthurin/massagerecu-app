@@ -41,6 +41,14 @@ body {
   --surface-2: #fdfaf5;
   --surface-3: #f8f2e8;
   --surface-4: #fcf8f2;
+
+  // Shared brand button tokens (AA strict with white text)
+  --brand-primary: #9b5445;
+  --brand-primary-hover: #7f4034;
+
+  // Progress dots
+  --step-circle: #2b3551;
+  --step-circle-area: rgba(43, 53, 81, 0.35);
 }
 
 // Force Lora for lower headings (overrides Bootstrap headings)
@@ -156,19 +164,19 @@ section a:hover {
 }
 
 .dot-app {
-  background-color: $color-app;
+  background-color: var(--step-circle);
 }
 
 .dot-app:hover {
-  background-color: darken($color-app, 20%);
+  background-color: #20293c;
 }
 
 .dot-next-steps {
-  background-color: $color-app-light;
+  background-color: var(--step-circle-area);
 }
 
 .dot-next-steps:hover {
-  background-color: darken($color-app-light, 20%);
+  background-color: rgba(43, 53, 81, 0.55);
 }
 
 .item-order-price {

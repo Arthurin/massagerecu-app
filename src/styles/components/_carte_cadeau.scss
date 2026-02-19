@@ -207,8 +207,8 @@
 }
 
 .gift-page {
-  --gift-primary: #b56958;
-  --gift-primary-deep: #9b5445;
+  --gift-primary: var(--brand-primary);
+  --gift-primary-deep: var(--brand-primary-hover);
   --gift-accent: #a9834f;
   --gift-ink: #231a17;
   --gift-cream: var(--surface-3);
@@ -325,10 +325,19 @@
 }
 
 .gift-hero__cta:hover,
-.gift-hero__cta:focus {
+.gift-hero__cta:active {
   transform: translateY(-2px);
-  box-shadow: 0 12px 24px rgba(155, 84, 69, 0.28);
+  background: var(--gift-primary-deep);
+  border-color: var(--gift-primary-deep);
+  box-shadow: none;
   color: #ffffff;
+}
+
+.gift-hero__cta:focus,
+.gift-hero__cta:focus-visible {
+  background: var(--gift-primary-deep);
+  border-color: var(--gift-primary-deep);
+  box-shadow: 0 0 0 0.2rem rgba(155, 84, 69, 0.24);
 }
 
 .gift-hero__note {
@@ -586,4 +595,5 @@
   border-radius: 999px;
   background: rgba(198, 165, 107, 0.62);
 }
+
 

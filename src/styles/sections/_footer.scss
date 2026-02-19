@@ -1,4 +1,4 @@
-//
+﻿//
 // Footer section styling
 //
 
@@ -58,7 +58,8 @@
 }
 
 input#validerNewsletter {
-  background-color: #c6a56b !important;
+  background-color: var(--brand-primary) !important;
+  color: #fff !important;
   text-transform: none !important;
   font-weight: 400;
   border-radius: 0px 10px 10px 0px;
@@ -73,8 +74,16 @@ input#validerNewsletter {
 }
 
 input#validerNewsletter:hover,
-input#validerNewsletter:focus {
-  background-color: #a9834f !important;
+input#validerNewsletter:active {
+  background-color: var(--brand-primary-hover) !important;
+}
+
+input#validerNewsletter:focus,
+input#validerNewsletter:focus-visible {
+  background-color: var(--brand-primary-hover) !important;
+  color: #fff !important;
+  box-shadow: 0 0 0 0.2rem rgba(155, 84, 69, 0.28);
+  outline: none;
 }
 
 .infoServeur {
@@ -158,3 +167,4 @@ input#validerNewsletter:focus {
 .footer .newsletterHeaderDescription {
   color: rgba(241, 234, 223, 0.82);
 }
+

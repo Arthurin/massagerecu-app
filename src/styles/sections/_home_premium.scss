@@ -1,4 +1,4 @@
-//
+﻿//
 // Premium home page styling (v2)
 //
 
@@ -6,8 +6,8 @@
   --home-ink: #231a17;
   --home-soft-ink: rgba(35, 26, 23, 0.78);
   --home-encre: #20293c;
-  --home-primary: #b56958;
-  --home-primary-deep: #9b5445;
+  --home-primary: var(--brand-primary);
+  --home-primary-deep: var(--brand-primary-hover);
   --home-accent: #a9834f;
   --home-sand: var(--surface-3);
   --home-ivory: var(--surface-2);
@@ -114,11 +114,39 @@
 }
 
 .home-page #news .section-subheading .link-secondary {
-  color: var(--home-primary-deep) !important;
+  color: #fff !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.05rem;
+  height: 2.05rem;
+  border-radius: 999px;
+  background: var(--home-primary);
+  border: 1px solid var(--home-primary);
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    transform 180ms ease,
+    box-shadow 180ms ease;
 }
 
-.home-page #news .section-subheading .link-secondary:hover {
-  color: var(--home-accent) !important;
+.home-page #news .section-subheading .link-secondary:hover,
+.home-page #news .section-subheading .link-secondary:active {
+  color: #fff !important;
+  background: var(--home-primary-deep);
+  border-color: var(--home-primary-deep);
+  transform: translateY(-1px);
+  text-decoration: none;
+}
+
+.home-page #news .section-subheading .link-secondary:focus,
+.home-page #news .section-subheading .link-secondary:focus-visible {
+  color: #fff !important;
+  background: var(--home-primary-deep);
+  border-color: var(--home-primary-deep);
+  transform: translateY(-1px);
+  box-shadow: 0 0 0 0.2rem rgba(155, 84, 69, 0.24);
+  text-decoration: none;
 }
 
 .home-page .newsInfoContainer {
@@ -202,3 +230,4 @@
     padding-top: 200px;
   }
 }
+
