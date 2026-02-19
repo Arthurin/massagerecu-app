@@ -79,7 +79,7 @@ export default function Home() {
             </span>
           </p>
 
-          <NewsItem title="Ré-ouverture à partir du 11/02/26">
+          <NewsItem title="Ré-ouverture progressive à partir de fin février">
             <Image
               src="/assets/img/news/fermeture.jpg"
               alt="Blessure au poignet"
@@ -94,12 +94,17 @@ export default function Home() {
               🤕), je me vois contraint de suspendre momentanément les massages.
               <br />
               Il est toujours possible d'acheter des cartes cadeaux, et celles
-              qui sont en cours de validité seront prolongées d'un mois et demi.
+              qui sont en cours de validité seront prolongées de 2 mois.
             </p>
             <p>Merci de votre compréhension !</p>
             <p>
               Je vous souhaite une bonne année 2026, prenez soin de vous et
               faites attention aux chutes 😄
+            </p>
+            <p>
+              MAJ : je vais reprendre progressivement les séances à partir de
+              fin février, la ré-éducation demande du temps mais c'est sur la
+              bonne voie.
             </p>
           </NewsItem>
 
