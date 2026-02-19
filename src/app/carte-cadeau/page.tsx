@@ -18,11 +18,11 @@ export default function CarteCadeauPage() {
           <div className="gift-hero__content">
             <p className="gift-hero__eyebrow">Cabinet de massage · Janzé</p>
             <h1 id="carte-cadeau-title" className="gift-hero__title">
-              Offrez un instant de douceur à celles et ceux que vous aimez.
+              Le plaisir d’offrir, l’art de prendre soin
             </h1>
             <p className="gift-hero__lead">
-              Une carte cadeau élégante, simple à personnaliser et envoyée par
-              mail en quelques minutes.
+              Offrez une parenthèse de bien-être à celles et ceux que vous
+              aimez.
             </p>
             <div className="gift-hero__actions">
               <div className="gift-hero__cta-group">
@@ -49,7 +49,7 @@ export default function CarteCadeauPage() {
             />
             <div className="gift-hero__badge">
               <strong>Prêt en quelques minutes</strong>
-              <span>Envoi instantané par email</span>
+              <span>Une carte cadeau élégante et simple à personnaliser.</span>
             </div>
           </div>
         </div>
@@ -62,9 +62,8 @@ export default function CarteCadeauPage() {
               Une attention qui fait vraiment du bien
             </h2>
             <p>
-              Vous cherchez un cadeau attentionné pour l&apos;un·e de vos
-              proches dans la région de Janzé ? Optez pour une pause bien-être
-              avec un masseur professionnel.
+              Le tarif est défini par la durée, pour laisser à la personne
+              bénéficiaire le choix du massage.
             </p>
             <div className="gift-info__highlights">
               <div className="gift-highlight">
@@ -72,31 +71,19 @@ export default function CarteCadeauPage() {
                 <p>1h00, 1h30 ou 2h00 de détente.</p>
               </div>
               <div className="gift-highlight">
-                <h3>Personnalisez votre carte</h3>
-                <p>Il est possible d'ajouter un petit mot doux.</p>
+                <h3>Ajoutez un message</h3>
+                <p>Quelques mots suffisent pour rendre votre cadeau unique.</p>
               </div>
               <div className="gift-highlight">
                 <h3>Recevez-la tout de suite</h3>
                 <p>
-                  La carte arrive dans votre boîte mail dès réception du
-                  paiement.
+                  La carte est envoyée par email dès validation du paiement.
                 </p>
               </div>
-            </div>
-          </div>
-          <div className="gift-info__card">
-            <h3>Pour une présentation parfaite :</h3>
-            <ol className="gift-info__steps">
-              <li>Imprimez la carte en couleur sur un papier de qualité.</li>
-              <li>Pliez-la deux fois pour former un accordéon.</li>
-              <li>Glissez-la dans une belle enveloppe pour offrir.</li>
-            </ol>
-            <div className="gift-info__eco">
-              <span>Option douce pour la planète</span>
-              <p>
-                Envoyez la carte par email au bénéficiaire. Il suffira de
-                présenter le numéro de carte cadeau lors du rendez-vous.
-              </p>
+              <div className="gift-highlight">
+                <h3>Offrez-la comme vous voulez</h3>
+                <p>Imprimez-la ou transmettez-la directement par email.</p>
+              </div>
             </div>
           </div>
         </div>
@@ -110,13 +97,9 @@ export default function CarteCadeauPage() {
         <div className="container">
           <div className="gift-flow__header">
             <h2 id="carte-cadeau-choix">
-              Le plaisir d’offrir, la liberté de choisir
+              Créez votre carte cadeau en quelques clics
             </h2>
-            <p>
-              Sélectionnez la durée, la personne bénéficiaire choisira le
-              massage ou demandera conseil au praticien. <br /> Votre carte est
-              valable 6 mois à compter de sa date d'achat.
-            </p>
+            <p>Carte valable 6 mois à compter de l’achat.</p>
           </div>
           <div className="gift-flow__panel">
             <CarteCadeauFlow />
