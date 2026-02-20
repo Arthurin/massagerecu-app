@@ -169,22 +169,32 @@
     .navbar-topbar__inner {
       min-height: 34px;
       display: flex;
-      align-items: center;
+      align-items: flex-end;
       justify-content: space-between;
-      font-size: 0.82rem;
+      padding-bottom: 8px;
+      font-size: 14px;
       color: rgba(245, 236, 223, 0.86);
     }
 
     .navbar-topbar__brand {
       color: rgba(245, 236, 223, 0.9);
-      font-family: var(--font-lora), serif;
-      letter-spacing: 0.04em;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 0.01em;
+      line-height: 1;
       white-space: nowrap;
+    }
+
+    .navbar-topbar__brand-name {
+      font-family: var(--font-lora), serif;
+      font-size: 1.1rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
     }
 
     .navbar-topbar__contact {
       display: inline-flex;
-      align-items: center;
+      align-items: baseline;
       justify-content: flex-end;
       gap: 1.15rem;
     }
@@ -195,6 +205,7 @@
       gap: 0.42rem;
       color: inherit;
       text-decoration: none;
+      line-height: 1;
       white-space: nowrap;
     }
 

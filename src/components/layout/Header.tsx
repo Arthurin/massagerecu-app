@@ -30,7 +30,11 @@ const Header: React.FC = () => {
     <nav id="mainNav" className="navbar navbar-expand-lg fixed-top">
       <div className="navbar-topbar">
         <div className="container navbar-topbar__inner">
-          <span className="navbar-topbar__brand">Massage Reçu</span>
+          <span className="navbar-topbar__brand">
+            <span className="navbar-topbar__brand-name">Massage Reçu</span>
+            <span className="navbar-topbar__brand-sep"> · </span>
+            <span>Soins massage</span>
+          </span>
           <div className="navbar-topbar__contact">
             <span className="navbar-topbar__item">
               <FontAwesomeIcon
