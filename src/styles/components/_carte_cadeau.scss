@@ -534,14 +534,44 @@
   }
 }
 
+@media (max-width: 1199px) {
+  .gift-hero__badge {
+    position: static;
+    margin-top: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+    width: min(100%, 520px);
+    background: var(--surface-4);
+    border: 1px solid rgba(198, 165, 107, 0.32);
+    border-left: 2px solid rgba(198, 165, 107, 0.68);
+    border-radius: 12px;
+    box-shadow: none;
+    text-align: center;
+    padding: 0.85rem 1rem;
+  }
+}
+
 @media (max-width: 991px) {
   .gift-hero {
     padding-top: 4.5rem;
   }
 
-  .gift-hero__badge {
-    position: static;
-    margin-top: 1.5rem;
+  .gift-hero__content {
+    max-width: none;
+  }
+
+  .gift-hero__lead {
+    max-width: none;
+  }
+
+  .gift-hero__actions {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .gift-hero__cta-group {
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 
@@ -552,11 +582,15 @@
 
   .gift-hero__actions {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+  }
+
+  .gift-hero__visual {
+    width: 100%;
   }
 
   .gift-flow__panel {
-    padding: 1.5rem;
+    padding: 0.9rem;
   }
 
   .gift-info__card {
@@ -590,6 +624,10 @@
   .gift-info__eco {
     padding: 0.85rem 1rem;
   }
+
+  .gift-flow__panel .carte-cadeau-component {
+    padding: 0.65rem !important;
+  }
 }
 .gift-info h2,
 .gift-flow h2 {
@@ -608,5 +646,3 @@
   border-radius: 999px;
   background: rgba(198, 165, 107, 0.62);
 }
-
-
