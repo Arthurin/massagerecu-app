@@ -16,7 +16,6 @@ export default function CarteCadeauPage() {
       >
         <div className="container gift-hero__grid">
           <div className="gift-hero__content">
-            <p className="gift-hero__eyebrow">Cabinet de massage · Janzé</p>
             <h1 id="carte-cadeau-title" className="gift-hero__title">
               Le plaisir d’offrir, l’art de prendre soin.
             </h1>
