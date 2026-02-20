@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBars,
@@ -32,15 +33,24 @@ const Header: React.FC = () => {
           <span className="navbar-topbar__brand">Massage Reçu</span>
           <div className="navbar-topbar__contact">
             <span className="navbar-topbar__item">
-              <FontAwesomeIcon icon={faLocationDot} className="navbar-topbar__icon" />
+              <FontAwesomeIcon
+                icon={faLocationDot}
+                className="navbar-topbar__icon"
+              />
               Brie · Janzé
             </span>
             <a className="navbar-topbar__item" href="tel:+33769488450">
               <FontAwesomeIcon icon={faPhone} className="navbar-topbar__icon" />
               07 69 48 84 50
             </a>
-            <a className="navbar-topbar__item" href="mailto:massagerecu@gmail.com">
-              <FontAwesomeIcon icon={faEnvelope} className="navbar-topbar__icon" />
+            <a
+              className="navbar-topbar__item"
+              href="mailto:massagerecu@gmail.com"
+            >
+              <FontAwesomeIcon
+                icon={faEnvelope}
+                className="navbar-topbar__icon"
+              />
               massagerecu@gmail.com
             </a>
           </div>
@@ -48,7 +58,16 @@ const Header: React.FC = () => {
       </div>
       <div className="container">
         <Link className="navbar-brand" href="/">
-          <img src="/assets/img/logo.png" alt="Massage Reçu" />
+          <span className="navbar-brand__logo-stack">
+            <Image
+              src="/assets/img/Logo-2026.4.png"
+              alt="Massage Reçu"
+              width={110}
+              height={110}
+              className="navbar-brand__logo"
+              priority
+            />
+          </span>
         </Link>
         <button
           className="navbar-toggler"
