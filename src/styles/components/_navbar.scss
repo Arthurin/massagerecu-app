@@ -156,10 +156,23 @@
       min-height: 34px;
       display: flex;
       align-items: center;
-      justify-content: flex-end;
-      gap: 1.15rem;
+      justify-content: space-between;
       font-size: 0.82rem;
       color: rgba(245, 236, 223, 0.86);
+    }
+
+    .navbar-topbar__brand {
+      color: rgba(245, 236, 223, 0.9);
+      font-family: var(--font-lora), serif;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+
+    .navbar-topbar__contact {
+      display: inline-flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 1.15rem;
     }
 
     .navbar-topbar__item {
