@@ -15,7 +15,63 @@ import NavItem from "@/components/layout/Navitem";
 
 const Header: React.FC = () => {
   const pathname = usePathname();
-  console.log("Affichage de la page :", pathname);
+  const [compactBrand, setCompactBrand] = React.useState(false);
+  const containerRef = React.useRef<HTMLDivElement>(null);
+  const brandRef = React.useRef<HTMLAnchorElement>(null);
+  const brandLogoRef = React.useRef<HTMLSpanElement>(null);
+  const brandTextRef = React.useRef<HTMLSpanElement>(null);
+  const togglerRef = React.useRef<HTMLButtonElement>(null);
+
+  React.useEffect(() => {
+    const container = containerRef.current;
+    const brand = brandRef.current;
+    const logo = brandLogoRef.current;
+    const text = brandTextRef.current;
+    const toggler = togglerRef.current;
+    if (!container || !brand || !logo || !text || !toggler) return;
+
+    const measure = () => {
+      const togglerStyle = window.getComputedStyle(toggler);
+      const isTogglerVisible = togglerStyle.display !== "none";
+      if (!isTogglerVisible) {
+        setCompactBrand(false);
+        return;
+      }
+
+      const brandRect = brand.getBoundingClientRect();
+      const logoRect = logo.getBoundingClientRect();
+      const togglerRect = toggler.getBoundingClientRect();
+      const brandStyle = window.getComputedStyle(brand);
+      const gap = Number.parseFloat(brandStyle.columnGap || brandStyle.gap || "0");
+      const textWidth = text.scrollWidth;
+      const availableWidth = togglerRect.left - brandRect.left;
+      const expandedWidth = logoRect.width + gap + textWidth;
+
+      const hideThreshold = expandedWidth + 8;
+      const showThreshold = expandedWidth + 24;
+
+      setCompactBrand((prev) => {
+        if (!prev && availableWidth < hideThreshold) return true;
+        if (prev && availableWidth > showThreshold) return false;
+        return prev;
+      });
+    };
+
+    const runMeasure = () => window.requestAnimationFrame(measure);
+    runMeasure();
+
+    const resizeObserver = new ResizeObserver(runMeasure);
+    resizeObserver.observe(container);
+    resizeObserver.observe(brand);
+    resizeObserver.observe(toggler);
+    window.addEventListener("resize", runMeasure, { passive: true });
+    document.fonts?.ready.then(runMeasure).catch(() => undefined);
+
+    return () => {
+      resizeObserver.disconnect();
+      window.removeEventListener("resize", runMeasure);
+    };
+  }, []);
 
   const items = [
     { title: "Accueil", url: "/" },
@@ -60,9 +116,13 @@ const Header: React.FC = () => {
           </div>
         </div>
       </div>
-      <div className="container">
-        <Link className="navbar-brand" href="/">
-          <span className="navbar-brand__logo-stack">
+      <div className="container" ref={containerRef}>
+        <Link
+          ref={brandRef}
+          className={`navbar-brand ${compactBrand ? "navbar-brand--compact" : ""}`}
+          href="/"
+        >
+          <span ref={brandLogoRef} className="navbar-brand__logo-stack">
             <Image
               src="/assets/img/Logo-2026.4.png"
               alt="Massage Reçu"
@@ -72,8 +132,12 @@ const Header: React.FC = () => {
               priority
             />
           </span>
+          <span ref={brandTextRef} className="navbar-brand__text">
+            Massage Reçu
+          </span>
         </Link>
         <button
+          ref={togglerRef}
           className="navbar-toggler"
           type="button"
           data-bs-toggle="collapse"
