@@ -11,6 +11,7 @@ $menu-padding-small: 0.3rem;
 $menu-padding-bigscreen: 0.5rem;
 $menu-padding-bigscreen-sticky: 0.3rem;
 $menu-topbar-bigscreen: 2.125rem;
+$menu-mobile-height: 5.625rem;
 
 $menu-logo-small: 6.875rem;
 $menu-logo-bigscreen: 8.125rem;
@@ -136,7 +137,7 @@ p {
 }
 
 #premiere-section {
-  padding-top: 1.5 + $menu-small-height;
+  padding-top: 1.5rem + $menu-mobile-height;
 }
 
 @include media-breakpoint-up(lg) {
