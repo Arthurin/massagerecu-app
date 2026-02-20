@@ -261,13 +261,14 @@
   content: "";
   position: absolute;
   right: -10%;
-  top: -30%;
+  top: -18%;
   width: 420px;
   height: 420px;
   border-radius: 999px;
   background: rgba(198, 165, 107, 0.2);
   filter: blur(0);
   z-index: 0;
+  display: none;
 }
 
 .gift-hero__grid {
@@ -523,6 +524,10 @@
   .gift-hero__grid {
     grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
     align-items: start;
+  }
+
+  .gift-hero::after {
+    display: block;
   }
 
   .gift-hero__visual {

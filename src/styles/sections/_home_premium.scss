@@ -231,3 +231,10 @@
   }
 }
 
+@include media-breakpoint-up(lg) {
+  .home-page .masthead {
+    height: calc(760px + #{$menu-topbar-bigscreen});
+    padding-top: calc(200px + #{$menu-topbar-bigscreen});
+  }
+}
+
