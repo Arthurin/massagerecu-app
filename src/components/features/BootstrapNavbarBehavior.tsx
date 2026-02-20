@@ -9,19 +9,42 @@ export default function BootstrapNavbarBehavior() {
       return;
     }
 
+    // Hysteresis avoids rapid toggling near the top of the page.
+    const SHRINK_AT = 24;
+    const EXPAND_AT = 8;
+    let isShrunk = false;
+    let rafId: number | null = null;
+
     const navbarShrink = () => {
-      if (window.scrollY === 0) {
-        navbarCollapsible.classList.remove("navbar-shrink");
-      } else {
+      const y = window.scrollY;
+
+      if (!isShrunk && y >= SHRINK_AT) {
         navbarCollapsible.classList.add("navbar-shrink");
+        isShrunk = true;
+        return;
       }
+
+      if (isShrunk && y <= EXPAND_AT) {
+        navbarCollapsible.classList.remove("navbar-shrink");
+        isShrunk = false;
+      }
+    };
+
+    const onScroll = () => {
+      if (rafId !== null) {
+        return;
+      }
+      rafId = window.requestAnimationFrame(() => {
+        navbarShrink();
+        rafId = null;
+      });
     };
 
     // Initial state
     navbarShrink();
 
     // Scroll listener
-    document.addEventListener("scroll", navbarShrink);
+    window.addEventListener("scroll", onScroll, { passive: true });
 
     // Collapse responsive navbar
     const navbarToggler =
@@ -45,7 +68,10 @@ export default function BootstrapNavbarBehavior() {
 
     // Cleanup (important en App Router)
     return () => {
-      document.removeEventListener("scroll", navbarShrink);
+      window.removeEventListener("scroll", onScroll);
+      if (rafId !== null) {
+        window.cancelAnimationFrame(rafId);
+      }
       responsiveNavItems.forEach((item) =>
         item.removeEventListener("click", handleNavItemClick),
       );

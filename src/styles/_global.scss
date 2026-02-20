@@ -10,6 +10,7 @@
 $menu-padding-small: 0.3rem;
 $menu-padding-bigscreen: 0.5rem;
 $menu-padding-bigscreen-sticky: 0.3rem;
+$menu-topbar-bigscreen: 2.125rem;
 
 $menu-logo-small: 6.875rem;
 $menu-logo-bigscreen: 8.125rem;
@@ -140,7 +141,7 @@ p {
 
 @include media-breakpoint-up(lg) {
   #premiere-section {
-    padding-top: 5 + $menu-big-height;
+    padding-top: 5 + $menu-big-height + $menu-topbar-bigscreen;
   }
 
   .page-section {

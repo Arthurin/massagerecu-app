@@ -3,7 +3,12 @@
 import React from "react";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBars,
+  faEnvelope,
+  faLocationDot,
+  faPhone,
+} from "@fortawesome/free-solid-svg-icons";
 import { usePathname } from "next/navigation";
 import NavItem from "@/components/layout/Navitem";
 
@@ -22,6 +27,22 @@ const Header: React.FC = () => {
 
   return (
     <nav id="mainNav" className="navbar navbar-expand-lg fixed-top">
+      <div className="navbar-topbar">
+        <div className="container navbar-topbar__inner">
+          <span className="navbar-topbar__item">
+            <FontAwesomeIcon icon={faLocationDot} className="navbar-topbar__icon" />
+            Brie · Janzé
+          </span>
+          <a className="navbar-topbar__item" href="tel:+33769488450">
+            <FontAwesomeIcon icon={faPhone} className="navbar-topbar__icon" />
+            07 69 48 84 50
+          </a>
+          <a className="navbar-topbar__item" href="mailto:massagerecu@gmail.com">
+            <FontAwesomeIcon icon={faEnvelope} className="navbar-topbar__icon" />
+            massagerecu@gmail.com
+          </a>
+        </div>
+      </div>
       <div className="container">
         <Link className="navbar-brand" href="/">
           <img src="/assets/img/logo.png" alt="Massage Reçu" />
